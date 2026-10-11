@@ -91,8 +91,8 @@ export default function BossArrivalShowcase() {
       aria-label="Animation Showcase"
       onClick={handleDismiss}
       className={`fixed inset-0 z-[99995] flex items-center justify-center overflow-hidden cursor-pointer select-none transition-all duration-700 ${isFadingOut
-          ? 'opacity-0 scale-[1.02] backdrop-blur-none pointer-events-none'
-          : 'opacity-100 scale-100 backdrop-blur-2xl pointer-events-auto'
+        ? 'opacity-0 scale-[1.02] backdrop-blur-none pointer-events-none'
+        : 'opacity-100 scale-100 backdrop-blur-2xl pointer-events-auto'
         }`}
       style={{
         backgroundColor: 'rgba(2, 6, 23, 0.65)',
@@ -101,12 +101,7 @@ export default function BossArrivalShowcase() {
         transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
-      {/* Subtle Return Hint */}
-      <div className="absolute top-5 right-5 sm:top-7 sm:right-7 z-30 pointer-events-none opacity-60 transition-opacity">
-        <span className="text-[10px] sm:text-xs font-mono font-medium tracking-wider text-slate-300 bg-slate-900/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-700/60 shadow-lg">
-          Auto-returns • Tap anywhere to skip
-        </span>
-      </div>
+
 
       {/* Container with camera-shake — exact match to SharedBackground */}
       <div
