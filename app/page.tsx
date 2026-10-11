@@ -1,30 +1,52 @@
+'use client';
+
+import { useState, useCallback } from 'react';
 import Navigation from '@/components/Navigation';
 import FloatingElements from '@/components/FloatingElements';
 import SharedBackground from '@/components/SharedBackground';
-import SocialSidebar from '@/components/sidebar'; // ADD THIS IMPORT
+import SocialSidebar from '@/components/sidebar';
 import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import SkillsSection from '@/components/sections/SkillsSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import ContactSection from '@/components/sections/ContactSection';
+import SplashScreen from '@/components/SplashScreen';
+import AIChatWidget from '@/components/AIChatWidget';
+import NarutoCursor from '@/components/CustomCursor';
+import BossArrivalShowcase from '@/components/ArrivalShowcase';
 
 export default function Home() {
+  const [splashDone, setSplashDone] = useState(false);
+
+  // Stable callback — splash fires onComplete when sword has docked
+  const handleSplashComplete = useCallback(() => {
+    setSplashDone(true);
+  }, []);
+
   return (
     <>
+      {/* Splash renders ON TOP (z-[9999] fixed) and manages its own exit animation.
+          The main content renders underneath from the start.
+          When the splash fades out, the crow animation is already in flight. */}
+      <SplashScreen onComplete={handleSplashComplete} />
+
+      {/* Main page content (always rendered, hidden behind splash until it exits) */}
       <SharedBackground />
       <FloatingElements />
-      <Navigation />
-      <SocialSidebar /> {/* ADD THIS - Will appear on all sections */}
+      <Navigation splashDone={splashDone} />
+      <SocialSidebar />
       <main>
-        <HeroSection />
+        <HeroSection animReady={splashDone} />
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
         <ExperienceSection />
+        <TestimonialsSection />
         <ContactSection />
       </main>
-      <footer 
+      <footer
         className="relative py-12 px-4 text-white text-center overflow-hidden"
         style={{
           backgroundImage: 'url(/messageContainerBG.jpeg)',
@@ -40,7 +62,7 @@ export default function Home() {
               Thanks for Visiting!
             </h3>
             <p className="text-slate-300 text-base md:text-lg drop-shadow-md">
-              Let's build something amazing together
+              Let&apos;s build something amazing together
             </p>
           </div>
           <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-500 to-transparent mb-5"></div>
@@ -53,6 +75,9 @@ export default function Home() {
           <div className="absolute bottom-8 right-8 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
         </div>
       </footer>
+      {splashDone && <AIChatWidget splashDone={splashDone} />}
+      <BossArrivalShowcase />
+      <NarutoCursor />
     </>
   );
 }

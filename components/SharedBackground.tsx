@@ -1,291 +1,251 @@
-"use client";
+import { useState, useEffect, useRef } from 'react';
 
 export default function SharedBackground() {
+  const [showIntense, setShowIntense] = useState(false);
+  const hasPlayedRef = useRef(false);
+
+  useEffect(() => {
+    // We only want to play the heavy animation when the user scrolls down to the About section,
+    // because the Hero section has a video that blocks it.
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasPlayedRef.current) {
+          hasPlayedRef.current = true;
+          setShowIntense(true);
+          
+          // Unmount the heavy DOM elements after the 6-second sequence finishes
+          setTimeout(() => {
+            setShowIntense(false);
+          }, 6500);
+        }
+      });
+    }, { threshold: 0.2 }); // Trigger when 20% of the about section is visible
+
+    // Wait a brief moment to ensure the DOM is fully rendered before observing
+    const timer = setTimeout(() => {
+      const aboutEl = document.getElementById('about');
+      if (aboutEl) observer.observe(aboutEl);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 -z-10 bg-white dark:bg-slate-950 pointer-events-none overflow-hidden">
-      <div
-        className="absolute top-0 right-10 w-72 h-72 border-2 border-slate-400/45 dark:border-slate-600/45 rotate-45 rounded-3xl animate-float-sophisticated shadow-2xl shadow-slate-400/20"
-        style={{ willChange: "transform, opacity, filter" }}
-      ></div>
+    <div
+      className={`fixed inset-0 -z-10 bg-slate-50 dark:bg-slate-950 pointer-events-none overflow-hidden flex items-center justify-center ${showIntense ? 'animate-camera-shake' : ''}`}
+      style={{ contain: 'strict', transform: 'translateZ(0)' }}
+    >
 
-      <div
-        className="absolute bottom-0 left-10 w-72 h-72 border-2 border-slate-400/45 dark:border-slate-600/45 -rotate-45 rounded-3xl animate-float-sophisticated-alt shadow-2xl shadow-slate-400/20"
-        style={{ willChange: "transform, opacity, filter" }}
-      ></div>
-
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="absolute -top-32 -left-20 w-16 h-16 border border-slate-400/40 dark:border-slate-600/40 rotate-45 rounded-lg animate-spin-very-slow"></div>
-        <div className="absolute -bottom-28 right-24 w-20 h-20 border border-slate-400/35 dark:border-slate-600/35 -rotate-12 rounded-xl animate-float-micro"></div>
-        <div className="absolute top-40 -right-32 w-14 h-14 border border-slate-400/40 dark:border-slate-600/40 rounded-full animate-pulse-elegant"></div>
-        <div className="absolute -top-24 right-28 w-18 h-18 border border-slate-400/35 dark:border-slate-600/35 rounded-full animate-orbit-elegant"></div>
-        <div className="absolute -top-40 left-32 w-20 h-20 border-2 border-slate-400/40 dark:border-slate-600/40 rounded-full animate-pulse-elegant-alt"></div>
-      </div>
-
-      <div className="absolute top-1/3 left-1/2 w-2 h-2 bg-slate-400/50 dark:bg-slate-600/50 rounded-full animate-twinkle-1"></div>
-      <div className="absolute top-1/2 left-1/3 w-2 h-2 bg-slate-400/50 dark:bg-slate-600/50 rounded-full animate-twinkle-2"></div>
-      <div className="absolute top-2/3 left-1/2 w-2 h-2 bg-slate-400/50 dark:bg-slate-600/50 rounded-full animate-twinkle-3"></div>
-      <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-slate-400/50 dark:bg-slate-600/50 rounded-full animate-twinkle-4"></div>
-      <div className="absolute top-1/3 right-2/5 w-2 h-2 bg-slate-400/50 dark:bg-slate-600/50 rounded-full animate-twinkle-5"></div>
-
-      {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-[0.90] dark:opacity-[0.100]">
+      {/* --- BACKGROUND LAYER: Manga Grid & Speed Lines --- */}
+      <div className="absolute inset-0 opacity-[0.85] dark:opacity-[0.25]">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgb(148 163 184 / 0.3) 1px, transparent 1px),
-              linear-gradient(to bottom, rgb(148 163 184 / 0.3) 1px, transparent 1px)
+              linear-gradient(to right, rgb(148 163 184 / 0.15) 1px, transparent 1px),
+              linear-gradient(to bottom, rgb(148 163 184 / 0.15) 1px, transparent 1px)
             `,
-            backgroundSize: "80px 80px",
+            backgroundSize: "60px 60px",
           }}
         ></div>
+        <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_10%,_rgba(15,23,42,0.1)_100%)] dark:bg-[radial-gradient(ellipse_at_center,_transparent_10%,_rgba(0,0,0,0.8)_100%)] ${showIntense ? 'animate-dynamic-speedlines' : 'opacity-10'}`}></div>
       </div>
 
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-radial from-slate-200/40 via-slate-100/20 to-transparent dark:from-slate-800/30 dark:via-slate-900/15 dark:to-transparent blur-3xl animate-orb-elegant-1"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-slate-200/40 via-slate-100/20 to-transparent dark:from-slate-800/30 dark:via-slate-900/15 dark:to-transparent blur-3xl animate-orb-elegant-2"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-radial from-slate-150/25 to-transparent dark:from-slate-850/25 dark:to-transparent blur-3xl animate-orb-center-elegant"></div>
+      {showIntense && (
+        <>
+          {/* --- ACT 1: THE HIGH-SPEED CLASH --- */}
+          {/* Fighter 1 Streak (Left to Center) */}
+          <div className="absolute top-1/2 left-0 w-1/2 h-1 bg-gradient-to-r from-transparent to-slate-800 dark:to-slate-200 animate-streak-left rounded-full shadow-[0_0_15px_currentColor]"></div>
+
+          {/* Fighter 2 Streak (Right to Center) */}
+          <div className="absolute top-1/2 right-0 w-1/2 h-1 bg-gradient-to-l from-transparent to-slate-600 dark:to-slate-400 animate-streak-right rounded-full shadow-[0_0_15px_currentColor]"></div>
+
+          {/* Impact Frame Flash */}
+          <div className="absolute inset-0 bg-white/60 dark:bg-white/10 animate-impact-flash z-10 pointer-events-none"></div>
+
+          {/* Explosive Shockwave Ring */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 border-[8px] border-slate-800 dark:border-slate-200 rounded-full animate-shockwave z-0"></div>
+
+          {/* --- ACT 2: THE 3-HIT COMBO SLASHES (The Z-Slash) --- */}
+          {/* Screen dims for the slashes */}
+          <div className="absolute inset-0 bg-slate-900/10 dark:bg-black/40 animate-slash-dimmer z-0"></div>
+
+          {/* Slash 1: Diagonal Down */}
+          <div className="absolute top-1/2 left-1/2 w-[150vw] h-[2px] bg-white dark:bg-slate-100 animate-slash-1 shadow-[0_0_20px_2px_rgba(148,163,184,0.8)] z-20"></div>
+
+          {/* Slash 2: Horizontal Cut */}
+          <div className="absolute top-[40%] left-1/2 w-[150vw] h-[2px] bg-white dark:bg-slate-100 animate-slash-2 shadow-[0_0_20px_2px_rgba(148,163,184,0.8)] z-20"></div>
+
+          {/* Slash 3: Massive Upward Cleave */}
+          <div className="absolute top-1/2 left-1/2 w-[200vw] h-[4px] bg-white dark:bg-slate-50 animate-slash-3 shadow-[0_0_30px_4px_rgba(148,163,184,0.9)] z-20"></div>
+
+          {/* --- ACT 3: THE PROJECTILE DODGE --- */}
+          {/* Subtly transparent Shuriken flying directly at the camera */}
+          <div className="absolute top-1/2 left-1/2 w-16 h-16 text-slate-300/40 dark:text-slate-600/30 animate-shuriken-flyby z-10">
+            <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 0 L58 35 L95 20 L65 42 L100 50 L65 58 L95 80 L58 65 L50 100 L42 65 L5 80 L35 58 L0 50 L35 42 L5 20 L42 35 Z" />
+              <circle cx="50" cy="50" r="18" fill="transparent" stroke="currentColor" strokeWidth="3" />
+              <circle cx="50" cy="50" r="8" fill="currentColor" className="opacity-60" />
+            </svg>
+          </div>
+
+          {/* --- ACT 4: AFTERMATH (Embers & Leaves) --- */}
+          {/* High-speed sparks scattering from impact */}
+          <div className="absolute top-1/2 left-1/2 w-2 h-1 bg-slate-700 dark:bg-slate-300 rounded-full animate-spark-1 shadow-[0_0_8px_currentColor]"></div>
+          <div className="absolute top-1/2 left-1/2 w-3 h-1 bg-slate-600 dark:bg-slate-400 rounded-full animate-spark-2 shadow-[0_0_8px_currentColor]"></div>
+          <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-slate-800 dark:bg-slate-200 rounded-full animate-spark-3 shadow-[0_0_8px_currentColor]"></div>
+        </>
+      )}
+
+      {/* Atmospheric Falling Leaves (Constant smooth loop, always visible) */}
+      <div
+        className="absolute -top-10 left-[15%] w-6 h-6 text-slate-400/40 dark:text-slate-500/40 animate-falling-leaf-1"
+        style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" /></svg>
+      </div>
+      <div
+        className="absolute -top-10 left-[80%] w-8 h-8 text-slate-400/30 dark:text-slate-500/30 animate-falling-leaf-2"
+        style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" /></svg>
+      </div>
 
       <style jsx>{`
-        /* ===== Big squares: slightly more noticeable but still subtle ===== */
-        @keyframes float-sophisticated {
-          0%,
-          100% {
-            transform: translate(0, 0) rotate(45deg) scale(1);
-            opacity: 0.95;
-            filter: drop-shadow(0 8px 18px rgba(58, 75, 102, 0.05));
-          }
-          25% {
-            transform: translate(-22px, -28px) rotate(47deg) scale(1.03);
-            opacity: 1;
-            filter: drop-shadow(0 12px 28px rgba(58, 75, 102, 0.08));
-          }
-          50% {
-            transform: translate(14px, -18px) rotate(43deg) scale(0.985) skewX(-0.3deg);
-            opacity: 0.9;
-            filter: drop-shadow(0 6px 14px rgba(58, 75, 102, 0.04));
-          }
-          75% {
-            transform: translate(-8px, -10px) rotate(46deg) scale(1.01);
-            opacity: 0.98;
-            filter: drop-shadow(0 10px 22px rgba(58, 75, 102, 0.06));
-          }
+        /* Camera Shake on Impact */
+        @keyframes camera-shake {
+          0%, 36% { transform: translate(0, 0); }
+          38% { transform: translate(-10px, 8px) rotate(-1deg); }
+          40% { transform: translate(10px, -8px) rotate(1deg); }
+          42% { transform: translate(-5px, 5px) rotate(-0.5deg); }
+          44%, 100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        @keyframes float-sophisticated-alt {
-          0%,
-          100% {
-            transform: translate(0, 0) rotate(-45deg) scale(1);
-            opacity: 0.95;
-            filter: drop-shadow(0 8px 18px rgba(58, 75, 102, 0.05));
-          }
-          25% {
-            transform: translate(22px, 28px) rotate(-43deg) scale(1.035) skewX(0.4deg);
-            opacity: 1;
-            filter: drop-shadow(0 12px 28px rgba(58, 75, 102, 0.08));
-          }
-          50% {
-            transform: translate(-14px, 18px) rotate(-48deg) scale(0.985);
-            opacity: 0.9;
-            filter: drop-shadow(0 6px 14px rgba(58, 75, 102, 0.04));
-          }
-          75% {
-            transform: translate(8px, 10px) rotate(-46deg) scale(1.01);
-            opacity: 0.98;
-            filter: drop-shadow(0 10px 22px rgba(58, 75, 102, 0.06));
-          }
+        /* High Speed Streaks */
+        @keyframes streak-left {
+          0%, 30% { transform: translate(-100vw, 0) scaleX(1); opacity: 0; }
+          32% { transform: translate(-50vw, 0) scaleX(5); opacity: 1; }
+          38% { transform: translate(0, 0) scaleX(1); opacity: 1; }
+          40%, 100% { opacity: 0; }
+        }
+        @keyframes streak-right {
+          0%, 30% { transform: translate(100vw, 0) scaleX(1); opacity: 0; }
+          32% { transform: translate(50vw, 0) scaleX(5); opacity: 1; }
+          38% { transform: translate(0, 0) scaleX(1); opacity: 1; }
+          40%, 100% { opacity: 0; }
         }
 
-        /* micro / center animations unchanged */
-        @keyframes float-micro {
-          0%,
-          100% {
-            transform: translateY(0) rotate(-12deg);
-          }
-          50% {
-            transform: translateY(-15px) rotate(-8deg);
-          }
-        }
-        @keyframes spin-very-slow {
-          from {
-            transform: rotate(45deg);
-          }
-          to {
-            transform: rotate(405deg);
-          }
-        }
-        @keyframes pulse-elegant {
-          0%,
-          100% {
-            transform: scale(1);
-            opacity: 0.4;
-          }
-          50% {
-            transform: scale(1.15);
-            opacity: 0.7;
-          }
-        }
-        @keyframes pulse-elegant-alt {
-          0%,
-          100% {
-            transform: scale(1);
-            opacity: 0.4;
-          }
-          50% {
-            transform: scale(1.12);
-            opacity: 0.65;
-          }
-        }
-        @keyframes orbit-elegant {
-          0% {
-            transform: rotate(0deg) translateX(25px) rotate(0deg);
-            opacity: 0.35;
-          }
-          50% {
-            opacity: 0.6;
-          }
-          100% {
-            transform: rotate(360deg) translateX(25px) rotate(-360deg);
-            opacity: 0.35;
-          }
-        }
-        @keyframes twinkle-1 {
-          0%,
-          100% {
-            transform: scale(0.8);
-            opacity: 0.3;
-          }
-          50% {
-            transform: scale(1.8);
-            opacity: 1;
-          }
-        }
-        @keyframes twinkle-2 {
-          0%,
-          100% {
-            transform: scale(0.6);
-            opacity: 0.2;
-          }
-          50% {
-            transform: scale(2);
-            opacity: 0.9;
-          }
-        }
-        @keyframes twinkle-3 {
-          0%,
-          100% {
-            transform: scale(0.7);
-            opacity: 0.25;
-          }
-          50% {
-            transform: scale(1.9);
-            opacity: 0.95;
-          }
-        }
-        @keyframes twinkle-4 {
-          0%,
-          100% {
-            transform: scale(0.9);
-            opacity: 0.3;
-          }
-          50% {
-            transform: scale(1.7);
-            opacity: 0.85;
-          }
-        }
-        @keyframes twinkle-5 {
-          0%,
-          100% {
-            transform: scale(0.75);
-            opacity: 0.25;
-          }
-          50% {
-            transform: scale(1.85);
-            opacity: 0.9;
-          }
-        }
-        @keyframes orb-elegant-1 {
-          0%,
-          100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.4;
-          }
-          50% {
-            transform: translate(40px, 40px) scale(1.15);
-            opacity: 0.55;
-          }
-        }
-        @keyframes orb-elegant-2 {
-          0%,
-          100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.4;
-          }
-          50% {
-            transform: translate(-40px, -40px) scale(1.15);
-            opacity: 0.55;
-          }
-        }
-        @keyframes orb-center-elegant {
-          0%,
-          100% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.25;
-          }
-          50% {
-            transform: translate(-50%, -50%) scale(1.25);
-            opacity: 0.4;
-          }
+        /* Impact Flash Frame */
+        @keyframes impact-flash {
+          0%, 37.8% { opacity: 0; }
+          38% { opacity: 1; }
+          42%, 100% { opacity: 0; }
         }
 
-        /* slightly snappier but still chill timings for the big squares */
-        .animate-float-sophisticated {
-          animation: float-sophisticated 20s cubic-bezier(.22,.9,.28,.99) infinite;
+        /* Shockwave Ring */
+        @keyframes shockwave {
+          0%, 37.8% { transform: translate(-50%, -50%) scale(0); opacity: 0; border-width: 20px; }
+          38% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; border-width: 40px; }
+          46% { transform: translate(-50%, -50%) scale(5); opacity: 0; border-width: 0px; }
+          100% { opacity: 0; }
         }
-        .animate-float-sophisticated-alt {
-          animation: float-sophisticated-alt 22s cubic-bezier(.22,.9,.28,.99) infinite 1.2s;
+
+        /* Screen Dimmer during slashes to make them pop */
+        @keyframes slash-dimmer {
+          0%, 40% { opacity: 0; }
+          44%, 56% { opacity: 1; }
+          64%, 100% { opacity: 0; }
         }
-        .animate-float-micro {
-          animation: float-micro 20s ease-in-out infinite;
+
+        /* Slash 1: Top Left to Bottom Right */
+        @keyframes slash-1 {
+          0%, 42% { transform: translate(-50%, -50%) rotate(35deg) scaleX(0); opacity: 0; }
+          43% { transform: translate(-50%, -50%) rotate(35deg) scaleX(1); opacity: 1; }
+          45%, 100% { transform: translate(-50%, -50%) rotate(35deg) scaleX(0); opacity: 0; }
         }
-        .animate-spin-very-slow {
-          animation: spin-very-slow 50s linear infinite;
+
+        /* Slash 2: Right to Left */
+        @keyframes slash-2 {
+          0%, 46% { transform: translate(-50%, -50%) rotate(-5deg) scaleX(0); opacity: 0; }
+          47% { transform: translate(-50%, -50%) rotate(-5deg) scaleX(1); opacity: 1; }
+          49%, 100% { transform: translate(-50%, -50%) rotate(-5deg) scaleX(0); opacity: 0; }
         }
-        .animate-pulse-elegant {
-          animation: pulse-elegant 12s ease-in-out infinite;
+
+        /* Slash 3: Massive Cleave Bottom to Top */
+        @keyframes slash-3 {
+          0%, 50% { transform: translate(-50%, -50%) rotate(-60deg) scaleX(0); opacity: 0; }
+          51% { transform: translate(-50%, -50%) rotate(-60deg) scaleX(1); opacity: 1; }
+          54%, 100% { transform: translate(-50%, -50%) rotate(-60deg) scaleX(0); opacity: 0; }
         }
-        .animate-pulse-elegant-alt {
-          animation: pulse-elegant-alt 14s ease-in-out infinite 2s;
+
+        /* Shuriken flying at camera */
+        @keyframes shuriken-flyby {
+          0%, 54% { transform: translate(-20vw, 10vh) scale(0) rotate(0deg); opacity: 0; }
+          56% { transform: translate(-15vw, 5vh) scale(0.5) rotate(180deg); opacity: 1; }
+          72% { transform: translate(30vw, -20vh) scale(15) rotate(1080deg); opacity: 1; }
+          76%, 100% { transform: translate(50vw, -40vh) scale(20) rotate(1440deg); opacity: 0; }
         }
-        .animate-orbit-elegant {
-          animation: orbit-elegant 35s linear infinite;
+
+        /* Embers scattering from the impact */
+        @keyframes spark-1 {
+          0%, 36% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0; }
+          38% { opacity: 1; }
+          60%, 100% { transform: translate(-250px, -150px) scale(0) rotate(180deg); opacity: 0; }
         }
-        .animate-twinkle-1 {
-          animation: twinkle-1 4s ease-in-out infinite;
+        @keyframes spark-2 {
+          0%, 36% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0; }
+          38% { opacity: 1; }
+          64%, 100% { transform: translate(200px, -200px) scale(0) rotate(-180deg); opacity: 0; }
         }
-        .animate-twinkle-2 {
-          animation: twinkle-2 5s ease-in-out infinite 1s;
+        @keyframes spark-3 {
+          0%, 36% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0; }
+          38% { opacity: 1; }
+          70%, 100% { transform: translate(-100px, 250px) scale(0) rotate(360deg); opacity: 0; }
         }
-        .animate-twinkle-3 {
-          animation: twinkle-3 4.5s ease-in-out infinite 2s;
+
+        /* Speed lines reacting to the beats */
+        @keyframes dynamic-speedlines {
+          0%, 36% { opacity: 0.1; transform: scale(1); }
+          38% { opacity: 0.8; transform: scale(1.05); } 
+          40% { opacity: 0.2; transform: scale(1); }
+          51% { opacity: 0.6; transform: scale(1.02); } 
+          54% { opacity: 0.2; transform: scale(1); }
+          72% { opacity: 0.7; transform: scale(1.05); } 
+          76%, 100% { opacity: 0.1; transform: scale(1); }
         }
-        .animate-twinkle-4 {
-          animation: twinkle-4 5.5s ease-in-out infinite 1.5s;
+
+        /* Leaves - kept at 15s/18s so they just drift naturally in the background */
+        @keyframes falling-leaf-1 {
+          0% { transform: translate(0vw, -10vh) rotate(0deg); opacity: 0; }
+          10%, 90% { opacity: 0.8; }
+          100% { transform: translate(-20vw, 110vh) rotate(540deg); opacity: 0; }
         }
-        .animate-twinkle-5 {
-          animation: twinkle-5 4.8s ease-in-out infinite 2.5s;
+        @keyframes falling-leaf-2 {
+          0% { transform: translate(0vw, -10vh) rotate(45deg) scale(0.8); opacity: 0; }
+          15%, 85% { opacity: 0.6; }
+          100% { transform: translate(15vw, 110vh) rotate(-360deg) scale(0.8); opacity: 0; }
         }
-        .animate-orb-elegant-1 {
-          animation: orb-elegant-1 30s ease-in-out infinite;
-        }
-        .animate-orb-elegant-2 {
-          animation: orb-elegant-2 34s ease-in-out infinite 3s;
-        }
-        .animate-orb-center-elegant {
-          animation: orb-center-elegant 25s ease-in-out infinite 1.5s;
-        }
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
+
+        .animate-camera-shake { animation: camera-shake 6s cubic-bezier(.36,.07,.19,.97) forwards; }
+        .animate-streak-left { animation: streak-left 6s cubic-bezier(0.8, 0, 0.2, 1) forwards; }
+        .animate-streak-right { animation: streak-right 6s cubic-bezier(0.8, 0, 0.2, 1) forwards; }
+        .animate-impact-flash { animation: impact-flash 6s step-end forwards; }
+        .animate-shockwave { animation: shockwave 6s ease-out forwards; }
+        .animate-slash-dimmer { animation: slash-dimmer 6s ease-in-out forwards; }
+        .animate-slash-1 { animation: slash-1 6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
+        .animate-slash-2 { animation: slash-2 6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
+        .animate-slash-3 { animation: slash-3 6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
+        .animate-shuriken-flyby { animation: shuriken-flyby 6s cubic-bezier(0.5, 0, 0.8, 1) forwards; }
+        .animate-spark-1 { animation: spark-1 6s cubic-bezier(0.2, 0.8, 0.4, 1) forwards; }
+        .animate-spark-2 { animation: spark-2 6s cubic-bezier(0.2, 0.8, 0.4, 1) forwards; }
+        .animate-spark-3 { animation: spark-3 6s cubic-bezier(0.2, 0.8, 0.4, 1) forwards; }
+        .animate-dynamic-speedlines { animation: dynamic-speedlines 6s ease-in-out forwards; }
+        
+        .animate-falling-leaf-1 { animation: falling-leaf-1 15s linear infinite; }
+        .animate-falling-leaf-2 { animation: falling-leaf-2 18s linear infinite 3s; }
       `}</style>
     </div>
   );

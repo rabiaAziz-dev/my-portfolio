@@ -28,7 +28,7 @@ export default function TypewriterEffect({
           setCharIndex(charIndex + 1);
         } else {
           setIsDeleting(true);
-          setTimeout(() => {}, delay);
+          setTimeout(() => { }, delay);
         }
       } else {
         if (charIndex > 0) {

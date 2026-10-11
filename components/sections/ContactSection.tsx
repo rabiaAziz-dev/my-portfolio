@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { 
   Mail, 
@@ -11,17 +11,14 @@ import {
   Send, 
   Github, 
   Linkedin, 
-  Twitter,
-  MessageSquare,
   CheckCircle2,
   AlertCircle,
   ExternalLink,
   ArrowRight
 } from 'lucide-react';
+import { RevealContainer, RevealItem } from '@/components/ui/scroll_reveal';
 
 export default function ContactSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -193,35 +190,20 @@ icon: WhatsAppIcon,
       accent: true
     },
   ];
-  
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
 
   return (
     <section
       id="contact"
       className="py-24 px-4 relative overflow-hidden"
-      ref={ref}
     >
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
+        <RevealContainer>
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-20">
-            <h2 className="text-6xl md:text-7xl font-black font-display mb-6">
+          <RevealItem className="text-center mb-10 sm:mb-20">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-display mb-4 sm:mb-6 text-center tracking-tight">
               Get In{' '}
               <span
-                className="relative inline-block px-4 py-1 rounded-xl overflow-hidden group cursor-pointer translate-y-4"
+                className="relative inline-block px-3 sm:px-4 py-1 rounded-xl overflow-hidden group cursor-pointer translate-y-1 sm:translate-y-4 shadow-[0_5px_15px_rgba(0,0,0,0.4)]"
                 style={{
                   backgroundImage: "url('/messageContainerBG.jpeg')",
                   backgroundSize: "cover",
@@ -235,8 +217,8 @@ icon: WhatsAppIcon,
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 blur-3xl rounded-full animate-pulse-glow"></span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
                 <span className="relative z-10 inline-block transform group-hover:scale-105 transition-transform duration-300">
-                  <span className="absolute top-[3px] left-[3px] text-slate-900/40 font-black select-none" aria-hidden="true">Touch</span>
-                  <span className="absolute top-[2px] left-[2px] text-slate-800/50 font-black select-none" aria-hidden="true">Touch</span>
+                  <span className="absolute top-[2px] sm:top-[3px] left-[2px] sm:left-[3px] text-slate-900/40 font-black select-none" aria-hidden="true">Touch</span>
+                  <span className="absolute top-[1.5px] sm:top-[2px] left-[1.5px] sm:left-[2px] text-slate-800/50 font-black select-none" aria-hidden="true">Touch</span>
                   <span className="absolute top-[1px] left-[1px] text-slate-700/60 font-black select-none" aria-hidden="true">Touch</span>
                   <span 
                     className="relative text-white font-black select-none"
@@ -253,18 +235,21 @@ icon: WhatsAppIcon,
               </span>
             </h2>
 
-            <div className="w-24 h-1 bg-gradient-to-r from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100 rounded-full mx-auto mb-6" />
+            {/* Sword draw underline effect */}
+            <div className="relative w-24 sm:w-32 h-[3px] bg-slate-800 dark:bg-slate-200 mx-auto overflow-hidden rounded-full mt-2 mb-4 sm:mb-6">
+              <div className="absolute inset-0 bg-white w-full h-full -translate-x-full animate-sword-draw"></div>
+            </div>
 
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed px-2">
               Have a project in mind or want to collaborate? I'd love to hear from you. Let's bring your vision to life!
             </p>
-          </motion.div>
+          </RevealItem>
 
-          <div className="grid lg:grid-cols-5 gap-8 mb-12">
+          <div className="grid lg:grid-cols-5 gap-6 sm:gap-8 mb-8 sm:mb-12">
             {/* Left Column */}
-            <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6 pb-6">
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+            <RevealItem className="lg:col-span-2 space-y-4 sm:space-y-6 pb-2 sm:pb-6">
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 sm:mb-4">
                   Contact Information
                 </h3>
                 {contactMethods.map((method) => {
@@ -275,25 +260,25 @@ icon: WhatsAppIcon,
                   const CardContent = (
                     <>
                       {showAccent && (
-                        <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-slate-300/50 dark:border-slate-700/50 rounded-tr-2xl group-hover:border-slate-400 dark:group-hover:border-slate-600 transition-colors pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-16 sm:w-24 h-16 sm:h-24 border-t-2 border-r-2 border-slate-300/50 dark:border-slate-700/50 rounded-tr-2xl group-hover:border-slate-400 dark:group-hover:border-slate-600 transition-colors pointer-events-none" />
                       )}
 
-                      <div className="flex items-center gap-4 relative z-10">
-                        <div className={`p-4 bg-gradient-to-br ${method.color} rounded-xl relative overflow-hidden group/icon`}>
+                      <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                        <div className={`p-3 sm:p-4 bg-gradient-to-br ${method.color} rounded-xl relative overflow-hidden group/icon flex-shrink-0`}>
                           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
-                          <Icon className="w-6 h-6 text-white dark:text-slate-900 relative z-10" />
+                          <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-slate-900 relative z-10" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-1 flex items-center gap-2">
+                          <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-0.5 sm:mb-1 flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base">
                             {method.title}
-                            {isClickable && <ExternalLink className="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-colors" />}
+                            {isClickable && <ExternalLink className="w-3.5 h-3.5 text-slate-400 dark:text-slate-600 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-colors" />}
                           </h4>
-                          <p className="text-sm text-slate-700 dark:text-slate-300 font-medium mb-0.5 truncate">
+                          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium mb-0.5 truncate">
                             {method.value}
                           </p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">{method.description}</p>
+                          <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">{method.description}</p>
                         </div>
-                        {isClickable && <ArrowRight className="w-5 h-5 text-slate-400 dark:text-slate-600 group-hover:translate-x-1 transition-transform flex-shrink-0" />}
+                        {isClickable && <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 dark:text-slate-600 group-hover:translate-x-1 transition-transform flex-shrink-0" />}
                       </div>
 
                       <div className={`absolute inset-0 bg-gradient-to-r ${method.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl`} />
@@ -301,33 +286,30 @@ icon: WhatsAppIcon,
                   );
 
                   return isClickable ? (
-                    <motion.a
+                    <a
                       key={method.title}
                       href={method.link}
-                      className="glass-card p-5 rounded-2xl neon-glow group cursor-pointer relative overflow-hidden block hover:border-slate-300 dark:hover:border-slate-600 transition-all"
-                      whileHover={{ scale: 1.02, x: 4 }}
-                      variants={itemVariants}
+                      className="glass-card p-4 sm:p-5 rounded-2xl neon-glow group cursor-pointer relative overflow-hidden block hover:border-slate-300 dark:hover:border-slate-600 transition-all hover:scale-[1.01] sm:hover:scale-[1.02] hover:translate-x-1"
                     >
                       {CardContent}
-                    </motion.a>
+                    </a>
                   ) : (
-                    <motion.div
+                    <div
                       key={method.title}
-                      className="glass-card p-5 rounded-2xl neon-glow group relative overflow-hidden"
-                      variants={itemVariants}
+                      className="glass-card p-4 sm:p-5 rounded-2xl neon-glow group relative overflow-hidden"
                     >
                       {CardContent}
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
 
-              <motion.div variants={itemVariants} className="glass-card p-6 rounded-2xl neon-glow group relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-slate-300/50 dark:border-slate-700/50 rounded-tr-2xl group-hover:border-slate-400 dark:group-hover:border-slate-600 transition-colors pointer-events-none" />
+              <div className="glass-card p-4 sm:p-6 rounded-2xl neon-glow group relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-16 sm:w-20 h-16 sm:h-20 border-t-2 border-r-2 border-slate-300/50 dark:border-slate-700/50 rounded-tr-2xl group-hover:border-slate-400 dark:group-hover:border-slate-600 transition-colors pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-5 transition-opacity rounded-2xl pointer-events-none" />
 
-                <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-4">Connect on Social</h3>
-                <div className="flex items-center gap-4">
+                <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 text-sm sm:text-base">Connect on Social</h3>
+                <div className="flex items-center flex-wrap gap-2.5 sm:gap-3">
                   {socialLinks.map((social) => {
                     const Icon = social.icon;
                     const isHovered = hoveredSocial === social.name;
@@ -343,15 +325,15 @@ icon: WhatsAppIcon,
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={social.name}
-                          className={`group/social relative p-3 rounded-full bg-gradient-to-br ${social.color} text-white flex items-center justify-center hover:shadow-lg transition-all overflow-hidden ${isHovered ? 'w-auto px-4' : 'w-11 h-11'}`}
-                          whileHover={{ scale: 1.12, rotate: 8 }}
+                          className={`group/social relative p-2.5 sm:p-3 rounded-full bg-gradient-to-br ${social.color} text-white flex items-center justify-center hover:shadow-lg transition-all overflow-hidden ${isHovered ? 'w-auto px-3.5 sm:px-4' : 'w-10 h-10 sm:w-11 sm:h-11'}`}
+                          whileHover={{ scale: 1.08 }}
                           whileTap={{ scale: 0.98 }}
-                          style={{ minWidth: '44px', minHeight: '44px' }}
+                          style={{ minWidth: '40px', minHeight: '40px' }}
                         >
                           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/social:translate-x-full transition-transform duration-700 rounded-full"></span>
                           
                           <div className="flex items-center gap-2 relative z-10">
-                            <Icon className="w-5 h-5 flex-shrink-0" />
+                            <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                             {isHovered && (
                               <motion.span
                                 initial={{ opacity: 0, width: 0 }}
@@ -374,21 +356,21 @@ icon: WhatsAppIcon,
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
                   Follow me for updates, code, and behind-the-scenes.
                 </p>
-              </motion.div>
-            </motion.div>
+              </div>
+            </RevealItem>
 
             {/* Right Column - Contact Form */}
-            <motion.div variants={itemVariants} className="lg:col-span-3 flex items-center">
-              <div className="glass-card p-8 rounded-2xl neon-glow h-auto mx-auto w-full lg:w-[90%] relative group overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-slate-300/50 dark:border-slate-700/50 rounded-tr-2xl group-hover:border-slate-400 dark:group-hover:border-slate-600 transition-colors pointer-events-none" />
+            <RevealItem className="lg:col-span-3 flex items-center">
+              <div className="glass-card p-5 sm:p-8 rounded-2xl neon-glow h-auto mx-auto w-full lg:w-[90%] relative group overflow-hidden">
+                <div className="absolute top-0 right-0 w-16 sm:w-24 h-16 sm:h-24 border-t-2 border-r-2 border-slate-300/50 dark:border-slate-700/50 rounded-tr-2xl group-hover:border-slate-400 dark:group-hover:border-slate-600 transition-colors pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-5 transition-opacity rounded-2xl pointer-events-none" />
 
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">Send Me a Message</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1 sm:mb-2">Send Me a Message</h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-4 sm:mb-6">
                   Fill out the form below and I'll get back to you as soon as possible
                 </p>
                 
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                   <div className="grid md:grid-cols-2 gap-5">
                     <input 
                       type="text" 
@@ -431,46 +413,34 @@ icon: WhatsAppIcon,
                   />
 
                   {formStatus === 'success' && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: -10 }} 
-                      animate={{ opacity: 1, y: 0 }} 
-                      className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl"
-                    >
+                    <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
                       <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
                       <p className="text-sm text-green-800 dark:text-green-300 font-medium">
                         Message sent successfully! I'll get back to you soon.
                       </p>
-                    </motion.div>
+                    </div>
                   )}
 
                   {formStatus === 'error' && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: -10 }} 
-                      animate={{ opacity: 1, y: 0 }} 
-                      className="flex items-center gap-2 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl"
-                    >
+                    <div className="flex items-center gap-2 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
                       <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
                       <p className="text-sm text-red-800 dark:text-red-300 font-medium">
                         Something went wrong. Please check console and verify your EmailJS credentials.
                       </p>
-                    </motion.div>
+                    </div>
                   )}
 
-                  <motion.button
+                  <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full px-6 py-4 bg-gradient-to-r from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-slate-500/50 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    className="group w-full px-6 py-3.5 sm:py-4 bg-gradient-to-r from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-slate-500/50 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden text-sm sm:text-base"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
                     
                     {isSubmitting ? (
                       <>
-                        <motion.div
-                          className="w-5 h-5 border-2 border-white dark:border-slate-900 border-t-transparent rounded-full relative z-10"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        <div
+                          className="w-5 h-5 border-2 border-white dark:border-slate-900 border-t-transparent rounded-full relative z-10 animate-spin"
                         />
                         <span className="relative z-10">Sending...</span>
                       </>
@@ -480,7 +450,7 @@ icon: WhatsAppIcon,
                         <span className="relative z-10">Send Message</span>
                       </>
                     )}
-                  </motion.button>
+                  </button>
                 </form>
 
                 <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
@@ -489,11 +459,11 @@ icon: WhatsAppIcon,
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </RevealItem>
           </div>
 
           {/* Bottom CTA */}
-          <motion.div variants={itemVariants} className="glass-card p-8 md:p-10 rounded-2xl neon-glow text-center">
+          <RevealItem className="glass-card p-8 md:p-10 rounded-2xl neon-glow text-center">
             <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-slate-100 mb-3">
               Ready to Start Your Project?
             </h3>
@@ -501,37 +471,43 @@ icon: WhatsAppIcon,
               Let's discuss your ideas and turn them into reality. Whether it's a small task or a large project, I'm here to help you achieve your goals.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <motion.a
+              <a
                 href="https://calendly.com/swe-rabiaaziz/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group px-8 py-4 bg-gradient-to-r from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-slate-500/50 transition-all duration-300 inline-flex items-center gap-2 relative overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="group px-8 py-4 bg-gradient-to-r from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-slate-500/50 transition-all duration-300 inline-flex items-center gap-2 relative overflow-hidden hover:scale-105"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
                 
                 <span className="relative z-10">Schedule a 1-1 meeting</span>
                 <ArrowRight className="w-5 h-5 relative z-10" />
-              </motion.a>
+              </a>
               
-              <motion.a
+              <a
                 href="mailto:swe.rabiaaziz@gmail.com"
-                className="group px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 transition-all duration-300 inline-flex items-center gap-2 relative overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="group px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 transition-all duration-300 inline-flex items-center gap-2 relative overflow-hidden hover:scale-105"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/60 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
                 
                 <Mail className="w-5 h-5 relative z-10" />
                 <span className="relative z-10">Send Quick Email</span>
-              </motion.a>
+              </a>
             </div>
-          </motion.div>
-        </motion.div>
+          </RevealItem>
+        </RevealContainer>
       </div>
 
       <style jsx>{`
+        /* Sword draw animation for the header */
+        @keyframes sword-draw {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(0%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-sword-draw {
+          animation: sword-draw 2.5s ease-in-out infinite;
+        }
+
         @keyframes pulse-glow {
           0%, 100% { opacity: 0.6; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.1); }

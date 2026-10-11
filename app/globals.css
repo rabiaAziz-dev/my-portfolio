@@ -109,7 +109,9 @@
 /* Glass effect components - Monochrome theme */
 @layer components {
   .glass-card {
-    @apply bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 shadow-xl;
+    @apply bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 shadow-xl;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .neon-glow {
@@ -236,5 +238,43 @@
 
 .animate-pulse-subtle {
   animation: pulse-subtle 4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   AURORA CURSOR — Hide default cursor on desktop devices
+   Only applies on devices with a fine pointer (not touch screens)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CINEMATIC SWORD DOCK IMPACT WHOLE-WEBSITE SHAKE
+   Hardware-accelerated on GPU compositor (translate3d)
+   ═══════════════════════════════════════════════════════════════════ */
+html, body {
+  overflow-x: hidden;
+}
+
+@keyframes sword-screen-shake {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  10% { transform: translate3d(-7px, 3.5px, 0) rotate(-0.35deg); }
+  22% { transform: translate3d(8px, -4px, 0) rotate(0.4deg); }
+  36% { transform: translate3d(-5.5px, 3px, 0) rotate(-0.25deg); }
+  50% { transform: translate3d(4.5px, -2px, 0) rotate(0.18deg); }
+  65% { transform: translate3d(-2.5px, 1.2px, 0) rotate(-0.1deg); }
+  80% { transform: translate3d(1.5px, -0.6px, 0) rotate(0.04deg); }
+  92% { transform: translate3d(-0.5px, 0.3px, 0) rotate(-0.01deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+.sword-impact-shaking {
+  animation: sword-screen-shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+  transform-origin: center center !important;
+  will-change: transform !important;
 }
 

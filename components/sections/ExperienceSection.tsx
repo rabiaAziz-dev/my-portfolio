@@ -1,19 +1,17 @@
-"use client"
+'use client';
 
-import { motion, useInView } from "framer-motion"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { BookOpen, Award, Briefcase, ChevronRight, User } from "lucide-react"
+import { RevealContainer, RevealItem } from '@/components/ui/scroll_reveal';
 
 export default function Experience() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.2 })
   const [activeSection, setActiveSection] = useState<"education" | "experience" | "currentRole" | "certifications">("education")
 
+  // EXACT Data Preserved 100%
   const experiences = {
     education: {
       title: "Education",
       icon: BookOpen,
-      color: "from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100",
       subtitle: "Academic Background",
       items: [
         {
@@ -27,7 +25,6 @@ export default function Experience() {
     experience: {
       title: "Experience",
       icon: Briefcase,
-      color: "from-slate-600 to-slate-800 dark:from-slate-200 dark:to-slate-400",
       subtitle: "Training & Development",
       items: [
         {
@@ -47,7 +44,6 @@ export default function Experience() {
     currentRole: {
       title: "Current Role",
       icon: User,
-      color: "from-slate-600 to-slate-800 dark:from-slate-200 dark:to-slate-400",
       subtitle: "Active Position",
       items: [
         {
@@ -61,7 +57,6 @@ export default function Experience() {
     certifications: {
       title: "Certifications",
       icon: Award,
-      color: "from-slate-800 to-slate-700 dark:from-slate-100 dark:to-slate-300",
       subtitle: "Professional Credentials",
       items: [
         {
@@ -89,37 +84,19 @@ export default function Experience() {
     },
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
-
-  const timelineVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5, staggerChildren: 0.15 } },
-  }
-
-  const cardVariants = {
-    hidden: { opacity: 0, x: 30, scale: 0.95 },
-    visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.5 } },
-  }
+  // Responsive clip path for Manga panels
+  const cardClipPath = 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))';
 
   return (
-    <section id="experience" className="py-24 px-4 relative overflow-hidden" ref={ref}>
-
+    <section id="experience" className="py-24 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div variants={containerVariants} initial="hidden" animate={inView ? "visible" : "hidden"}>
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-6xl md:text-7xl font-black font-display mb-4">
+        <RevealContainer>
+          {/* --- HEADER --- */}
+          <RevealItem className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-display mb-4 text-center tracking-tight">
               Professional{" "}
               <span
-                className="relative inline-block px-4 py-1 rounded-xl overflow-hidden group cursor-pointer translate-y-4"
+                className="relative inline-block px-3 sm:px-4 py-1 rounded-xl overflow-hidden group cursor-pointer translate-y-1 sm:translate-y-4 shadow-[0_5px_15px_rgba(0,0,0,0.4)]"
                 style={{
                   backgroundImage: "url('/messageContainerBG.jpeg')",
                   backgroundSize: "cover",
@@ -133,8 +110,8 @@ export default function Experience() {
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 blur-3xl rounded-full animate-pulse-glow"></span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
                 <span className="relative z-10 inline-block transform group-hover:scale-105 transition-transform duration-300">
-                  <span className="absolute top-[3px] left-[3px] text-slate-900/40 font-black select-none" aria-hidden="true">Journey</span>
-                  <span className="absolute top-[2px] left-[2px] text-slate-800/50 font-black select-none" aria-hidden="true">Journey</span>
+                  <span className="absolute top-[2px] sm:top-[3px] left-[2px] sm:left-[3px] text-slate-900/40 font-black select-none" aria-hidden="true">Journey</span>
+                  <span className="absolute top-[1.5px] sm:top-[2px] left-[1.5px] sm:left-[2px] text-slate-800/50 font-black select-none" aria-hidden="true">Journey</span>
                   <span className="absolute top-[1px] left-[1px] text-slate-700/60 font-black select-none" aria-hidden="true">Journey</span>
                   <span
                     className="relative text-white font-black select-none"
@@ -150,184 +127,181 @@ export default function Experience() {
                 <span className="absolute inset-0 rounded-xl shadow-[inset_0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[inset_0_0_50px_rgba(255,255,255,0.15)] transition-all duration-500"></span>
               </span>
             </h2>
-          </motion.div>
+            <div className="relative w-24 sm:w-32 h-[3px] bg-slate-800 dark:bg-slate-200 mx-auto overflow-hidden rounded-full">
+              <div className="absolute inset-0 bg-white w-full h-full -translate-x-full animate-sword-draw"></div>
+            </div>
+          </RevealItem>
 
-          {/* Main Content - Sidebar + Timeline Layout */}
-          <div className="grid lg:grid-cols-[280px_1fr] gap-8">
-            <motion.div variants={itemVariants} className="space-y-3">
+          {/* --- MAIN CONTENT LAYOUT --- */}
+          <div className="grid lg:grid-cols-[280px_1fr] gap-6 lg:gap-10">
+
+            {/* SIDEBAR TABS (2x2 on mobile, vertical stack on desktop) */}
+            <RevealItem direction="left" className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3 lg:gap-4">
               {(Object.keys(experiences) as Array<keyof typeof experiences>).map((key) => {
-                const section = experiences[key]
-                const Icon = section.icon
-                const isActive = activeSection === key
+                const section = experiences[key];
+                const Icon = section.icon;
+                const isActive = activeSection === key;
 
                 return (
                   <button
                     key={key}
                     onClick={() => setActiveSection(key)}
-                    className={`w-full text-left glass-card p-5 rounded-xl border transition-all duration-300 group relative overflow-hidden ${isActive
-                      ? "border-slate-400 dark:border-slate-500 neon-glow"
-                      : "border-slate-200/50 dark:border-slate-700/50 hover:border-slate-300 dark:hover:border-slate-600"
+                    className={`w-full relative flex items-center gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-xl lg:rounded-r-2xl lg:rounded-l-md border transition-all duration-300 shadow-sm sm:shadow-md outline-none
+                      ${isActive
+                        ? 'bg-gradient-to-b from-slate-200 via-white to-slate-200 dark:from-slate-700 dark:via-slate-800 dark:to-slate-900 border-slate-400 dark:border-slate-500 scale-[1.01] sm:scale-[1.02]'
+                        : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${section.color}`}
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
+                    {/* Metal Cap Accent (Desktop) */}
+                    <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-slate-400 via-slate-200 to-slate-500 dark:from-slate-600 dark:via-slate-400 dark:to-slate-700 rounded-l-md border-r border-slate-300 dark:border-slate-800"></div>
 
-                    <div className={`absolute inset-0 bg-gradient-to-r ${section.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-
-                    <div className="relative flex items-center gap-3">
-                      <div className={`p-2.5 rounded-lg bg-gradient-to-br ${section.color} ${isActive ? "scale-110" : ""} transition-transform duration-300`}>
-                        <Icon className="w-5 h-5 text-white dark:text-slate-900" />
+                    {/* Diamond Icon Container */}
+                    <div className={`lg:ml-4 w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center shadow-sm transform rotate-45 transition-transform duration-500 flex-shrink-0
+                      ${isActive ? 'bg-slate-900 dark:bg-slate-100' : 'bg-slate-200 dark:bg-slate-800'}`}>
+                      <div className="transform -rotate-45">
+                        <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isActive ? 'text-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-400'}`} />
                       </div>
-                      <div className="flex-1">
-                        <div className="font-bold text-slate-900 dark:text-slate-100 mb-0.5">{section.title}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-400">{section.subtitle}</div>
-                      </div>
-                      <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${isActive ? "translate-x-1" : ""}`} />
                     </div>
+
+                    {/* Title */}
+                    <div className="text-left z-10 pl-1 sm:pl-2 min-w-0 flex-1">
+                      <div className={`font-black uppercase tracking-wider sm:tracking-widest text-xs sm:text-sm truncate transition-colors ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'}`}>
+                        {section.title}
+                      </div>
+                    </div>
+
+                    {/* Secret Mission Kanji (Desktop) */}
+                    {isActive && (
+                      <div className="hidden sm:flex absolute right-4 items-center justify-center">
+                        <span className="text-2xl lg:text-3xl font-black text-slate-400/30 dark:text-slate-500/30 drop-shadow-[0_0_8px_rgba(148,163,184,0.8)]">秘</span>
+                      </div>
+                    )}
                   </button>
                 )
               })}
-            </motion.div>
+            </RevealItem>
 
-            {/* Timeline Content */}
-            <motion.div
-              key={activeSection}
-              variants={timelineVariants}
-              initial="hidden"
-              animate="visible"
-              className="relative"
-            >
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-300 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 hidden md:block" />
-
-              <div className="space-y-8">
-                {experiences[activeSection].items.map((item: any, idx: number) => {
-                  const section = experiences[activeSection]
-                  const isLast = idx === section.items.length - 1
-
-                  return (
-                    <motion.div
+            {/* CONTENT AREA */}
+            <RevealItem direction="right" className="relative">
+              <div className="space-y-4 sm:space-y-6">
+                {experiences[activeSection].items.map((item: any, idx: number) => (
+                    <div
                       key={idx}
-                      variants={cardVariants}
-                      className="relative"
+                      className="p-5 sm:p-6 md:p-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200 dark:border-slate-700 group relative overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:border-slate-400 dark:hover:border-slate-500"
+                      style={{ clipPath: cardClipPath }}
                     >
-                      {/* Timeline Dot */}
-                      <div className="absolute -left-[13px] top-8 w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 dark:from-slate-300 dark:to-slate-100 border-4 border-white dark:border-slate-950 hidden md:flex items-center justify-center z-10">
-                        <div className="w-2 h-2 rounded-full bg-white dark:bg-slate-900" />
+                      {/* Subtle Shuriken Background (Only visible on hover) */}
+                      <div className="absolute -right-8 -top-8 w-32 h-32 text-slate-300/30 dark:text-slate-600/20 opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow pointer-events-none transition-opacity duration-500">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 14.5L0 12L9.5 9.5L12 0ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" />
+                        </svg>
                       </div>
 
-                      {/* Card */}
-                      <div className="glass-card p-8 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 neon-glow hover:border-slate-300 dark:hover:border-slate-600 transition-all group md:ml-12 relative overflow-hidden">
-                        {/* Gradient accent */}
-                        <div className={`absolute inset-0 bg-gradient-to-r ${section.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                      {/* Corner Accent Brackets */}
+                      <div className="absolute top-0 right-0 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-r-2 border-slate-400 dark:border-slate-500 pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-l-2 border-slate-400 dark:border-slate-500 pointer-events-none"></div>
 
-                        <div className="relative z-10">
-                          {/* Header */}
-                          <div className="flex items-start justify-between gap-4 mb-3">
-                            <div className="flex-1">
-                              <h4 className="text-xl md:text-2xl font-bold font-display text-slate-900 dark:text-slate-100 mb-2">
-                                {item.title}
-                              </h4>
-                              <p className="text-slate-700 dark:text-slate-300 font-semibold flex items-center gap-2">
-                                {item.organization}
+                      <div className="relative z-10">
+                        {/* Header */}
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-4 border-b border-slate-200 dark:border-slate-700 pb-4 transition-colors group-hover:border-slate-300 dark:group-hover:border-slate-600">
+                          <div>
+                            <h4 className="text-lg sm:text-xl md:text-2xl font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">
+                              {item.title}
+                            </h4>
+                            <p className="text-slate-600 dark:text-slate-400 font-bold mt-1 uppercase text-xs sm:text-sm tracking-widest">
+                              {item.organization}
+                            </p>
+                          </div>
+                          <span className="self-start sm:self-auto px-3 sm:px-4 py-1 sm:py-1.5 border border-slate-900 dark:border-slate-100 text-slate-900 dark:text-slate-100 text-[10px] font-black uppercase tracking-widest shrink-0 bg-transparent">
+                            {item.period}
+                          </span>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-medium mb-4">
+                          {item.description}
+                        </p>
+
+                        {/* Certificate link */}
+                        {item.link && (
+                          <div className="mt-6">
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-4 group/btn"
+                            >
+                              <div className="w-10 h-10 bg-gradient-to-br from-slate-700 to-slate-900 dark:from-slate-200 dark:to-slate-400 flex items-center justify-center shadow-md transform rotate-45 group-hover/btn:rotate-90 transition-transform duration-500">
+                                <div className="transform -rotate-45 group-hover/btn:-rotate-90 transition-transform duration-500">
+                                  <ChevronRight className="w-5 h-5 text-white dark:text-slate-900" />
+                                </div>
+                              </div>
+                              <span className="font-black tracking-wide text-slate-900 dark:text-slate-100 text-sm group-hover/btn:text-slate-600 dark:group-hover/btn:text-slate-300 transition-colors uppercase">
+                                View Certificate
+                              </span>
+                            </a>
+                          </div>
+                        )}
+
+                        {/* Reference Section */}
+                        {item.reference && (
+                          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                            <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-500 mb-3">Reference</p>
+                            <div className="space-y-1">
+                              <p className="text-sm">
+                                <span className="font-black text-slate-900 dark:text-slate-100">{item.reference.name}</span>
+                                <span className="text-slate-500 font-semibold"> • {item.reference.role}</span>
+                              </p>
+                              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                                Email: <a href={`mailto:${item.reference.contact}`} className="hover:text-slate-900 dark:hover:text-white transition-colors underline decoration-1 underline-offset-2">{item.reference.contact}</a>
+                              </p>
+                              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                                LinkedIn: <a href={`https://${item.reference.linkedin}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 dark:hover:text-white transition-colors underline decoration-1 underline-offset-2">{item.reference.linkedin}</a>
                               </p>
                             </div>
-                            <span className={`px-4 py-2 bg-gradient-to-r ${section.color} text-white dark:text-slate-900 text-sm font-bold rounded-full whitespace-nowrap shrink-0`}>
-                              {item.period}
-                            </span>
                           </div>
-
-                          {/* Description */}
-                          <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                            {item.description}
-                          </p>
-
-                          {/* Certificate link (if present) */}
-                          {item.link && (
-                            <div className="mt-3">
-                              <a
-                                href={item.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-3 py-2 rounded-md font-semibold text-sm border border-slate-200 dark:border-slate-700 hover:shadow-lg transition"
-                              >
-                                View certificate
-                                <ChevronRight className="w-4 h-4" />
-                              </a>
-                            </div>
-                          )}
-
-
-                          {/* Reference Section */}
-                          {item.reference && (
-                            <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                              <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Reference:</p>
-                              <div className="space-y-1">
-                                <p className="text-sm text-slate-600 dark:text-slate-400">
-                                  <span className="font-semibold text-slate-900 dark:text-slate-100">{item.reference.name}</span>
-                                  <span className="text-slate-500 dark:text-slate-500"> • {item.reference.role}</span>
-                                </p>
-                                <p className="text-sm text-slate-600 dark:text-slate-400">
-                                  Email: <a href={`mailto:${item.reference.contact}`} className="text-slate-700 dark:text-slate-300 hover:underline">{item.reference.contact}</a>
-                                </p>
-                                <p className="text-sm text-slate-600 dark:text-slate-400">
-                                  LinkedIn: <a href={`https://${item.reference.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-slate-700 dark:text-slate-300 hover:underline">{item.reference.linkedin}</a>
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                        )}
                       </div>
-                    </motion.div>
-                  )
-                })}
+                    </div>
+                ))}
               </div>
-            </motion.div>
+            </RevealItem>
+
           </div>
-        </motion.div>
+        </RevealContainer>
       </div>
 
       <style jsx>{`
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px) rotate(45deg); }
-          50% { transform: translateY(-30px) rotate(45deg); }
+        /* Sword draw animation for the header */
+        @keyframes sword-draw {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(0%); }
+          100% { transform: translateX(100%); }
         }
-        @keyframes float-medium {
-          0%, 100% { transform: translateY(0px) rotate(-12deg); }
-          50% { transform: translateY(-35px) rotate(-12deg); }
+        .animate-sword-draw {
+          animation: sword-draw 2.5s ease-in-out infinite;
         }
-        @keyframes float-fast {
-          0%, 100% { transform: translateY(0px) rotate(12deg); }
-          50% { transform: translateY(-25px) rotate(12deg); }
+
+        /* Slow ambient spin for the background shuriken */
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
-        @keyframes pulse-slow {
-          0%, 100% { transform: scale(1); opacity: 0.4; }
-          50% { transform: scale(1.05); opacity: 0.6; }
+        .animate-spin-slow {
+          animation: spin-slow 8s linear infinite;
         }
-        @keyframes pulse-slower {
-          0%, 100% { transform: scale(1); opacity: 0.3; }
-          50% { transform: scale(1.1); opacity: 0.5; }
-        }
+
+        /* Existing Pulse Animations for Header */
         @keyframes pulse-glow {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.1); }
         }
         @keyframes pulse-glow-delayed {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.1); }
         }
-        .animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
-        .animate-float-medium { animation: float-medium 18s ease-in-out infinite 1s; }
-        .animate-float-fast { animation: float-fast 16s ease-in-out infinite 2s; }
-        .animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
-        .animate-pulse-slower { animation: pulse-slower 10s ease-in-out infinite 1s; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
-        .animate-pulse-glow-delayed { animation: pulse-glow-delayed 2s ease-in-out infinite 0.5s; }
-        .bg-gradient-radial { background: radial-gradient(circle, var(--tw-gradient-stops)); }
+        .animate-pulse-glow-delayed { animation: pulse-glow-delayed 2s ease-in-out infinite 1s; }
       `}</style>
     </section>
   )

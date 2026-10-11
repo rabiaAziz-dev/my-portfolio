@@ -1,28 +1,26 @@
 export default function FloatingElements() {
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {/* Lighter Dark Blue & Blue Grey Gradient Blobs with 9% opacity */}
+    <div
+      className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]"
+      style={{ contain: 'strict', transform: 'translateZ(0)' }}
+    >
       <div
-        className="absolute top-20 left-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-3xl animate-blob"
+        className="absolute top-0 left-0 w-[40rem] h-[40rem] rounded-full animate-blob opacity-60"
         style={{
-          background: 'radial-gradient(circle, #3A4B66 0%, #4B5A70 100%)',
-          opacity: 0.09,
+          background: 'radial-gradient(circle, rgba(148,163,184,0.15) 0%, rgba(71,85,105,0) 70%)',
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
         }}
       ></div>
 
       <div
-        className="absolute top-40 right-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"
+        className="absolute top-1/3 right-0 w-[45rem] h-[45rem] rounded-full animate-blob animation-delay-2000 opacity-60"
         style={{
-          background: 'radial-gradient(circle, #4B5A70 0%, #3A4B66 100%)',
-          opacity: 0.09,
-        }}
-      ></div>
-
-      <div
-        className="absolute -bottom-8 left-20 w-72 h-72 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"
-        style={{
-          background: 'radial-gradient(circle, #3A4B66 0%, #4B5A70 100%)',
-          opacity: 0.09,
+          background: 'radial-gradient(circle, rgba(100,116,139,0.12) 0%, rgba(30,41,59,0) 70%)',
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
         }}
       ></div>
     </div>
