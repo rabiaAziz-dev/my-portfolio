@@ -5,12 +5,36 @@ import { useRef, useState, useEffect } from 'react';
 import { Github, Download, X, Play, ExternalLink } from 'lucide-react';
 import { RevealContainer, RevealItem } from '@/components/ui/scroll_reveal';
 
+interface Project {
+  title: string;
+  desc: string;
+  tags: string[];
+  github?: string | null;
+  download?: string | null;
+  playstore?: string | null;
+  initial?: string;
+  showcase?: string | null;
+  showcaseAlt?: string;
+  comingSoon?: boolean;
+}
+
 export default function ProjectsSection() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxSrc, setLightboxSrc] = useState('');
   const [lightboxAlt, setLightboxAlt] = useState('');
 
-  const projects = [
+  const projects: Project[] = [
+    {
+      title: 'CivicCoach — AI US Citizenship Test 2026',
+      desc: 'A modern AI-powered Flutter application for the USCIS 2026 civics test. Features oral AI mock interviews, 128 official questions with spaced-repetition flashcards, dynamic elected officials lookup by ZIP/state, and bilingual English/Spanish study modes.',
+      tags: ['Flutter', 'AI Voice & STT', 'Civics Prep', 'Google Play', 'Drift / SQLite'],
+      github: null,
+      download: null,
+      playstore: 'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
+      initial: 'C',
+      showcase: '/images/civic_coach_showcase.jpeg',
+      showcaseAlt: 'CivicCoach — AI US Citizenship Test 2026 showcase',
+    },
     {
       title: 'Health Tracker — Vitals & BP Monitor',
       desc: 'A personal health companion app to track blood pressure, pulse rate, temperature, and blood glucose with weekly summaries and trend charts.',
@@ -21,15 +45,6 @@ export default function ProjectsSection() {
       initial: 'H',
       showcase: '/images/health_trackor showcase.jpg',
       showcaseAlt: 'Health Tracker showcase',
-    },
-    {
-      title: 'Coming Soon',
-      desc: 'New Flutter projects are currently in progress. Stay tuned for upcoming releases!',
-      tags: ['Flutter', 'Mobile Apps'],
-      github: null,
-      download: null,
-      initial: '?',
-      comingSoon: true,
     },
   ];
 
@@ -121,14 +136,14 @@ export default function ProjectsSection() {
 
                 {/* Image / Showcase Area */}
                 <div
-                  className="relative z-10 h-44 bg-slate-100/80 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 mb-6 flex items-center justify-center overflow-hidden"
+                  className="relative z-10 w-full aspect-[16/9] bg-slate-900/90 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 mb-6 flex items-center justify-center overflow-hidden p-1"
                   style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}
                 >
                   {project.showcase ? (
                     <img
                       src={project.showcase}
                       alt={project.showcaseAlt || project.title}
-                      className="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-contain cursor-pointer group-hover:scale-[1.02] transition-transform duration-500 rounded"
                       onClick={() => openLightbox(project.showcase!, project.showcaseAlt || project.title)}
                     />
                   ) : (

@@ -43,7 +43,19 @@ CORE TECHNICAL EXPERTISE (6 CATEGORIES):
    - Git / GitHub, VS Code, Android Studio, Google Maps Integration, Localization (i18n / multi-language), In-App Purchases, Google Ads, App Deployment (Google Play & App Store)
 
 FEATURED PROJECTS:
-1. Health Tracker — Vitals & BP Monitor:
+1. CivicCoach — AI US Citizenship Test 2026 (civic_coach_US_citizenship_2026):
+   - Overview: A cutting-edge AI-powered cross-platform Flutter application tailored to prepare applicants for the official USCIS Naturalization Civics Test (2026 edition).
+   - Core Features:
+     • 🎙️ AI Voice & Realistic Mock Interviews: Oral simulation tests using Speech-to-Text and AI evaluation that replicate official USCIS officer questioning and naturalization interviews.
+     • 📚 128 & 100 Official Civics Questions: Complete USCIS civics question bank with audio narration, contextual explanations, and question breakdown.
+     • 🧠 Spaced Repetition Flashcards: Swipeable study card deck powered by the SuperMemo-2 (SM-2) algorithm for rapid long-term memory retention.
+     • 🏛️ Dynamic Elected Officials Lookup: Real-time representative finder by state and ZIP code for local governor, senators, and representative questions.
+     • 🌐 Bilingual Localization: Comprehensive English and Spanish (es) support across study materials, navigation, and dual-language review.
+     • ❌ Weighted Mistake Bank & Smart Practice: Targeted review focusing on repeated errors and low-confidence answers.
+     • 📊 Test Readiness Analytics: Real-time mastery tracking, daily streak rings, and category-level progress.
+   - Tech Stack: Flutter, Dart, Speech-to-Text (speech_to_text), Text-to-Speech (flutter_tts), Drift ORM / SQLite & Hive, Provider state management, Google Fonts, Rive animations.
+   - Google Play Store: https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en
+2. Health Tracker — Vitals & BP Monitor:
    - Overview: A personal health companion mobile app designed to help users take small daily steps toward healthier tomorrows by monitoring vital signs, health trends, and daily wellness.
    - Core Features:
      • Vitals & Blood Pressure Tracking: Log and monitor Systolic & Diastolic readings (mmHg) with visual status indicators (Normal, Elevated).
@@ -53,7 +65,7 @@ FEATURED PROJECTS:
      • Health Glance & History: At-a-glance dashboard with most recent readings and organized history logs.
      • Clean, Modern UI: Soft neumorphic/glassmorphic interface with color-coded status badges for effortless reading.
    - Google Play Store: https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en
-2. Production Applications & Ecosystems:
+3. Production Applications & Ecosystems:
    - 10+ battle-tested cross-platform applications featuring clean responsive UI, cloud backends, and reliable performance.
 
 PROFESSIONAL EXPERIENCE & JOURNEY:

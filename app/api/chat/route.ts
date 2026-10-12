@@ -32,12 +32,28 @@ function getLocalFallbackResponse(
   // 1. Greetings & Pleasantries
   if (/^(hi|hello|hey|greetings|good morning|good evening|good afternoon|what's up|sup)\b/i.test(query)) {
     return {
-      reply: "Hello! 👋 I'm Rabia's AI Assistant. I can guide you through her Flutter apps (like Health Tracker), tech stack, backend expertise in Supabase/Firebase, and senior recommendations, or help you connect directly with her. What would you like to explore?",
+      reply: "Hello! 👋 I'm Rabia's AI Assistant. I can guide you through her Flutter apps (like CivicCoach & Health Tracker), tech stack, backend expertise in Supabase/Firebase, and senior recommendations, or help you connect directly with her. What would you like to explore?",
       functionCalls: null,
     };
   }
 
-  // 2. Specific Project: Health Tracker (Vitals & BP Monitor)
+  // 2. Specific Project: CivicCoach — AI US Citizenship Test 2026 (civic_coach_US_citizenship_2026)
+  if (
+    query.includes('civic') ||
+    query.includes('coach') ||
+    query.includes('citizenship') ||
+    query.includes('naturalization') ||
+    query.includes('uscis') ||
+    query.includes('n-400') ||
+    query.includes('civics')
+  ) {
+    return {
+      reply: "CivicCoach — AI US Citizenship Test 2026 is Rabia's latest flagship Flutter application! 🇺🇸📱\n\nOverview:\nA cutting-edge AI-powered citizenship preparation app for applicants taking the official USCIS Naturalization Civics Test (2026 edition). It combines spaced-repetition study tools, real-time government representative lookup, and AI-driven speech interviews.\n\nKey App Features:\n• 🎙️ AI Voice & Realistic Mock Interviews: Oral interview simulation with Speech-to-Text and AI evaluation simulating real USCIS officer questioning.\n• 📚 Official Civics Questions: 128 & 100 official USCIS civics question bank with audio narration and clear contextual explanations.\n• 🧠 Spaced Repetition Flashcards: Swipeable study card deck powered by the SuperMemo-2 (SM-2) algorithm for rapid long-term memory retention.\n• 🏛️ Dynamic Elected Officials Lookup: Enter your state and ZIP code to automatically look up your governor, senators, and representative.\n• 🌐 Bilingual Localization: Comprehensive English and Spanish support with dual-language question review.\n• ❌ Mistake Bank & Smart Practice: Targeted revision for repeated errors and low-confidence responses.\n• 📊 Real-Time Readiness Score: Exam readiness percentage, daily streak rings, and category mastery.\n\n📲 Available on Google Play Store:\nhttps://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en",
+      functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'projects' } }],
+    };
+  }
+
+  // 3. Specific Project: Health Tracker (Vitals & BP Monitor)
   if (
     query.includes('health') ||
     query.includes('tracker') ||
@@ -54,7 +70,7 @@ function getLocalFallbackResponse(
     };
   }
 
-  // 3. Dynamic Future-Proof Project Lookup (Scans projects found live on the website)
+  // 4. Dynamic Future-Proof Project Lookup (Scans projects found live on the website)
   if (pageContext?.liveProjects && pageContext.liveProjects.length > 0) {
     for (const project of pageContext.liveProjects) {
       const titleLower = project.title.toLowerCase();
@@ -71,7 +87,7 @@ function getLocalFallbackResponse(
     }
   }
 
-  // 4. Projects & Work Showcase (General Query)
+  // 5. Projects & Work Showcase (General Query)
   if (
     query.includes('project') ||
     query.includes('work') ||
@@ -82,7 +98,7 @@ function getLocalFallbackResponse(
   ) {
     const liveProjectList = pageContext?.liveProjects?.length
       ? pageContext.liveProjects.map((p) => `• 📱 ${p.title}: ${p.desc}`).join('\n')
-      : "• 📱 Health Tracker — Vitals & BP Monitor: A personal health companion for logging blood pressure, body temperature, pulse rate, and tracking weekly trend averages.";
+      : "• 📱 CivicCoach — AI US Citizenship Test 2026: Official USCIS 2026 prep with AI voice mock interviews, 128 questions, and elected officials lookup.\n• 📱 Health Tracker — Vitals & BP Monitor: A personal health companion for logging blood pressure, body temperature, pulse rate, and tracking weekly trend averages.";
 
     return {
       reply: `Rabia has built 10+ battle-tested mobile, web, and desktop applications using Flutter, Dart, Supabase, and Firebase.\n\nFeatured Projects on her website:\n${liveProjectList}\n\nExplore her Projects showcase or check out her GitHub at https://github.com/jk647 !`,
@@ -242,14 +258,14 @@ function getLocalFallbackResponse(
     query.includes('background')
   ) {
     return {
-      reply: "Rabia Aziz is a passionate Software Engineer and Flutter App Developer with 2+ years of experience and 10+ completed applications. She specializes in building AI-powered mobile apps, scalable Supabase/Firebase backends, and responsive UI that feels smooth and intuitive. Would you like to check her projects (like Health Tracker), technical skills, or get in touch?",
+      reply: "Rabia Aziz is a passionate Software Engineer and Flutter App Developer with 2+ years of experience and 10+ completed applications. She specializes in building AI-powered mobile apps, scalable Supabase/Firebase backends, and responsive UI that feels smooth and intuitive. Would you like to check her projects (like CivicCoach & Health Tracker), technical skills, or get in touch?",
       functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'about' } }],
     };
   }
 
   // 14. Smart Fallback
   return {
-    reply: "I'm here to help you learn all about Rabia Aziz! You can ask about her featured Flutter apps (like Health Tracker), technical skill set, senior endorsements, certifications, work experience at X dev Soft, or how to get in touch with her.",
+    reply: "I'm here to help you learn all about Rabia Aziz! You can ask about her featured Flutter apps (like CivicCoach & Health Tracker), technical skill set, senior endorsements, certifications, work experience at X dev Soft, or how to get in touch with her.",
     functionCalls: null,
   };
 }

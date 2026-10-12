@@ -133,10 +133,10 @@ export default function Experience() {
           </RevealItem>
 
           {/* --- MAIN CONTENT LAYOUT --- */}
-          <div className="grid lg:grid-cols-[280px_1fr] gap-6 lg:gap-10">
+          <div className="grid lg:grid-cols-[280px_1fr] gap-6 lg:gap-10 items-start">
 
             {/* SIDEBAR TABS (2x2 on mobile, vertical stack on desktop) */}
-            <RevealItem direction="left" className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3 lg:gap-4">
+            <RevealItem direction="left" className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3 lg:gap-4 self-start content-start h-fit">
               {(Object.keys(experiences) as Array<keyof typeof experiences>).map((key) => {
                 const section = experiences[key];
                 const Icon = section.icon;
