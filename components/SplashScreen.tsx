@@ -1,15 +1,15 @@
-'use client';
+﻿'use client';
 
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-/* ═══ PREMIUM KATANA SLASH EFFECT ═══
+/* â•â•â• PREMIUM KATANA SLASH EFFECT â•â•â•
    A real sword-cut reads as: a fast white bloom (the flash of impact), a thin
    crisp edge that lingers a beat after the bloom dies (the actual "cut mark"),
    a faint lagging afterimage (sells the speed of the swing), and a small spark
    burst where the blade exits frame. Hoisted outside the component since these
-   are pure — no need to redefine them on every render. */
+   are pure â€” no need to redefine them on every render. */
 
 const SPARK_ANGLES = [-75, -40, -12, 14, 42, 78, 118, 158];
 
@@ -46,7 +46,7 @@ const SwordSlash = ({
 }: { x1: string; y1: string; x2: string; y2: string; delay?: number; big?: boolean }) => (
   <>
     <svg className="absolute inset-0 w-full h-full z-[35] pointer-events-none overflow-visible">
-      {/* Afterimage — a faint offset duplicate that lags slightly behind, selling the speed of the swing */}
+      {/* Afterimage â€” a faint offset duplicate that lags slightly behind, selling the speed of the swing */}
       <motion.line
         x1={x1} y1={y1} x2={x2} y2={y2}
         stroke="#94a3b8" strokeLinecap="round"
@@ -56,7 +56,7 @@ const SwordSlash = ({
         style={{ filter: 'blur(3px)', transform: 'translate(6px, -5px)', willChange: 'opacity, stroke-width' }}
       />
 
-      {/* Bloom — the initial white-hot flash of the cut, wide and very fast to decay */}
+      {/* Bloom â€” the initial white-hot flash of the cut, wide and very fast to decay */}
       <motion.line
         x1={x1} y1={y1} x2={x2} y2={y2}
         stroke="#ffffff" strokeLinecap="round"
@@ -74,7 +74,7 @@ const SwordSlash = ({
         style={{ filter: 'blur(5px)', willChange: 'opacity, stroke-width' }}
       />
 
-      {/* Crisp edge — the thin sharp line that lingers a beat after the bloom fades: the actual cut mark */}
+      {/* Crisp edge â€” the thin sharp line that lingers a beat after the bloom fades: the actual cut mark */}
       <motion.line
         x1={x1} y1={y1} x2={x2} y2={y2}
         stroke="#ffffff" strokeLinecap="round"
@@ -202,7 +202,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_#262626_0%,_#0a0a0a_70%,_#000000_100%)]">
       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
       <div className="absolute inset-0 flex items-center justify-center opacity-10 select-none pointer-events-none z-0">
-        <span className="text-[35vw] font-black text-white tracking-widest drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">開始</span>
+        <span className="text-[35vw] font-black text-white tracking-widest drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">é–‹å§‹</span>
       </div>
       <Image
         src="/images/Logo.png"
@@ -219,7 +219,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     <AnimatePresence>
       {isVisible && (
         // Fade the entire splash wrapper to opacity:0 before unmounting
-        // — home page renders underneath while this is still covering it
+        // â€” home page renders underneath while this is still covering it
         <motion.div
           className={`fixed inset-0 z-[9999] bg-black overflow-hidden pointer-events-none ${getShakeClass()}`}
           initial={{ opacity: 1 }}
@@ -253,7 +253,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           {phase === 'slash2' && <SwordSlash x1="80%" y1="-20%" x2="20%" y2="120%" />}
           {phase === 'slash3' && <SwordSlash x1="120%" y1="80%" x2="-20%" y2="30%" />}
 
-          {/* FINAL CLEAVE — the decisive full-screen cut, bigger bloom + bigger spark burst */}
+          {/* FINAL CLEAVE â€” the decisive full-screen cut, bigger bloom + bigger spark burst */}
           {(phase === 'slashFinal' || phase === 'impact') && (
             <SwordSlash x1="-20%" y1="calc(50vh + 35vw)" x2="120%" y2="calc(50vh - 35vw)" big />
           )}
@@ -265,7 +265,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
 
           {/* NAVBAR SWORD */}
           <motion.div
-            className="absolute z-[40] w-full max-w-[95%] px-2 hidden md:flex"
+            className="absolute z-[40] w-full max-w-[98%] sm:max-w-[95%] px-1 sm:px-2 flex"
             variants={swordVariants}
             style={{ willChange: 'transform, top, left, opacity' }}
             initial="intro"
@@ -273,7 +273,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           >
             <div className="relative h-10 w-full items-center justify-center flex drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]">
               <div className="h-full w-3 bg-gradient-to-b from-slate-400 via-slate-300 to-slate-500 rounded-l-md border border-slate-700 z-30 shadow-[0_0_5px_rgba(0,0,0,0.8)]"></div>
-              <div className="h-full w-56 bg-slate-900 border-y border-slate-800 relative flex items-center justify-center shadow-[inset_0_0_15px_rgba(0,0,0,1)] z-20 group">
+              <div className="h-full w-28 sm:w-40 md:w-56 bg-slate-900 border-y border-slate-800 relative flex items-center justify-center shadow-[inset_0_0_15px_rgba(0,0,0,1)] z-20 group">
                 <div className="absolute inset-0 opacity-40 transition-opacity duration-300" style={{ background: `linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b), linear-gradient(-45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b)`, backgroundSize: `12px 12px` }}></div>
                 <div className="relative z-10 flex items-center gap-2 px-2 bg-black/40 rounded shadow-md">
                   <div className="w-7 h-7 rounded border border-slate-500" style={{ backgroundImage: "url('/messageContainerBG.jpeg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
@@ -284,13 +284,13 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
               </div>
               <div className="h-[130%] w-2.5 bg-gradient-to-b from-slate-800 via-slate-500 to-slate-900 rounded-sm border border-black z-30 shadow-[0_0_10px_rgba(0,0,0,1)]"></div>
               <div className="h-[90%] w-4 bg-gradient-to-b from-slate-300 via-white to-slate-400 z-20 shadow-[2px_0_5px_rgba(0,0,0,0.3)]"></div>
-              <div className="h-[80%] flex-1 bg-gradient-to-b from-slate-400 via-white to-slate-200 relative flex items-center justify-end px-12 z-10 border-b-2 border-white/80 shadow-[0_8px_15px_rgba(0,0,0,0.4)]" style={{ clipPath: 'polygon(0 0, 98.5% 0, 100% 50%, 98.5% 100%, 0 100%)' }}>
+              <div className="h-[80%] flex-1 bg-gradient-to-b from-slate-400 via-white to-slate-200 relative flex items-center justify-end px-3 sm:px-6 md:px-12 z-10 border-b-2 border-white/80 shadow-[0_8px_15px_rgba(0,0,0,0.4)]" style={{ clipPath: 'polygon(0 0, 98.5% 0, 100% 50%, 98.5% 100%, 0 100%)' }}>
                 <div className="absolute bottom-0 w-full h-[2px] bg-white opacity-90 shadow-[0_0_8px_#ffffff]"></div>
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: phase === 'dock' ? 1 : 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="flex gap-8 lg:gap-12 items-center relative z-20 mr-4"
+                  className="flex gap-2.5 sm:gap-6 md:gap-8 lg:gap-12 items-center relative z-20 mr-1 sm:mr-4 overflow-hidden"
                 >
                   {['Home', 'About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item) => (
                     <span key={item} className="relative font-black tracking-[0.15em] uppercase text-xs text-slate-800 py-1">

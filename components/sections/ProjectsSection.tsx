@@ -1,12 +1,59 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { Github, Download, X, Play, ExternalLink } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ArrowUpRight,
+  Maximize2,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Images,
+  Sparkles,
+  Smartphone,
+} from 'lucide-react';
 import { RevealContainer, RevealItem } from '@/components/ui/scroll_reveal';
+
+interface SlideItem {
+  id: string;
+  type: 'showcase' | 'screenshot';
+  src: string;
+  alt: string;
+  badge: string;
+  title: string;
+  shortLabel: string;
+}
+
+function getProjectSlides(project: Project): SlideItem[] {
+  const items: SlideItem[] = [];
+  if (project.showcase) {
+    items.push({
+      id: `${project.title}-showcase`,
+      type: 'showcase',
+      src: project.showcase,
+      alt: project.showcaseAlt || `${project.title} feature showcase`,
+      badge: 'Feature Showcase',
+      title: 'Showcase Overview & Feature Graphic',
+      shortLabel: 'Showcase',
+    });
+  }
+  project.screenshots.forEach((shot, index) => {
+    items.push({
+      id: `${project.title}-shot-${index}`,
+      type: 'screenshot',
+      src: shot,
+      alt: `${project.title} app interface screenshot ${index + 1}`,
+      badge: `Screen ${index + 1} of ${project.screenshots.length}`,
+      title: `App Screen ${index + 1}`,
+      shortLabel: `#${index + 1}`,
+    });
+  });
+  return items;
+}
 
 interface Project {
   title: string;
+  shortTitle?: string;
   desc: string;
   tags: string[];
   github?: string | null;
@@ -15,333 +62,790 @@ interface Project {
   initial?: string;
   showcase?: string | null;
   showcaseAlt?: string;
+  screenshots: string[];
   comingSoon?: boolean;
 }
 
+const projects: Project[] = [
+  {
+    title: 'CivicCoach — AI US Citizenship 2026',
+    shortTitle: 'CivicCoach',
+    desc: 'AI-powered Flutter application for USCIS civics prep featuring oral AI mock interviews, 128 official questions with spaced-repetition, ZIP-based elected officials lookup, and bilingual study modes.',
+    tags: [
+      'Flutter',
+      'AI Voice & STT',
+      'Civics Prep',
+      'Google Play',
+      'Drift / SQLite',
+    ],
+    github: null,
+    download: null,
+    playstore:
+      'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
+    initial: 'C',
+    showcase: '/images/civic_coach_showcase.jpeg',
+    showcaseAlt: 'CivicCoach — AI US Citizenship Test 2026 showcase',
+    screenshots: [
+      '/images/civic_coach_screenshots/image.png',
+      '/images/civic_coach_screenshots/image2.png',
+      '/images/civic_coach_screenshots/image3.png',
+      '/images/civic_coach_screenshots/image4.png',
+      '/images/civic_coach_screenshots/image5.png',
+      '/images/civic_coach_screenshots/image6.png',
+    ],
+  },
+  {
+    title: 'ZenPeace — Pomodoro & Mindful Flow',
+    shortTitle: 'ZenPeace',
+    desc: 'A minimalist Pomodoro companion built with Flutter and Provider. Offers customizable focus intervals, ambient soundscapes (piano, lofi, ocean), session analytics with fl_chart, and haptic feedback.',
+    tags: [
+      'Flutter',
+      'Provider',
+      'Pomodoro & Focus',
+      'Google Play',
+      'Audio & Charts',
+    ],
+    github: null,
+    download: null,
+    playstore:
+      'https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en',
+    initial: 'Z',
+    showcase: '/images/zenpeace_showcase.png',
+    showcaseAlt: 'ZenPeace — Pomodoro Focus & Mindful Flow showcase',
+    screenshots: [
+      '/images/zenpeace_screenshots/image.png',
+      '/images/zenpeace_screenshots/image2.png',
+      '/images/zenpeace_screenshots/image3.png',
+      '/images/zenpeace_screenshots/image4.png',
+      '/images/zenpeace_screenshots/image5.png',
+      '/images/zenpeace_screenshots/image6.png',
+    ],
+  },
+  {
+    title: 'Health Tracker — Vitals & BP Monitor',
+    shortTitle: 'Health Tracker',
+    desc: 'A personal health companion to record and monitor blood pressure, pulse rate, temperature, and blood glucose with weekly summaries and visual trend charts.',
+    tags: [
+      'Flutter',
+      'Health & Vitals',
+      'Provider',
+      'Charts',
+      'Google Play',
+    ],
+    github: null,
+    download: null,
+    playstore:
+      'https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en',
+    initial: 'H',
+    showcase: '/images/health_trackor showcase.jpg',
+    showcaseAlt: 'Health Tracker showcase',
+    screenshots: [
+      '/images/health_tracker_screenshots/image.png',
+      '/images/health_tracker_screenshots/image2.png',
+      '/images/health_tracker_screenshots/image3.png',
+      '/images/health_tracker_screenshots/image4.png',
+      '/images/health_tracker_screenshots/image5.png',
+      '/images/health_tracker_screenshots/image6.png',
+      '/images/health_tracker_screenshots/image7.png',
+    ],
+  },
+];
+
 export default function ProjectsSection() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxSrc, setLightboxSrc] = useState('');
-  const [lightboxAlt, setLightboxAlt] = useState('');
+  // Unified Showcase & App Screenshots Modal State
+  const [activeModal, setActiveModal] = useState<{
+    project: Project;
+    currentIndex: number;
+    direction: number;
+  } | null>(null);
 
-  const projects: Project[] = [
-    {
-      title: 'CivicCoach — AI US Citizenship Test 2026',
-      desc: 'A modern AI-powered Flutter application for the USCIS 2026 civics test. Features oral AI mock interviews, 128 official questions with spaced-repetition flashcards, dynamic elected officials lookup by ZIP/state, and bilingual English/Spanish study modes.',
-      tags: ['Flutter', 'AI Voice & STT', 'Civics Prep', 'Google Play', 'Drift / SQLite'],
-      github: null,
-      download: null,
-      playstore: 'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
-      initial: 'C',
-      showcase: '/images/civic_coach_showcase.jpeg',
-      showcaseAlt: 'CivicCoach — AI US Citizenship Test 2026 showcase',
-    },
-    {
-      title: 'Health Tracker — Vitals & BP Monitor',
-      desc: 'A personal health companion app to track blood pressure, pulse rate, temperature, and blood glucose with weekly summaries and trend charts.',
-      tags: ['Flutter', 'Health & Vitals', 'Provider', 'Charts'],
-      github: null,
-      download: null,
-      playstore: 'https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en',
-      initial: 'H',
-      showcase: '/images/health_trackor showcase.jpg',
-      showcaseAlt: 'Health Tracker showcase',
-    },
-  ];
+  const thumbnailContainerRef = useRef<HTMLDivElement>(null);
 
+  // Keyboard navigation listener (Escape to close, Left/Right arrow keys for slide navigation)
   useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape' && lightboxOpen) setLightboxOpen(false);
+    function handleKeyDown(e: KeyboardEvent) {
+      if (!activeModal) return;
+
+      if (e.key === 'Escape') {
+        setActiveModal(null);
+      } else if (e.key === 'ArrowLeft') {
+        const slides = getProjectSlides(activeModal.project);
+        setActiveModal((prev) =>
+          prev
+            ? {
+                ...prev,
+                currentIndex: (prev.currentIndex - 1 + slides.length) % slides.length,
+                direction: -1,
+              }
+            : null
+        );
+      } else if (e.key === 'ArrowRight') {
+        const slides = getProjectSlides(activeModal.project);
+        setActiveModal((prev) =>
+          prev
+            ? {
+                ...prev,
+                currentIndex: (prev.currentIndex + 1) % slides.length,
+                direction: 1,
+              }
+            : null
+        );
+      }
     }
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [lightboxOpen]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModal]);
 
+  // Lock body scroll when modal is open
   useEffect(() => {
-    if (lightboxOpen) {
-      const btn = document.getElementById('lightbox-close-btn');
-      btn?.focus();
+    if (activeModal) {
+      const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
     }
-  }, [lightboxOpen]);
+  }, [activeModal]);
 
-  const openLightbox = (src: string, alt: string) => {
-    setLightboxSrc(src);
-    setLightboxAlt(alt || 'Preview');
-    setLightboxOpen(true);
-  };
+  // Auto-scroll active thumbnail into view
+  useEffect(() => {
+    if (activeModal && thumbnailContainerRef.current) {
+      const activeThumb = thumbnailContainerRef.current.querySelector(
+        `[data-thumb-index="${activeModal.currentIndex}"]`
+      ) as HTMLElement | null;
+      if (activeThumb) {
+        activeThumb.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
+        });
+      }
+    }
+  }, [activeModal]);
 
   return (
-    <section id="projects" className="relative py-20 md:py-32 px-6 overflow-hidden">
-      <div className="relative max-w-6xl mx-auto z-10">
+    <section id="projects" className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10">
         <RevealContainer>
           {/* Header */}
-          <RevealItem className="text-center mb-10 sm:mb-20">
-            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-display mb-4 sm:mb-8 text-center tracking-tight">
+          <RevealItem className="text-center mb-10 sm:mb-14">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-display mb-3 text-center tracking-tight">
               Featured{' '}
               <span
-                className="relative inline-block px-3 sm:px-4 py-1 rounded-xl overflow-hidden group cursor-pointer translate-y-1 sm:translate-y-4 shadow-[0_5px_15px_rgba(0,0,0,0.4)]"
+                className="neu-header-badge rounded-2xl px-4 sm:px-5 py-1.5 inline-block group cursor-pointer translate-y-1 sm:translate-y-2"
                 style={{
                   backgroundImage: "url('/messageContainerBG.jpeg')",
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
               >
-                <span className="absolute inset-0 bg-gradient-to-br from-black/60 via-slate-900/50 to-black/60 rounded-xl"></span>
-                <span className="absolute inset-0 rounded-xl border-2 border-white/30 group-hover:border-white/50 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"></span>
-                <span className="absolute top-2 right-2 w-2 h-2 bg-white/60 rounded-full animate-pulse-glow"></span>
-                <span className="absolute bottom-2 left-2 w-2 h-2 bg-white/60 rounded-full animate-pulse-glow-delayed"></span>
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 blur-3xl rounded-full animate-pulse-glow"></span>
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
+                <span className="absolute inset-0 bg-gradient-to-br from-black/60 via-slate-900/50 to-black/60 rounded-2xl" />
+                <span className="absolute inset-0 rounded-2xl border border-white/30 group-hover:border-white/50 transition-all duration-500 shadow-[inset_0_0_15px_rgba(255,255,255,0.15)]" />
+                <span className="absolute top-2 right-2 w-2 h-2 bg-white/60 rounded-full animate-pulse-glow" />
+                <span className="absolute bottom-2 left-2 w-2 h-2 bg-white/60 rounded-full animate-pulse-glow-delayed" />
+                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 blur-3xl rounded-full animate-pulse-glow" />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl" />
                 <span className="relative z-10 inline-block transform group-hover:scale-105 transition-transform duration-300">
-                  <span className="absolute top-[2px] sm:top-[3px] left-[2px] sm:left-[3px] text-slate-900/40 font-black select-none" aria-hidden="true">Projects</span>
-                  <span className="absolute top-[1.5px] sm:top-[2px] left-[1.5px] sm:left-[2px] text-slate-800/50 font-black select-none" aria-hidden="true">Projects</span>
-                  <span className="absolute top-[1px] left-[1px] text-slate-700/60 font-black select-none" aria-hidden="true">Projects</span>
-                  <span className="relative text-white font-black select-none" style={{ textShadow: '0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.3)', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.5))' }}>Projects</span>
-                  <span className="absolute top-[-1px] left-0 text-white/40 font-black select-none blur-[0.5px]" aria-hidden="true">Projects</span>
+                  <span
+                    className="relative text-white font-black select-none"
+                    style={{
+                      textShadow:
+                        '0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.3)',
+                      filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.5))',
+                    }}
+                  >
+                    Projects
+                  </span>
                 </span>
-                <span className="absolute inset-0 rounded-xl shadow-[inset_0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[inset_0_0_50px_rgba(255,255,255,0.15)] transition-all duration-500"></span>
               </span>
             </h2>
 
-            {/* Sword draw underline effect */}
-            <div className="relative w-24 sm:w-32 h-[3px] bg-slate-800 dark:bg-slate-200 mx-auto overflow-hidden rounded-full mt-2 mb-4 sm:mb-8">
-              <div className="absolute inset-0 bg-white w-full h-full -translate-x-full animate-sword-draw"></div>
+            <div className="relative w-24 sm:w-32 h-[3px] bg-slate-800 dark:bg-slate-200 mx-auto overflow-hidden rounded-full mt-2 mb-3 sm:mb-4">
+              <div className="absolute inset-0 bg-white w-full h-full -translate-x-full animate-sword-draw" />
             </div>
 
-            <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed px-2">
-              A collection of Flutter apps I've built, showcasing my UI skills and App development experience.
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base max-w-xl mx-auto leading-relaxed px-2 font-medium">
+              Production Flutter applications built with clean architecture, modern state management, and fluid UI.
             </p>
           </RevealItem>
 
-          {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 max-w-4xl mx-auto gap-6 sm:gap-8">
-            {projects.map((project, i) => (
+          {/* 3 Projects in One Row on Desktop (Grid: 1 col on mobile, 2 on tablet, 3 on desktop) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-stretch">
+            {projects.map((project, index) => (
               <RevealItem
-                key={i}
-                className="p-5 sm:p-6 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200 dark:border-slate-700 group relative overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:border-slate-400 dark:hover:border-slate-500 flex flex-col h-full hover:scale-[1.01] sm:hover:scale-[1.02] hover:-translate-y-1"
-                style={{ clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))' }}
+                key={project.title}
+                direction={index === 0 ? 'left' : index === 1 ? 'up' : 'right'}
+                className="h-full"
               >
-                {/* Subtle Shuriken Background (Only visible on hover, identical to About) */}
-                <div className="absolute -right-12 -top-12 w-48 h-48 text-slate-300/30 dark:text-slate-600/20 opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow pointer-events-none transition-opacity duration-500 z-0">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" />
-                  </svg>
-                </div>
+                <div className="neu-flat-interactive group relative flex flex-col justify-between h-full rounded-2xl sm:rounded-3xl p-5 border border-white/70 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                  {/* Ambient Shuriken watermark on hover */}
+                  <div className="absolute -right-6 -top-6 w-24 h-24 text-slate-400/20 dark:text-slate-600/15 opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow pointer-events-none transition-opacity duration-500">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 14.5L0 12L9.5 9.5L12 0ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12Z" />
+                    </svg>
+                  </div>
 
-                {/* Corner Accent Brackets (Identical to About) */}
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-slate-400 dark:border-slate-500 pointer-events-none z-10"></div>
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-slate-400 dark:border-slate-500 pointer-events-none z-10"></div>
+                  {/* Shimmer sweep on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none rounded-2xl sm:rounded-3xl" />
 
-                {/* Image / Showcase Area */}
-                <div
-                  className="relative z-10 w-full aspect-[16/9] bg-slate-900/90 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 mb-6 flex items-center justify-center overflow-hidden p-1"
-                  style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}
-                >
-                  {project.showcase ? (
-                    <img
-                      src={project.showcase}
-                      alt={project.showcaseAlt || project.title}
-                      className="w-full h-full object-contain cursor-pointer group-hover:scale-[1.02] transition-transform duration-500 rounded"
-                      onClick={() => openLightbox(project.showcase!, project.showcaseAlt || project.title)}
-                    />
-                  ) : (
-                    <span className="text-4xl font-black text-slate-300 dark:text-slate-700">{project.initial}</span>
-                  )}
-                </div>
+                  <div className="relative z-10 flex flex-col flex-1">
+                    {/* Top Meta: Index & Live Badge */}
+                    <div className="flex items-center justify-between gap-2 mb-3.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                          Project {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
 
-                {/* Content */}
-                <div className="relative z-10 space-y-3 flex-grow">
-                  <h3 className="font-black text-xl tracking-wide text-slate-900 dark:text-slate-100 mb-1 group-hover:text-black dark:group-hover:text-white transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {project.desc}
-                  </p>
-                </div>
-
-                {/* Tags */}
-                <div className="relative z-10 flex flex-wrap gap-2 py-5">
-                  {project.tags.map((tag, j) => (
-                    <span
-                      key={j}
-                      className="px-3 py-1 bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 text-xs font-bold text-slate-700 dark:text-slate-300"
-                      style={{ clipPath: 'polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px)' }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="relative z-10 flex gap-4 pt-4 border-t border-slate-200 dark:border-slate-700 w-full items-center">
-                  {!project.comingSoon ? (
-                    <>
-                      {project.github && (
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group/btn">
-                          <div className="w-8 h-8 bg-gradient-to-br from-slate-700 to-slate-900 dark:from-slate-200 dark:to-slate-400 flex items-center justify-center shadow-md transform rotate-45 group-hover/btn:rotate-90 transition-transform duration-500">
-                            <div className="transform -rotate-45 group-hover/btn:-rotate-90 transition-transform duration-500">
-                              <Github className="w-4 h-4 text-white dark:text-slate-900" />
-                            </div>
-                          </div>
-                          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover/btn:text-slate-900 dark:group-hover/btn:text-white transition-colors">Code</span>
-                        </a>
+                      {project.playstore && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-extrabold tracking-wider uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          Live App
+                        </span>
                       )}
-                      {project.download && (
-                        <a href={project.download} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group/btn">
-                          <div className="w-8 h-8 bg-white dark:bg-slate-900 border-2 border-slate-700 dark:border-slate-300 flex items-center justify-center shadow-md transform rotate-45 group-hover/btn:rotate-90 transition-transform duration-500">
-                            <div className="transform -rotate-45 group-hover/btn:-rotate-90 transition-transform duration-500">
-                              <Download className="w-4 h-4 text-slate-900 dark:text-slate-100" />
-                            </div>
-                          </div>
-                          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover/btn:text-slate-900 dark:group-hover/btn:text-white transition-colors">App</span>
-                        </a>
+                    </div>
+
+                    {/* Seamless Blended Showcase Image: Click to preview main showcase */}
+                    {project.showcase && (
+                      <div
+                        className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-4 group/img cursor-pointer border border-white/50 dark:border-white/10 shadow-sm"
+                        onClick={() =>
+                          setActiveModal({
+                            project,
+                            currentIndex: 0,
+                            direction: 0,
+                          })
+                        }
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setActiveModal({
+                              project,
+                              currentIndex: 0,
+                              direction: 0,
+                            });
+                          }
+                        }}
+                        aria-label={`View showcase and screenshots for ${project.title}`}
+                      >
+                        {/* Soft ambient color bleeding from the graphic into the card surface */}
+                        <div className="absolute -inset-1 blur-md opacity-35 dark:opacity-25 pointer-events-none">
+                          <img
+                            src={project.showcase}
+                            alt=""
+                            className="w-full h-full object-cover"
+                            aria-hidden="true"
+                          />
+                        </div>
+
+                        {/* Edge-to-edge blended showcase image */}
+                        <img
+                          src={project.showcase}
+                          alt={project.showcaseAlt || project.title}
+                          className="relative z-10 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
+                          loading="lazy"
+                        />
+
+                        {/* Subtle gradient vignette to blend the image organically into the card */}
+                        <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none" />
+
+                        {/* Soft glass reflection on the top edge */}
+                        <div className="absolute inset-x-0 top-0 h-1/4 z-20 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
+
+                        {/* Hover Overlay Hint */}
+                        <div className="absolute inset-0 z-30 bg-black/45 opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
+                          <span className="neu-button px-3 py-1 rounded-full text-[11px] font-bold text-white flex items-center gap-1.5 shadow-lg bg-black/60 border border-white/20">
+                            <Maximize2 className="w-3 h-3" />
+                            Expand View
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Project Title */}
+                    <h3 className="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-slate-100 mb-1.5 line-clamp-1" title={project.title}>
+                      {project.shortTitle || project.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-3.5">
+                      {project.desc}
+                    </p>
+
+                    {/* Tech Tags */}
+                    <div className="flex flex-wrap gap-1.5 mt-auto mb-4">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="neu-pill rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-slate-700 dark:text-slate-300 cursor-default hover:scale-105 transition-transform"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {project.tags.length > 3 && (
+                        <span className="neu-pill rounded-full px-2 py-0.5 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                          +{project.tags.length - 3}
+                        </span>
                       )}
-                      {project.playstore && !project.github && !project.download ? (
+                    </div>
+                  </div>
+
+                  {/* Actions Row: Play Store & Screenshots Button with Equal Size & Dimensions */}
+                  <div className="relative z-10 pt-3.5 border-t border-slate-200/60 dark:border-slate-800/80 grid grid-cols-2 gap-2.5 items-center">
+                    {/* Google Play Button with Circulating Lightning Glow */}
+                    {project.playstore ? (
+                      <div className="relative flex h-10 w-full items-center justify-center overflow-hidden rounded-xl p-[1.5px] transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_14px_rgba(0,230,118,0.25)] group/play">
+                        {/* Circulating Conic Lightning Beam (Google Play Palette) */}
+                        <div className="absolute -inset-[150%] animate-spin-beam bg-[conic-gradient(from_0deg,transparent_0_290deg,#00E676_335deg,#00D2FF_360deg)] pointer-events-none" />
+                        <div className="absolute -inset-[150%] animate-spin-beam blur-[6px] opacity-75 bg-[conic-gradient(from_0deg,transparent_0_290deg,#00E676_335deg,#00D2FF_360deg)] pointer-events-none" />
+
+                        {/* Button Inner Body */}
                         <a
                           href={project.playstore}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative w-full flex items-center justify-between gap-3.5 py-3 px-4 sm:px-5 rounded-2xl bg-gradient-to-r from-slate-900/90 via-slate-800/85 to-slate-900/90 dark:from-slate-950/90 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-md border border-slate-300/30 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-400 shadow-[0_4px_20px_rgba(0,0,0,0.18)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.06)] transition-all duration-300 group/play overflow-hidden"
+                          className="relative z-10 flex h-full w-full items-center justify-center gap-1.5 rounded-[10px] bg-slate-950/95 dark:bg-[#070b14] px-2.5 text-white transition-colors group-hover/play:bg-slate-900"
                         >
-                          {/* Top architectural light highlight */}
-                          <span className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
-
-                          {/* Light sweep on hover */}
-                          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] dark:via-white/[0.12] to-transparent -translate-x-full group-hover/play:translate-x-full transition-transform duration-700 rounded-2xl pointer-events-none" />
-
-                          {/* Left: Monochromatic Icon Container */}
-                          <div className="flex items-center gap-3 sm:gap-3.5 relative z-10">
-                            <div className="w-10 h-10 rounded-xl bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 flex items-center justify-center flex-shrink-0 group-hover/play:scale-105 group-hover/play:bg-white/15 dark:group-hover/play:bg-white/10 transition-all duration-300 shadow-inner">
-                              {/* Real Official Google Play Vector */}
-                              <svg className="w-[22px] h-[22px] flex-shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" viewBox="0 0 24 24" fill="none">
-                                <path d="M3.609 1.814L13.793 12 3.61 22.186A2.372 2.372 0 0 1 3 20.505V3.495c0-.65.231-1.246.609-1.681z" fill="#00D2FF" />
-                                <path d="M3.609 1.814c.328-.377.818-.614 1.391-.614.502 0 .973.184 1.385.42l10.843 6.195-3.435 3.435L3.609 1.814z" fill="#00E676" />
-                                <path d="M17.228 8.565l-3.435 3.435 3.435 3.435 3.864-2.208c1.1-.628 1.1-1.826 0-2.454l-3.864-2.208z" fill="#FFD200" />
-                                <path d="M13.793 12l3.435 3.435-10.843 6.195c-.412.236-.883.42-1.385.42-.573 0-1.063-.237-1.391-.614L13.793 12z" fill="#FF3A44" />
-                              </svg>
-                            </div>
-
-                            {/* Center: Architectural Typography */}
-                            <div className="flex flex-col text-left leading-tight">
-                              <span className="text-[10px] font-extrabold tracking-[0.22em] uppercase text-slate-400 group-hover/play:text-slate-300 transition-colors">
-                                GET IT ON
-                              </span>
-                              <span className="text-sm font-black tracking-wider text-slate-100 group-hover/play:text-white transition-colors">
-                                Google Play
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Right: Architectural Live Indicator & Arrow */}
-                          <div className="flex items-center gap-2 relative z-10">
-                            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-white/5 border border-white/10 text-slate-300 group-hover/play:border-white/25 transition-colors">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                              Live
-                            </span>
-                            <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover/play:text-white group-hover/play:translate-x-0.5 group-hover/play:border-white/25 transition-all">
-                              <ExternalLink className="w-3.5 h-3.5" />
-                            </div>
-                          </div>
+                          <svg
+                            className="h-4 w-4 flex-shrink-0"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M3.609 1.814 13.793 12 3.61 22.186A2.372 2.372 0 0 1 3 20.505V3.495c0-.65.231-1.246.609-1.681Z"
+                              fill="#00D2FF"
+                            />
+                            <path
+                              d="M3.609 1.814c.328-.377.818-.614 1.391-.614.502 0 .973.184 1.385.42l10.843 6.195-3.435 3.435L3.609 1.814Z"
+                              fill="#00E676"
+                            />
+                            <path
+                              d="m17.228 8.565-3.435 3.435 3.435 3.435 3.864-2.208c1.1-.628 1.1-1.826 0-2.454l-3.864-2.208Z"
+                              fill="#FFD200"
+                            />
+                            <path
+                              d="m13.793 12 3.435 3.435-10.843 6.195c-.412.236-.883.42-1.385.42-.573 0-1.063-.237-1.391-.614L13.793 12Z"
+                              fill="#FF3A44"
+                            />
+                          </svg>
+                          <span className="text-xs font-bold tracking-wide truncate">
+                            Google Play
+                          </span>
+                          <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400 group-hover/play:translate-x-0.5 group-hover/play:-translate-y-0.5 transition-transform flex-shrink-0" />
                         </a>
-                      ) : project.playstore ? (
-                        <a href={project.playstore} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group/btn">
-                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 dark:from-slate-200 dark:to-slate-400 flex items-center justify-center shadow-md group-hover/btn:scale-110 transition-transform duration-300">
-                            <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
-                              <path d="M3.609 1.814L13.793 12 3.61 22.186A2.372 2.372 0 0 1 3 20.505V3.495c0-.65.231-1.246.609-1.681z" fill="#00D2FF" />
-                              <path d="M3.609 1.814c.328-.377.818-.614 1.391-.614.502 0 .973.184 1.385.42l10.843 6.195-3.435 3.435L3.609 1.814z" fill="#00E676" />
-                              <path d="M17.228 8.565l-3.435 3.435 3.435 3.435 3.864-2.208c1.1-.628 1.1-1.826 0-2.454l-3.864-2.208z" fill="#FFD200" />
-                              <path d="M13.793 12l3.435 3.435-10.843 6.195c-.412.236-.883.42-1.385.42-.573 0-1.063-.237-1.391-.614L13.793 12z" fill="#FF3A44" />
-                            </svg>
-                          </div>
-                          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover/btn:text-slate-900 dark:group-hover/btn:text-white transition-colors">Play Store</span>
-                        </a>
-                      ) : null}
-                    </>
-                  ) : (
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-slate-200 dark:bg-slate-800 flex items-center justify-center transform rotate-45">
-                        <div className="transform -rotate-45">
-                          <X className="w-4 h-4 text-slate-500" />
-                        </div>
                       </div>
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Coming Soon</span>
-                    </div>
-                  )}
-                </div>
+                    ) : (
+                      <div className="h-10 w-full" />
+                    )}
 
+                    {/* Showcase / Screenshots Gallery Button: Opens ALL app screenshots */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveModal({
+                          project,
+                          currentIndex: project.showcase ? 1 : 0,
+                          direction: 0,
+                        })
+                      }
+                      className="neu-button group/showcase relative flex h-10 w-full items-center justify-center gap-1.5 rounded-xl text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 transition-all hover:scale-[1.02] active:scale-95 border border-white/60 dark:border-white/10"
+                      aria-label={`View screenshots for ${project.title}`}
+                    >
+                      <Images className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400 group-hover/showcase:scale-110 transition-transform flex-shrink-0" />
+                      <span className="truncate">Screenshots</span>
+                    </button>
+                  </div>
+                </div>
               </RevealItem>
             ))}
           </div>
         </RevealContainer>
       </div>
 
-      {/* Lightbox / Modal (Original logic preserved entirely) */}
-      <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 pointer-events-none opacity-0"
-        animate={lightboxOpen ? { opacity: 1, pointerEvents: 'auto' } : { opacity: 0, pointerEvents: 'none' }}
-        onClick={() => setLightboxOpen(false)}
-      >
-        <div
-          className="relative max-w-[95vw] max-h-[95vh] p-4"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            id="lightbox-close-btn"
-            onClick={() => setLightboxOpen(false)}
-            className="absolute -top-12 right-0 z-50 inline-flex items-center justify-center rounded-full p-3 bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 shadow-lg hover:bg-white dark:hover:bg-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-slate-500"
-            aria-label="Close preview"
-          >
-            <X className="w-5 h-5 text-slate-700 dark:text-slate-200" />
-          </button>
-          <div className="bg-white dark:bg-slate-900 rounded-lg p-2 shadow-2xl">
-            <img
-              src={lightboxSrc}
-              alt={lightboxAlt}
-              className="max-w-full max-h-[85vh] object-contain rounded"
-            />
-          </div>
-          <div className="mt-4 text-center">
-            <div className="inline-block bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg">
-              <p className="text-sm font-medium text-white">{lightboxAlt}</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      {/* UNIFIED ULTRA-PREMIUM APP SHOWCASE & SCREENSHOTS MODAL */}
+      <AnimatePresence>
+        {activeModal && (() => {
+          const slides = getProjectSlides(activeModal.project);
+          const currentSlide = slides[activeModal.currentIndex] || slides[0];
+          const isShowcase = currentSlide?.type === 'showcase';
+          const screenshotCount = activeModal.project.screenshots.length;
+
+          const handleNext = () => {
+            setActiveModal((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    currentIndex: (prev.currentIndex + 1) % slides.length,
+                    direction: 1,
+                  }
+                : null
+            );
+          };
+
+          const handlePrev = () => {
+            setActiveModal((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    currentIndex: (prev.currentIndex - 1 + slides.length) % slides.length,
+                    direction: -1,
+                  }
+                : null
+            );
+          };
+
+          const handleSelectSlide = (idx: number) => {
+            if (idx === activeModal.currentIndex) return;
+            const dir = idx > activeModal.currentIndex ? 1 : -1;
+            setActiveModal((prev) =>
+              prev ? { ...prev, currentIndex: idx, direction: dir } : null
+            );
+          };
+
+          return (
+            <motion.div
+              key="app-showcase-backdrop"
+              className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/80 backdrop-blur-md overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveModal(null)}
+            >
+              <motion.div
+                key="app-showcase-dialog"
+                className={`relative w-full ${
+                  isShowcase ? 'max-w-2xl sm:max-w-3xl' : 'max-w-[380px] sm:max-w-[420px]'
+                } h-[92vh] max-h-[920px] rounded-3xl p-3 sm:p-4 bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-slate-100 border border-slate-200/80 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ease-out`}
+                initial={{ scale: 0.95, opacity: 0, y: 15 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 15 }}
+                transition={{ type: 'spring', damping: 26, stiffness: 300 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header Row */}
+                <div className="flex-shrink-0 flex items-center justify-between gap-2 pb-2.5 border-b border-slate-200/80 dark:border-white/10">
+                  {/* Project identity */}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-black text-xs flex items-center justify-center shadow-md flex-shrink-0">
+                      {activeModal.project.initial || activeModal.project.title.charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-slate-100 truncate max-w-[100px] sm:max-w-[130px]">
+                        {activeModal.project.shortTitle || activeModal.project.title}
+                      </h4>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
+                        {isShowcase
+                          ? 'Feature Showcase'
+                          : `Screen ${activeModal.currentIndex} of ${screenshotCount}`}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Center Segmented View Switcher (Showcase vs Screenshots) - Monochrome Theme */}
+                  <div className="flex items-center p-0.5 rounded-xl bg-slate-200/70 dark:bg-slate-800 border border-slate-300/60 dark:border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => handleSelectSlide(0)}
+                      className={`px-2 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all flex items-center gap-1 ${
+                        isShowcase
+                          ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white'
+                      }`}
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>Showcase</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleSelectSlide(
+                          activeModal.currentIndex === 0 ? 1 : activeModal.currentIndex
+                        )
+                      }
+                      className={`px-2 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all flex items-center gap-1 ${
+                        !isShowcase
+                          ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white'
+                      }`}
+                    >
+                      <Smartphone className="w-3 h-3" />
+                      <span>Screens ({screenshotCount})</span>
+                    </button>
+                  </div>
+
+                  {/* Close Button */}
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal(null)}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full neu-button flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all flex-shrink-0"
+                    aria-label="Close modal"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Presentation Stage Canvas - Maximized height, zero clipping */}
+                <div className="relative flex-1 min-h-0 my-2 rounded-2xl bg-slate-100/70 dark:bg-slate-950/40 border border-slate-200/70 dark:border-white/5 shadow-inner overflow-hidden flex items-center justify-center p-1 sm:p-2">
+                  {/* Previous Arrow Button */}
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="absolute left-1.5 sm:left-2 z-20 w-8 h-8 rounded-full neu-button flex items-center justify-center text-slate-700 dark:text-slate-200 hover:scale-105 active:scale-95 transition-all shadow-md"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  {/* Next Arrow Button */}
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="absolute right-1.5 sm:right-2 z-20 w-8 h-8 rounded-full neu-button flex items-center justify-center text-slate-700 dark:text-slate-200 hover:scale-105 active:scale-95 transition-all shadow-md"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+
+                  {/* Media Display Stage */}
+                  <div className="relative z-10 w-full h-full flex items-center justify-center">
+                    <AnimatePresence mode="wait" custom={activeModal.direction}>
+                      {isShowcase ? (
+                        /* 16:9 Showcase Banner */
+                        <motion.div
+                          key={currentSlide.id}
+                          custom={activeModal.direction}
+                          initial={{ opacity: 0, scale: 0.97 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.97 }}
+                          transition={{ duration: 0.18, ease: 'easeOut' }}
+                          className="relative max-h-full max-w-full flex items-center justify-center"
+                        >
+                          <div className="relative max-h-full rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-lg group">
+                            <img
+                              src={currentSlide.src}
+                              alt={currentSlide.alt}
+                              className="max-h-[66vh] sm:max-h-[72vh] w-auto max-w-full object-contain select-none rounded-2xl"
+                            />
+                            <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-slate-900/85 dark:bg-black/85 backdrop-blur-md border border-white/20 text-[10px] font-bold text-white flex items-center gap-1 shadow-md">
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-pulse" />
+                              <span>Showcase Banner</span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ) : (
+                        /* 9:16 Mobile App Screenshot - 100% visible, fully expanded height, completely unclipped! */
+                        <motion.div
+                          key={currentSlide.id}
+                          custom={activeModal.direction}
+                          initial={{ opacity: 0, scale: 0.97 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.97 }}
+                          transition={{ duration: 0.18, ease: 'easeOut' }}
+                          className="relative h-full max-h-full flex items-center justify-center"
+                        >
+                          {/* Floating Mobile Card with Clean Elevation */}
+                          <div className="relative h-full max-h-full rounded-2xl overflow-hidden border border-slate-200/90 dark:border-white/15 shadow-2xl shadow-slate-900/15 dark:shadow-black/60 flex items-center justify-center group">
+                            <img
+                              src={currentSlide.src}
+                              alt={currentSlide.alt}
+                              className="h-full max-h-[66vh] sm:max-h-[72vh] w-auto max-w-full object-contain select-none"
+                            />
+                            {/* Screen badge */}
+                            <div className="absolute top-2 right-2 px-2.5 py-0.5 rounded-full bg-slate-900/85 dark:bg-black/85 backdrop-blur-md border border-white/20 text-[10px] font-black tracking-wider text-white shadow-sm">
+                              {activeModal.currentIndex} / {screenshotCount}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Single Merged Bottom Row: Screen Counter, Thumbnails Collection, and Play Store Button */}
+                <div className="flex-shrink-0 pt-2 flex items-center justify-between gap-1.5 sm:gap-2 border-t border-slate-200/80 dark:border-white/10 mt-auto">
+                  {/* Left: App Screen text */}
+                  <div className="flex items-center gap-1 text-[11px] sm:text-xs text-slate-700 dark:text-slate-300 font-bold flex-shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+                    <span className="truncate">
+                      {isShowcase ? 'Showcase' : `Screen ${activeModal.currentIndex}`}
+                    </span>
+                  </div>
+
+                  {/* Center: The Whole Images Line (Thumbnails Collection) */}
+                  <div
+                    ref={thumbnailContainerRef}
+                    className="flex items-center justify-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-0.5 px-0.5 mx-auto"
+                  >
+                    {slides.map((slide, idx) => {
+                      const isActive = activeModal.currentIndex === idx;
+                      const isThumbShowcase = slide.type === 'showcase';
+
+                      return (
+                        <button
+                          key={slide.id}
+                          data-thumb-index={idx}
+                          type="button"
+                          onClick={() => handleSelectSlide(idx)}
+                          className={`relative rounded-md overflow-hidden border transition-all flex-shrink-0 group ${
+                            isThumbShowcase
+                              ? 'h-8 w-11 sm:h-9 sm:w-13'
+                              : 'h-8 w-5 sm:h-9 sm:w-6'
+                          } ${
+                            isActive
+                              ? 'border-slate-900 dark:border-white scale-105 shadow-sm ring-1 ring-slate-900/30 dark:ring-white/40 opacity-100 z-10'
+                              : 'border-slate-300 dark:border-white/15 opacity-55 hover:opacity-100 hover:border-slate-400 dark:hover:border-white/40'
+                          }`}
+                          aria-label={`Jump to ${slide.title}`}
+                        >
+                          <img
+                            src={slide.src}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Badge */}
+                          <div
+                            className={`absolute inset-x-0 bottom-0 py-[1px] text-center text-[6px] sm:text-[7px] font-black tracking-tight leading-none ${
+                              isActive
+                                ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-black'
+                                : 'bg-black/60 text-white group-hover:bg-black/80'
+                            }`}
+                          >
+                            {isThumbShowcase ? 'SHOW' : `#${idx}`}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right: Google Play Button */}
+                  {activeModal.project.playstore && (
+                    <a
+                      href={activeModal.project.playstore}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="neu-button group/play inline-flex items-center gap-1 px-2.5 py-1 sm:py-1.5 rounded-xl text-[10px] sm:text-[11px] font-bold text-slate-800 dark:text-slate-100 hover:scale-[1.02] active:scale-95 transition-all shadow-sm flex-shrink-0 border border-slate-300/80 dark:border-white/10"
+                      aria-label="View on Google Play"
+                    >
+                      {/* Official Google Play Icon */}
+                      <svg
+                        className="h-3 w-3 flex-shrink-0"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3.609 1.814 13.793 12 3.61 22.186A2.372 2.372 0 0 1 3 20.505V3.495c0-.65.231-1.246.609-1.681Z"
+                          fill="#00D2FF"
+                        />
+                        <path
+                          d="M3.609 1.814c.328-.377.818-.614 1.391-.614.502 0 .973.184 1.385.42l10.843 6.195-3.435 3.435L3.609 1.814Z"
+                          fill="#00E676"
+                        />
+                        <path
+                          d="m17.228 8.565-3.435 3.435 3.435 3.435 3.864-2.208c1.1-.628 1.1-1.826 0-2.454l-3.864-2.208Z"
+                          fill="#FFD200"
+                        />
+                        <path
+                          d="m13.793 12 3.435 3.435-10.843 6.195c-.412.236-.883.42-1.385.42-.573 0-1.063-.237-1.391-.614L13.793 12Z"
+                          fill="#FF3A44"
+                        />
+                      </svg>
+                      <span className="hidden sm:inline">Google Play</span>
+                      <ArrowUpRight className="w-3 h-3 text-slate-500 dark:text-slate-400 group-hover/play:translate-x-0.5 group-hover/play:-translate-y-0.5 transition-transform" />
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            </motion.div>
+          );
+        })()}
+      </AnimatePresence>
 
       <style jsx>{`
+        /* Circulating lighting beam around play store button */
+        @keyframes spin-beam {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        .animate-spin-beam {
+          animation: spin-beam 3.2s linear infinite;
+        }
+
         /* Sword draw animation for the header */
         @keyframes sword-draw {
-          0% { transform: translateX(-100%); }
-          50% { transform: translateX(0%); }
-          100% { transform: translateX(100%); }
+          0% {
+            transform: translateX(-100%);
+          }
+          50% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
         }
         .animate-sword-draw {
           animation: sword-draw 2.5s ease-in-out infinite;
         }
 
+        /* Ambient shuriken slow spin on hover */
         @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
         .animate-spin-slow {
           animation: spin-slow 8s linear infinite;
         }
 
+        /* Pulse glow header animations */
         @keyframes pulse-glow {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.1); }
+          0%,
+          100% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1);
+          }
         }
         @keyframes pulse-glow-delayed {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.1); }
+          0%,
+          100% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1);
+          }
         }
         .animate-pulse-glow {
           animation: pulse-glow 2s ease-in-out infinite;
         }
         .animate-pulse-glow-delayed {
           animation: pulse-glow-delayed 2s ease-in-out infinite 1s;
+        }
+
+        /* Hide scrollbars across all browsers for clean gallery carousel */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
     </section>

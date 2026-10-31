@@ -84,9 +84,6 @@ export default function Experience() {
     },
   }
 
-  // Responsive clip path for Manga panels
-  const cardClipPath = 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))';
-
   return (
     <section id="experience" className="py-24 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
@@ -96,23 +93,20 @@ export default function Experience() {
             <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-display mb-4 text-center tracking-tight">
               Professional{" "}
               <span
-                className="relative inline-block px-3 sm:px-4 py-1 rounded-xl overflow-hidden group cursor-pointer translate-y-1 sm:translate-y-4 shadow-[0_5px_15px_rgba(0,0,0,0.4)]"
+                className="neu-header-badge rounded-2xl px-4 sm:px-5 py-1.5 inline-block group cursor-pointer translate-y-1 sm:translate-y-3"
                 style={{
                   backgroundImage: "url('/messageContainerBG.jpeg')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
               >
-                <span className="absolute inset-0 bg-gradient-to-br from-black/60 via-slate-900/50 to-black/60 rounded-xl"></span>
-                <span className="absolute inset-0 rounded-xl border-2 border-white/30 group-hover:border-white/50 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"></span>
+                <span className="absolute inset-0 bg-gradient-to-br from-black/60 via-slate-900/50 to-black/60 rounded-2xl"></span>
+                <span className="absolute inset-0 rounded-2xl border border-white/30 group-hover:border-white/50 transition-all duration-500 shadow-[inset_0_0_15px_rgba(255,255,255,0.15)]"></span>
                 <span className="absolute top-2 right-2 w-2 h-2 bg-white/60 rounded-full animate-pulse-glow"></span>
                 <span className="absolute bottom-2 left-2 w-2 h-2 bg-white/60 rounded-full animate-pulse-glow-delayed"></span>
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 blur-3xl rounded-full animate-pulse-glow"></span>
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></span>
                 <span className="relative z-10 inline-block transform group-hover:scale-105 transition-transform duration-300">
-                  <span className="absolute top-[2px] sm:top-[3px] left-[2px] sm:left-[3px] text-slate-900/40 font-black select-none" aria-hidden="true">Journey</span>
-                  <span className="absolute top-[1.5px] sm:top-[2px] left-[1.5px] sm:left-[2px] text-slate-800/50 font-black select-none" aria-hidden="true">Journey</span>
-                  <span className="absolute top-[1px] left-[1px] text-slate-700/60 font-black select-none" aria-hidden="true">Journey</span>
                   <span
                     className="relative text-white font-black select-none"
                     style={{
@@ -122,9 +116,7 @@ export default function Experience() {
                   >
                     Journey
                   </span>
-                  <span className="absolute top-[-1px] left-0 text-white/40 font-black select-none blur-[0.5px]" aria-hidden="true">Journey</span>
                 </span>
-                <span className="absolute inset-0 rounded-xl shadow-[inset_0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[inset_0_0_50px_rgba(255,255,255,0.15)] transition-all duration-500"></span>
               </span>
             </h2>
             <div className="relative w-24 sm:w-32 h-[3px] bg-slate-800 dark:bg-slate-200 mx-auto overflow-hidden rounded-full">
@@ -135,8 +127,8 @@ export default function Experience() {
           {/* --- MAIN CONTENT LAYOUT --- */}
           <div className="grid lg:grid-cols-[280px_1fr] gap-6 lg:gap-10 items-start">
 
-            {/* SIDEBAR TABS (2x2 on mobile, vertical stack on desktop) */}
-            <RevealItem direction="left" className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3 lg:gap-4 self-start content-start h-fit">
+            {/* SIDEBAR TABS (Neumorphic Segmented Control) */}
+            <RevealItem direction="left" className="grid grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-3.5 self-start content-start h-fit">
               {(Object.keys(experiences) as Array<keyof typeof experiences>).map((key) => {
                 const section = experiences[key];
                 const Icon = section.icon;
@@ -146,36 +138,27 @@ export default function Experience() {
                   <button
                     key={key}
                     onClick={() => setActiveSection(key)}
-                    className={`w-full relative flex items-center gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-xl lg:rounded-r-2xl lg:rounded-l-md border transition-all duration-300 shadow-sm sm:shadow-md outline-none
-                      ${isActive
-                        ? 'bg-gradient-to-b from-slate-200 via-white to-slate-200 dark:from-slate-700 dark:via-slate-800 dark:to-slate-900 border-slate-400 dark:border-slate-500 scale-[1.01] sm:scale-[1.02]'
-                        : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
-                      }`}
+                    className={`w-full relative flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl transition-all duration-200 outline-none cursor-pointer ${
+                      isActive
+                        ? 'neu-button-primary shadow-lg scale-[1.02]'
+                        : 'neu-button'
+                    }`}
                   >
-                    {/* Metal Cap Accent (Desktop) */}
-                    <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-slate-400 via-slate-200 to-slate-500 dark:from-slate-600 dark:via-slate-400 dark:to-slate-700 rounded-l-md border-r border-slate-300 dark:border-slate-800"></div>
-
-                    {/* Diamond Icon Container */}
-                    <div className={`lg:ml-4 w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center shadow-sm transform rotate-45 transition-transform duration-500 flex-shrink-0
-                      ${isActive ? 'bg-slate-900 dark:bg-slate-100' : 'bg-slate-200 dark:bg-slate-800'}`}>
-                      <div className="transform -rotate-45">
-                        <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isActive ? 'text-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-400'}`} />
-                      </div>
+                    {/* Icon Container */}
+                    <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                      isActive
+                        ? 'bg-white/15 text-white'
+                        : 'neu-inset text-slate-700 dark:text-slate-300'
+                    }`}>
+                      <Icon className="w-4 h-4" />
                     </div>
 
                     {/* Title */}
-                    <div className="text-left z-10 pl-1 sm:pl-2 min-w-0 flex-1">
-                      <div className={`font-black uppercase tracking-wider sm:tracking-widest text-xs sm:text-sm truncate transition-colors ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'}`}>
+                    <div className="text-left z-10 min-w-0 flex-1">
+                      <div className="font-extrabold uppercase tracking-wider text-xs sm:text-sm truncate">
                         {section.title}
                       </div>
                     </div>
-
-                    {/* Secret Mission Kanji (Desktop) */}
-                    {isActive && (
-                      <div className="hidden sm:flex absolute right-4 items-center justify-center">
-                        <span className="text-2xl lg:text-3xl font-black text-slate-400/30 dark:text-slate-500/30 drop-shadow-[0_0_8px_rgba(148,163,184,0.8)]">秘</span>
-                      </div>
-                    )}
                   </button>
                 )
               })}
@@ -187,23 +170,18 @@ export default function Experience() {
                 {experiences[activeSection].items.map((item: any, idx: number) => (
                     <div
                       key={idx}
-                      className="p-5 sm:p-6 md:p-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200 dark:border-slate-700 group relative overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:border-slate-400 dark:hover:border-slate-500"
-                      style={{ clipPath: cardClipPath }}
+                      className="neu-flat-interactive rounded-3xl p-6 sm:p-8 relative overflow-hidden group"
                     >
-                      {/* Subtle Shuriken Background (Only visible on hover) */}
-                      <div className="absolute -right-8 -top-8 w-32 h-32 text-slate-300/30 dark:text-slate-600/20 opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow pointer-events-none transition-opacity duration-500">
+                      {/* Subtle Ambient Shuriken (Soft watermark on hover) */}
+                      <div className="absolute -right-8 -top-8 w-32 h-32 text-slate-400/20 dark:text-slate-600/15 opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow pointer-events-none transition-opacity duration-500">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 14.5L0 12L9.5 9.5L12 0ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" />
                         </svg>
                       </div>
 
-                      {/* Corner Accent Brackets */}
-                      <div className="absolute top-0 right-0 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-r-2 border-slate-400 dark:border-slate-500 pointer-events-none"></div>
-                      <div className="absolute bottom-0 left-0 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-l-2 border-slate-400 dark:border-slate-500 pointer-events-none"></div>
-
                       <div className="relative z-10">
                         {/* Header */}
-                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-4 border-b border-slate-200 dark:border-slate-700 pb-4 transition-colors group-hover:border-slate-300 dark:group-hover:border-slate-600">
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-4 border-b border-slate-200/60 dark:border-slate-800/80 pb-4">
                           <div>
                             <h4 className="text-lg sm:text-xl md:text-2xl font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">
                               {item.title}
@@ -212,7 +190,7 @@ export default function Experience() {
                               {item.organization}
                             </p>
                           </div>
-                          <span className="self-start sm:self-auto px-3 sm:px-4 py-1 sm:py-1.5 border border-slate-900 dark:border-slate-100 text-slate-900 dark:text-slate-100 text-[10px] font-black uppercase tracking-widest shrink-0 bg-transparent">
+                          <span className="self-start sm:self-auto neu-pill rounded-full px-3.5 py-1 text-slate-800 dark:text-slate-200 text-[11px] font-bold uppercase tracking-wider shrink-0">
                             {item.period}
                           </span>
                         </div>
@@ -224,38 +202,34 @@ export default function Experience() {
 
                         {/* Certificate link */}
                         {item.link && (
-                          <div className="mt-6">
+                          <div className="mt-5">
                             <a
                               href={item.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-4 group/btn"
+                              className="inline-flex items-center gap-3 neu-button rounded-full px-4 py-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 group/btn"
                             >
-                              <div className="w-10 h-10 bg-gradient-to-br from-slate-700 to-slate-900 dark:from-slate-200 dark:to-slate-400 flex items-center justify-center shadow-md transform rotate-45 group-hover/btn:rotate-90 transition-transform duration-500">
-                                <div className="transform -rotate-45 group-hover/btn:-rotate-90 transition-transform duration-500">
-                                  <ChevronRight className="w-5 h-5 text-white dark:text-slate-900" />
-                                </div>
-                              </div>
-                              <span className="font-black tracking-wide text-slate-900 dark:text-slate-100 text-sm group-hover/btn:text-slate-600 dark:group-hover/btn:text-slate-300 transition-colors uppercase">
-                                View Certificate
+                              <span className="w-7 h-7 neu-button-primary rounded-full flex items-center justify-center flex-shrink-0 group-hover/btn:translate-x-0.5 transition-transform">
+                                <ChevronRight className="w-4 h-4 text-white" />
                               </span>
+                              <span>View Certificate</span>
                             </a>
                           </div>
                         )}
 
                         {/* Reference Section */}
                         {item.reference && (
-                          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                            <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-500 mb-3">Reference</p>
-                            <div className="space-y-1">
+                          <div className="mt-6 pt-5 border-t border-slate-200/60 dark:border-slate-800/80">
+                            <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2">Reference</p>
+                            <div className="neu-inset rounded-2xl p-4 sm:p-5 space-y-1.5">
                               <p className="text-sm">
                                 <span className="font-black text-slate-900 dark:text-slate-100">{item.reference.name}</span>
                                 <span className="text-slate-500 font-semibold"> • {item.reference.role}</span>
                               </p>
-                              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                              <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
                                 Email: <a href={`mailto:${item.reference.contact}`} className="hover:text-slate-900 dark:hover:text-white transition-colors underline decoration-1 underline-offset-2">{item.reference.contact}</a>
                               </p>
-                              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                              <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
                                 LinkedIn: <a href={`https://${item.reference.linkedin}`} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 dark:hover:text-white transition-colors underline decoration-1 underline-offset-2">{item.reference.linkedin}</a>
                               </p>
                             </div>

@@ -32,7 +32,7 @@ function getLocalFallbackResponse(
   // 1. Greetings & Pleasantries
   if (/^(hi|hello|hey|greetings|good morning|good evening|good afternoon|what's up|sup)\b/i.test(query)) {
     return {
-      reply: "Hello! 👋 I'm Rabia's AI Assistant. I can guide you through her Flutter apps (like CivicCoach & Health Tracker), tech stack, backend expertise in Supabase/Firebase, and senior recommendations, or help you connect directly with her. What would you like to explore?",
+      reply: "Hello! 👋 I'm Rabia's AI Assistant. I can guide you through her Flutter apps (like CivicCoach, ZenPeace & Health Tracker), tech stack, backend expertise in Supabase/Firebase, and senior recommendations, or help you connect directly with her. What would you like to explore?",
       functionCalls: null,
     };
   }
@@ -53,7 +53,22 @@ function getLocalFallbackResponse(
     };
   }
 
-  // 3. Specific Project: Health Tracker (Vitals & BP Monitor)
+  // 3. Specific Project: ZenPeace — Pomodoro Focus & Mindful Flow
+  if (
+    query.includes('zenpeace') ||
+    query.includes('zen peace') ||
+    query.includes('pomodoro') ||
+    query.includes('focus timer') ||
+    query.includes('mindful') ||
+    query.includes('meditation')
+  ) {
+    return {
+      reply: "ZenPeace — Pomodoro Focus & Mindful Flow is Rabia's latest live productivity application on the Google Play Store! 🧘‍♂️⏱️\n\nOverview:\nA serene, minimalist Pomodoro timer and mindfulness companion app built with Flutter and Provider. Designed to help users defeat distractions, enter deep flow states, and build sustainable daily focus habits.\n\nKey App Features:\n• ⏱️ Customizable Pomodoro Intervals: Tailored deep-work sessions, short restoration pauses, and long breaks with configurable timers.\n• 🎵 Ambient Audio Soundscapes: Soothing built-in background tracks including calm piano, deep focus, lofi chill, ocean ambient, and zen meditation.\n• 📊 Focus Analytics & Progress Charts: Session tracking, streak rings, and daily/weekly productivity visualization powered by fl_chart.\n• 🔔 Smart Local Notifications & Haptics: Context-aware interval alerts with fine-tuned vibration pulses for uninterrupted focus.\n• 🌿 Serene Minimalist Interface: Distraction-free, aesthetic UI with smooth page transitions and gentle feedback.\n• 💎 In-App Purchases & Premium Unlocks: Full Google Play billing integration for premium audio soundscapes.\n\n📲 Available on Google Play Store:\nhttps://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en",
+      functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'projects' } }],
+    };
+  }
+
+  // 4. Specific Project: Health Tracker (Vitals & BP Monitor)
   if (
     query.includes('health') ||
     query.includes('tracker') ||
@@ -98,10 +113,10 @@ function getLocalFallbackResponse(
   ) {
     const liveProjectList = pageContext?.liveProjects?.length
       ? pageContext.liveProjects.map((p) => `• 📱 ${p.title}: ${p.desc}`).join('\n')
-      : "• 📱 CivicCoach — AI US Citizenship Test 2026: Official USCIS 2026 prep with AI voice mock interviews, 128 questions, and elected officials lookup.\n• 📱 Health Tracker — Vitals & BP Monitor: A personal health companion for logging blood pressure, body temperature, pulse rate, and tracking weekly trend averages.";
+      : "• 📱 CivicCoach — AI US Citizenship Test 2026: Official USCIS 2026 prep with AI voice mock interviews, 128 questions, and elected officials lookup.\n• 📱 ZenPeace — Pomodoro Focus & Mindful Flow: A serene Pomodoro timer with ambient soundscapes, focus analytics, and mindfulness tools.\n• 📱 Health Tracker — Vitals & BP Monitor: A personal health companion for logging blood pressure, body temperature, pulse rate, and tracking weekly trend averages.";
 
     return {
-      reply: `Rabia has built 10+ battle-tested mobile, web, and desktop applications using Flutter, Dart, Supabase, and Firebase.\n\nFeatured Projects on her website:\n${liveProjectList}\n\nExplore her Projects showcase or check out her GitHub at https://github.com/jk647 !`,
+      reply: `Rabia has built 10+ battle-tested mobile, web, and desktop applications using Flutter, Dart, Supabase, and Firebase.\n\nFeatured Projects on her website:\n${liveProjectList}\n\nExplore her Projects showcase or check out her GitHub at https://github.com/rabiaAziz-dev !`,
       functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'projects' } }],
     };
   }
@@ -146,6 +161,13 @@ function getLocalFallbackResponse(
     };
   }
 
+  if (query.includes('instagram') || query.includes('insta')) {
+    return {
+      reply: "You can follow Rabia Aziz on Instagram: https://www.instagram.com/rabiko_korozawa/ (@rabiko_korozawa)!",
+      functionCalls: null,
+    };
+  }
+
   // 6. LinkedIn & Social Links
   if (query.includes('linkedin')) {
     return {
@@ -156,7 +178,7 @@ function getLocalFallbackResponse(
 
   if (query.includes('github') || query.includes('repo') || query.includes('source code')) {
     return {
-      reply: "Explore Rabia's open-source projects and code repositories on GitHub: https://github.com/jk647 (@jk647)",
+      reply: "Explore Rabia's open-source projects and code repositories on GitHub: https://github.com/rabiaAziz-dev (@rabiaAziz-dev)",
       functionCalls: null,
     };
   }
@@ -258,7 +280,7 @@ function getLocalFallbackResponse(
     query.includes('background')
   ) {
     return {
-      reply: "Rabia Aziz is a passionate Software Engineer and Flutter App Developer with 2+ years of experience and 10+ completed applications. She specializes in building AI-powered mobile apps, scalable Supabase/Firebase backends, and responsive UI that feels smooth and intuitive. Would you like to check her projects (like CivicCoach & Health Tracker), technical skills, or get in touch?",
+      reply: "Rabia Aziz is a passionate Software Engineer and Flutter App Developer with 1+ years of experience and 10+ completed applications. She specializes in building AI-powered mobile apps, scalable Supabase/Firebase backends, and responsive UI that feels smooth and intuitive. Would you like to check her projects (like CivicCoach & Health Tracker), technical skills, or get in touch?",
       functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'about' } }],
     };
   }

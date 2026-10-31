@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, Compass, FileText } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 
 // --- CUSTOM ANIME CIPHER TEXT (Untouched) ---
@@ -224,33 +224,76 @@ export default function HeroSection({ animReady = false }: { animReady?: boolean
           </motion.div>
         )}
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - Modern Fluid Neumorphic (Monochrome Theme) */}
         {animReady && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: premiumEase, delay: 1.3 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 w-full max-w-md mx-auto sm:max-w-none"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-8 sm:mb-12 w-full max-w-xl mx-auto"
           >
-            <button
-              onClick={() => scrollToSection('about')}
-              className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-white/20 backdrop-blur-sm text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-all border border-white/30 overflow-hidden hover:scale-105 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] text-sm sm:text-base w-full sm:w-auto"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-lg"></span>
-              <span className="relative z-10">Explore My Journey</span>
-              <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </button>
+            {/* 1. Explore My Journey: Monochrome Obsidian Pill */}
+            <div className="relative group/journey cursor-pointer w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={() => scrollToSection('about')}
+                className="relative z-10 w-full sm:w-auto min-h-[58px] px-4 py-2 rounded-full flex items-center justify-between gap-3 text-white transition-all duration-300 select-none cursor-pointer border border-white/20 shadow-[0_12px_28px_rgba(0,0,0,0.7),inset_0_1.5px_2px_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.8)] group-hover/journey:scale-[1.03] group-hover/journey:border-white/40 group-hover/journey:shadow-[0_16px_36px_rgba(0,0,0,0.9),0_0_24px_rgba(255,255,255,0.12)] active:scale-[0.98]"
+                style={{
+                  background: 'linear-gradient(135deg, #18181b 0%, #09090b 55%, #18181b 100%)',
+                }}
+              >
+                {/* Left 3D Tactile Token Pebble */}
+                <span
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover/journey:scale-110 shadow-[0_3px_8px_rgba(0,0,0,0.6),inset_0_1.5px_2px_rgba(255,255,255,0.4),inset_0_-1.5px_2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-zinc-700 via-zinc-800 to-zinc-950 border border-white/20"
+                >
+                  <Compass className="w-5 h-5 text-zinc-100 transform group-hover/journey:rotate-45 transition-transform duration-500" />
+                </span>
 
-            <a
-              href="https://drive.google.com/file/d/15ybKpKaNNWWWRCr4juTa1-ocgLG9_YlV/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-semibold bg-white text-slate-900 rounded-lg transition-all border border-white/50 overflow-hidden hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] w-full sm:w-auto"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/60 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-lg"></span>
-              <Download className="w-4 h-4 relative z-10 group-hover:-translate-y-1 transition-transform" />
-              <span className="relative z-10">View Resume</span>
-            </a>
+                {/* Typography: Explore My Journey */}
+                <span className="text-base sm:text-lg flex items-center gap-1.5 px-1.5 whitespace-nowrap">
+                  <span className="font-normal text-zinc-400">Explore</span>
+                  <span className="font-bold text-white tracking-wide">
+                    My Journey
+                  </span>
+                </span>
+
+                {/* Right Arrow Pod */}
+                <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border border-white/20 bg-white/10 backdrop-blur-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)] group-hover/journey:bg-white/20 transition-all">
+                  <ArrowRight className="w-4 h-4 text-zinc-200 group-hover/journey:translate-x-0.5 transition-transform duration-200" />
+                </span>
+              </button>
+            </div>
+
+            {/* 2. View Resume: Monochrome Ceramic Cream / Silver Pill */}
+            <div className="relative group/resume cursor-pointer w-full sm:w-auto">
+              <a
+                href="https://drive.google.com/file/d/15ybKpKaNNWWWRCr4juTa1-ocgLG9_YlV/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10 w-full sm:w-auto min-h-[58px] px-4 py-2 rounded-full flex items-center justify-between gap-3 text-zinc-900 transition-all duration-300 select-none cursor-pointer border border-white/95 shadow-[0_12px_28px_rgba(0,0,0,0.45),0_2px_6px_rgba(0,0,0,0.25),inset_0_2px_3px_#ffffff,inset_0_-2px_4px_rgba(0,0,0,0.12)] group-hover/resume:scale-[1.03] group-hover/resume:shadow-[0_16px_36px_rgba(0,0,0,0.55),0_0_24px_rgba(255,255,255,0.35)] active:scale-[0.98]"
+                style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #f4f4f5 55%, #e4e4e7 100%)',
+                }}
+              >
+                {/* Left 3D Tactile Token Pebble */}
+                <span className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover/resume:scale-105 shadow-[0_3px_6px_rgba(0,0,0,0.15),inset_0_1.5px_2px_#ffffff,inset_0_-1.5px_2px_rgba(0,0,0,0.1)] bg-gradient-to-br from-white via-zinc-100 to-zinc-300 border border-white/80">
+                  <FileText className="w-5 h-5 text-zinc-900" />
+                </span>
+
+                {/* Typography: View Resume */}
+                <span className="text-base sm:text-lg flex items-center gap-1.5 px-1.5 whitespace-nowrap">
+                  <span className="font-normal text-zinc-600">View</span>
+                  <span className="font-bold text-zinc-950 tracking-wide">
+                    Resume
+                  </span>
+                </span>
+
+                {/* Right Arrow Pod */}
+                <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border border-zinc-900/10 bg-zinc-900/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)] group-hover/resume:bg-zinc-900/15 transition-all">
+                  <ArrowRight className="w-4 h-4 text-zinc-900 group-hover/resume:translate-x-0.5 transition-transform duration-200" />
+                </span>
+              </a>
+            </div>
           </motion.div>
         )}
       </div>

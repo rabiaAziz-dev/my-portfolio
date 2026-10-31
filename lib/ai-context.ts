@@ -17,15 +17,15 @@ FULL PROFILE:
 - Email: swe.rabiaaziz@gmail.com
 - Phone: +92 327 5676026
 - WhatsApp: https://wa.me/923275676026 (+92 327 5676026)
-- GitHub: https://github.com/jk647 (@jk647)
+- GitHub: https://github.com/rabiaAziz-dev (@rabiaAziz-dev)
 - LinkedIn: https://www.linkedin.com/in/rabiaaziz456/ (@rabiaaziz456)
-- Twitter / X: @rabiaaziz
+- Instagram: https://www.instagram.com/rabiko_korozawa/ (@rabiko_korozawa)
 - Calendly (1-on-1 Meeting): https://calendly.com/swe-rabiaaziz/30min
 - Resume (Google Drive): https://drive.google.com/file/d/15ybKpKaNNWWWRCr4juTa1-ocgLG9_YlV/view?usp=sharing
 
 PORTFOLIO HIGHLIGHTS & STATS:
 - 10+ Projects completed & battle-tested across production applications
-- 2+ Years of Software & Mobile Development Experience
+- 11+ Years of Software & Mobile Development Experience
 - 100% Passion & Commitment to clean code and exceptional UI/UX
 
 CORE TECHNICAL EXPERTISE (6 CATEGORIES):
@@ -55,7 +55,18 @@ FEATURED PROJECTS:
      • 📊 Test Readiness Analytics: Real-time mastery tracking, daily streak rings, and category-level progress.
    - Tech Stack: Flutter, Dart, Speech-to-Text (speech_to_text), Text-to-Speech (flutter_tts), Drift ORM / SQLite & Hive, Provider state management, Google Fonts, Rive animations.
    - Google Play Store: https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en
-2. Health Tracker — Vitals & BP Monitor:
+2. ZenPeace — Pomodoro Focus & Mindful Flow (zenpeace):
+   - Overview: A serene, minimalist Pomodoro timer and mindfulness companion app designed to eliminate distractions, enhance deep productivity, and cultivate calming focus rituals.
+   - Core Features:
+     • ⏱️ Customizable Pomodoro Engine: Configurable deep-work intervals, short breaks, and long restoration sessions (25/5 intervals, customized duration).
+     • 🎵 Ambient Audio Soundscapes: Integrated background relaxation tracks including calm piano, deep focus, lofi chill, ocean waves, and zen meditation.
+     • 📊 Focus Analytics & Progress Charts: Session tracking, completion metrics, and weekly productivity visualization powered by fl_chart.
+     • 🔔 Smart Local Notifications & Haptics: Context-aware break and resumption alerts with fine-tuned vibration feedback.
+     • 🌿 Serene Minimalist Interface: Distraction-free, aesthetic UI with smooth page transitions and gentle feedback.
+     • 💎 In-App Purchases & Premium Unlocks: Full Google Play billing integration for premium soundscapes and extended analytics.
+   - Tech Stack: Flutter, Dart, Provider, audioplayers, fl_chart, flutter_local_notifications, flutter_secure_storage, in_app_purchase, Google Fonts.
+   - Google Play Store: https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en
+3. Health Tracker — Vitals & BP Monitor:
    - Overview: A personal health companion mobile app designed to help users take small daily steps toward healthier tomorrows by monitoring vital signs, health trends, and daily wellness.
    - Core Features:
      • Vitals & Blood Pressure Tracking: Log and monitor Systolic & Diastolic readings (mmHg) with visual status indicators (Normal, Elevated).

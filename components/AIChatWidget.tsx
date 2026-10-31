@@ -27,7 +27,7 @@ function renderCleanMessageContent(content: string, isUser: boolean) {
                 return (
                   <strong
                     key={partIdx}
-                    className={`font-semibold ${isUser ? 'text-white' : 'text-slate-900'}`}
+                    className={`font-semibold ${isUser ? 'text-white' : 'text-slate-900 dark:text-white'}`}
                   >
                     {inner}
                   </strong>
@@ -200,61 +200,58 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                 }
               }}
               className="chat-panel-enter w-full md:w-[430px] h-[100dvh] md:h-[610px] md:max-h-[calc(100vh-3.5rem)] flex flex-col overflow-hidden pointer-events-auto
-                          md:rounded-[32px] border-0 md:border md:border-slate-800/80
-                          shadow-[0_25px_80px_rgba(0,0,0,0.4),0_0_30px_rgba(15,23,42,0.3)]"
+                          md:rounded-[32px] neu-flat border border-slate-200/50 dark:border-slate-800/80"
               style={{
                 background: '#0b1220',
               }}
             >
-              {/* ─── 1. Header with Interactive 3D Avatar ─── */}
-              <div className="relative w-full shrink-0 z-20" style={{ height: '80px' }}>
-                <svg
-                  viewBox="0 0 430 80"
-                  preserveAspectRatio="none"
-                  className="absolute inset-0 w-full h-full pointer-events-none z-0 filter drop-shadow-[0_6px_16px_rgba(0,0,0,0.6)]"
-                >
-                  <defs>
-                    <linearGradient id="assistantHeaderDarkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#060913" />
-                      <stop offset="40%" stopColor="#0f172a" />
-                      <stop offset="80%" stopColor="#1e293b" />
-                      <stop offset="100%" stopColor="#090e1a" />
-                    </linearGradient>
-                    <linearGradient id="assistantEdgeGleamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#64748b" stopOpacity="0.8" />
-                      <stop offset="25%" stopColor="#cbd5e1" stopOpacity="0.95" />
-                      <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-                      <stop offset="75%" stopColor="#e2e8f0" stopOpacity="0.95" />
-                      <stop offset="100%" stopColor="#94a3b8" stopOpacity="0.8" />
-                    </linearGradient>
-                  </defs>
+              {/* ─── 1. Header with Interactive 3D Avatar (Manga Sticker Header) ─── */}
+              <div
+                className="relative w-full shrink-0 z-20 px-4 sm:px-5 py-3 flex items-center justify-between select-none overflow-hidden rounded-t-[28px] md:rounded-t-[32px] rounded-b-none border-b border-slate-700/60 dark:border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.25)] group/header"
+                style={{
+                  height: '80px',
+                  backgroundImage: "url('/messageContainerBG.jpeg')",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                {/* Dark Gradient Overlay for optimal manga illustration contrast & text clarity */}
+                <span className="absolute inset-0 bg-gradient-to-br from-black/75 via-slate-950/70 to-black/85 pointer-events-none" />
 
-                  <path
-                    d="M 0,0 L 430,0 L 430,34 L 290,34 C 250,34 235,80 195,80 L 0,80 Z"
-                    fill="url(#assistantHeaderDarkGrad)"
-                  />
-                  <path
-                    d="M 0,80 L 195,80 C 235,80 250,34 290,34 L 430,34"
-                    fill="none"
-                    stroke="url(#assistantEdgeGleamGrad)"
-                    strokeWidth="2.5"
-                  />
-                </svg>
+                {/* Die-Cut Vinyl Sticker Top Gloss */}
+                <span className="absolute top-0 inset-x-0 h-[45%] bg-gradient-to-b from-white/15 via-white/5 to-transparent pointer-events-none" />
+
+                {/* Subtle Inner Bevel Glow */}
+                <span className="absolute inset-0 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25)] pointer-events-none" />
+
+                {/* Sticker Corner Rivet / Glow Nodes - Top Corners Only */}
+                <span className="absolute top-2.5 right-3 w-1.5 h-1.5 bg-white/70 rounded-full animate-pulse-glow pointer-events-none" />
+                <span className="absolute top-2.5 left-3 w-1.5 h-1.5 bg-white/70 rounded-full animate-pulse-glow-delayed pointer-events-none" />
+
+                {/* Center Ambient Core Aura */}
+                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white/10 blur-3xl rounded-full animate-pulse-glow pointer-events-none" />
+
+                {/* Holographic Light Sweep Across Sticker Surface */}
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/header:translate-x-full transition-transform duration-700 pointer-events-none" />
+
+                {/* Smooth, subtle hairline bottom divider */}
+                <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 dark:via-white/15 to-transparent pointer-events-none" />
 
                 {/* Header Content */}
-                <div className="relative z-10 w-full h-full px-5 pt-3.5 pb-2 flex items-start justify-between">
+                <div className="relative z-10 w-full flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-1 h-8 rounded-full bg-gradient-to-b from-slate-400 via-white to-slate-500 shadow-[0_0_8px_rgba(255,255,255,0.7)] shrink-0" />
+                    {/* Katana Accent Bar */}
+                    <div className="w-1 h-8 rounded-full bg-gradient-to-b from-slate-300 via-white to-slate-400 shadow-[0_0_8px_rgba(255,255,255,0.7)] shrink-0" />
 
                     {/* Interactive 3D Avatar in Header */}
                     <div
                       onClick={triggerHeaderSpin}
-                      className="relative cursor-pointer group"
+                      className="relative cursor-pointer group/avatar"
                       title="Click for a spin!"
                     >
                       <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center border-2 border-slate-300/80 bg-slate-900/90 shadow-[0_0_16px_rgba(148,163,184,0.3)] overflow-hidden transition-all ${
-                          headerAvatarSpin ? 'animate-joy-spin' : 'group-hover:scale-105'
+                        className={`w-12 h-12 rounded-full flex items-center justify-center border-2 border-white/40 bg-slate-900/90 shadow-[0_0_14px_rgba(255,255,255,0.25)] overflow-hidden transition-all ${
+                          headerAvatarSpin ? 'animate-joy-spin' : 'group-hover/avatar:scale-105'
                         }`}
                       >
                         <div className="relative w-10 h-10">
@@ -269,43 +266,49 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                           />
                         </div>
                       </div>
-                      <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900 shadow-[0_0_6px_rgba(16,185,129,0.8)]" />
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-slate-950 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse" />
                     </div>
 
                     <div>
-                      <h3 className="text-white font-black text-base tracking-tight leading-tight flex items-center gap-2">
+                      <h3
+                        className="text-white font-black text-base tracking-tight leading-tight flex items-center gap-2 select-none"
+                        style={{
+                          textShadow: '0 0 16px rgba(255,255,255,0.35), 0 2px 4px rgba(0,0,0,0.8)',
+                        }}
+                      >
                         Rabia&apos;s AI Assistant
-                        <span className="text-xs text-slate-300 font-normal">✦</span>
+                        <span className="text-xs text-white/90 drop-shadow-[0_0_6px_rgba(255,255,255,0.8)] animate-pulse">✦</span>
                       </h3>
-                      <div className="flex items-center gap-1.5 text-xs text-slate-300 mt-0.5 font-medium">
-                        <span className="text-emerald-400 font-semibold">● Online</span>
+                      <div className="flex items-center gap-1.5 text-xs text-slate-300 mt-0.5 font-medium select-none drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                        <span className="text-emerald-400 font-bold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          Online
+                        </span>
                         <span>•</span>
                         <span>{currentTime} PKT</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Circular Close Button */}
+                  {/* Circular Close Button with Dark Glass / Sticker Match */}
                   <button
                     onClick={() => {
                       setIsOpen(false);
                     }}
-                    className="w-8 h-8 rounded-full bg-slate-900/90 border border-slate-700/80 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-300 transition-all shadow-md group mt-0.5"
+                    className="relative z-10 w-8 h-8 rounded-full flex items-center justify-center text-slate-200 hover:text-white bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/50 transition-all shadow-md group/close cursor-pointer"
                     aria-label="Close chat"
+                    title="Close chat"
                   >
-                    <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M6 18L18 6M6 6l12 12" />
+                    <svg className="w-4 h-4 group-hover/close:scale-110 transition-transform drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
               </div>
 
-              {/* ─── 2. Main White Body ─── */}
+              {/* ─── 2. Main Body ─── */}
               <div
-                className="relative flex-1 flex flex-col min-h-0 z-10"
-                style={{
-                  background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
-                }}
+                className="relative flex-1 flex flex-col min-h-0 z-10 bg-slate-100 dark:bg-slate-900"
               >
                 {/* ─── Messages Area ─── */}
                 <div
@@ -316,7 +319,7 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                   {messages.length === 0 && (
                     <div className="msg-enter space-y-3">
                       {/* Hero Welcome Card with 3D Character */}
-                      <div className="flex items-center gap-4 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white rounded-3xl p-4 shadow-[0_8px_24px_rgba(0,0,0,0.15)] border border-slate-700/70">
+                      <div className="flex items-center gap-4 neu-flat rounded-3xl p-4 text-slate-800 dark:text-slate-100">
                         <div className="relative w-20 h-20 md:w-22 md:h-22 shrink-0">
                           <Image
                             src="/images/robot-welcome.png"
@@ -330,12 +333,12 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
-                            <p className="text-sm font-extrabold text-white tracking-tight">
+                            <p className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight">
                               Hey there! 👋 I&apos;m Rabia&apos;s AI Assistant.
                             </p>
                             <span className="text-slate-400 text-xs">✦ ✧</span>
                           </div>
-                          <p className="text-xs text-slate-300 leading-relaxed mt-1">
+                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-1">
                             I know everything about her Flutter apps and tech stack. Ask me anything or tap below!
                           </p>
                         </div>
@@ -347,15 +350,15 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                           <button
                             key={i}
                             onClick={() => handleSend(btn.val)}
-                            className={`bg-white hover:bg-slate-50 border border-slate-200/90 rounded-2xl p-3 flex flex-col items-start transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 group text-left cursor-pointer ${
+                            className={`neu-button rounded-2xl p-3 flex flex-col items-start transition-all duration-200 group text-left cursor-pointer ${
                               btn.fullWidth ? 'col-span-2' : ''
                             }`}
                           >
                             <span className="text-base mb-1">{btn.emoji}</span>
-                            <span className="text-xs font-bold text-slate-800 group-hover:text-slate-950 transition-colors">
+                            <span className="text-xs font-bold text-slate-800 dark:text-slate-100 group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
                               {btn.label}
                             </span>
-                            <span className="text-[11px] text-slate-400 mt-0.5">
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                               {btn.subtitle}
                             </span>
                           </button>
@@ -371,7 +374,7 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                       className={`flex msg-enter ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       {msg.role === 'assistant' && (
-                        <div className="relative w-8 h-8 shrink-0 rounded-full bg-slate-900 border border-slate-700/80 shadow-sm flex items-center justify-center mt-0.5 mr-2.5 overflow-hidden">
+                        <div className="relative w-8 h-8 shrink-0 rounded-full neu-inset flex items-center justify-center mt-0.5 mr-2.5 overflow-hidden">
                           <Image
                             src="/images/robot-dots.png"
                             alt="Assistant Avatar"
@@ -384,26 +387,13 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                         </div>
                       )}
                       <div
-                        className={`max-w-[82%] text-[13px] leading-relaxed p-3.5 ${
+                        className={`max-w-[82%] text-[13px] leading-relaxed p-3.5 rounded-2xl ${
                           msg.role === 'user'
-                            ? `rounded-2xl rounded-br-sm text-white ${
+                            ? `neu-button-primary rounded-br-sm text-white ${
                                 sendFlash && msg.id === messages[messages.length - 1]?.id ? 'send-flash' : ''
                               }`
-                            : 'rounded-2xl rounded-tl-sm text-slate-700'
+                            : 'neu-flat rounded-tl-sm text-slate-800 dark:text-slate-200'
                         }`}
-                        style={
-                          msg.role === 'user'
-                            ? {
-                                background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-                                border: '1px solid rgba(30,41,59,0.8)',
-                                boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
-                              }
-                            : {
-                                background: '#ffffff',
-                                border: '1px solid rgba(226, 232, 240, 0.9)',
-                                boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
-                              }
-                        }
                       >
                         {renderCleanMessageContent(msg.content, msg.role === 'user')}
                       </div>
@@ -425,11 +415,11 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                           style={{ animationDuration: '1.8s' }}
                         />
                       </div>
-                      <div className="px-4 py-3 rounded-2xl rounded-tl-sm flex gap-1.5 items-center bg-white border border-slate-200/90 shadow-sm">
+                      <div className="px-4 py-3 rounded-2xl rounded-tl-sm flex gap-1.5 items-center neu-flat">
                         <div className="chakra-dot" />
                         <div className="chakra-dot" />
                         <div className="chakra-dot" />
-                        <span className="text-[11px] text-slate-500 ml-2 font-medium">
+                        <span className="text-[11px] text-slate-600 dark:text-slate-400 ml-2 font-medium">
                           AI Assistant is thinking...
                         </span>
                       </div>
@@ -439,7 +429,7 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
 
                 {/* ─── 3. Floating Pill Input Area ─── */}
                 <div className="relative shrink-0 px-4 pt-2 pb-3 bg-transparent">
-                  <div className="relative flex items-center bg-white border border-slate-200/90 rounded-full shadow-[0_2px_14px_rgba(0,0,0,0.05)] pl-4 pr-1.5 py-1.5">
+                  <div className="relative flex items-center neu-inset rounded-full pl-4 pr-1.5 py-1.5">
                     <input
                       ref={inputRef}
                       type="text"
@@ -453,12 +443,12 @@ export default function AIChatWidget({ splashDone }: { splashDone?: boolean }) {
                       }}
                       placeholder="Ask about Rabia..."
                       disabled={isLoading}
-                      className="flex-1 bg-transparent text-slate-800 text-sm placeholder:text-slate-400 outline-none pr-2 disabled:opacity-40"
+                      className="flex-1 bg-transparent text-slate-800 dark:text-slate-200 text-sm placeholder:text-slate-400 outline-none pr-2 disabled:opacity-40"
                     />
                     <button
                       onClick={() => handleSend(input)}
                       disabled={isLoading || !input.trim()}
-                      className="w-8 h-8 rounded-full bg-slate-900 hover:bg-slate-800 text-white flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-sm shrink-0"
+                      className="w-8 h-8 rounded-full neu-button-primary text-white flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0 cursor-pointer"
                       aria-label="Send message"
                     >
                       <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">

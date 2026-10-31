@@ -560,21 +560,21 @@ export default function FloatingRobotAssistant({
 
           {/* Micro Badge */}
           <div
-            className={`relative -mt-1 px-2 sm:px-2.5 py-0.5 rounded-full bg-slate-900/90 border shadow-md flex items-center gap-1 sm:gap-1.5 transition-all ${isScrolling
-              ? 'border-sky-400/90 shadow-[0_0_14px_rgba(56,189,248,0.6)] bg-slate-950/95'
-              : 'border-slate-700/80 group-hover:border-slate-400'
+            className={`relative -mt-1 px-2.5 sm:px-3 py-0.5 rounded-full flex items-center gap-1.5 transition-all bg-slate-900/90 dark:bg-black/85 border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.4)] backdrop-blur-md ${isScrolling
+              ? 'ring-2 ring-sky-400 shadow-[0_0_14px_rgba(56,189,248,0.6)]'
+              : ''
               }`}
           >
             <span
               className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${isScrolling
-                ? 'bg-sky-300 shadow-[0_0_10px_#38bdf8] animate-ping'
-                : 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse'
+                ? 'bg-sky-400 shadow-[0_0_10px_#38bdf8] animate-ping'
+                : 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse'
                 }`}
             />
             <span
-              className={`text-[9px] sm:text-[10px] tracking-wide ${isScrolling
-                ? 'font-black text-sky-200 drop-shadow-[0_0_6px_rgba(56,189,248,0.8)]'
-                : 'font-bold text-slate-200'
+              className={`text-[9px] sm:text-[10px] tracking-wide font-bold ${isScrolling
+                ? 'text-sky-300'
+                : 'text-white'
                 }`}
             >
               {isScrolling ? 'Guiding ⚡' : 'AI Assistant'}
@@ -582,7 +582,7 @@ export default function FloatingRobotAssistant({
           </div>
         </div>
 
-        {/* ═══ TEMPORARY SELF-MINIMIZING NOTIFICATION OR HOVER TOOLTIP ═══ */}
+        {/* ═══ TEMPORARY SELF-MINIMIZING NOTIFICATION OR HOVER TOOLTIP (FAT STICKER DESIGN) ═══ */}
         {(showNotification || isHovered || isCardHovered) && !isScrolling && (
           <div
             onMouseEnter={handleCardMouseEnter}
@@ -593,23 +593,63 @@ export default function FloatingRobotAssistant({
               setShowNotification(false);
               onOpen();
             }}
-            className={`flex flex-col items-start bg-slate-900/95 backdrop-blur-md border border-slate-700/80 text-white rounded-2xl rounded-bl-sm px-3 sm:px-4 py-2 sm:py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.45)] mb-2 sm:mb-3 max-w-[190px] sm:max-w-[250px] cursor-pointer hover:border-slate-400 group transition-all duration-450 ease-out ${isMinimizing && !isHovered && !isCardHovered
-              ? 'opacity-0 translate-y-3 scale-90 pointer-events-none'
-              : 'bubble-enter opacity-100 translate-y-0 scale-100'
-              }`}
+            className={`neu-header-badge relative flex flex-col items-start rounded-2xl sm:rounded-3xl px-4 py-3 sm:px-5 sm:py-3.5 mb-2 sm:mb-3 max-w-[220px] sm:max-w-[280px] cursor-pointer group transition-all duration-450 ease-out select-none border border-white/35 hover:border-white/60 shadow-[0_16px_36px_rgba(0,0,0,0.65),0_6px_16px_rgba(0,0,0,0.45),inset_0_1.5px_2px_rgba(255,255,255,0.4),inset_0_-2px_4px_rgba(0,0,0,0.6)] ${
+              isMinimizing && !isHovered && !isCardHovered
+                ? 'opacity-0 translate-y-3 scale-90 pointer-events-none'
+                : 'bubble-enter opacity-100 translate-y-0 scale-100'
+            }`}
+            style={{
+              backgroundImage: "url('/messageContainerBG.jpeg')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
           >
-            <div className="flex items-center justify-between w-full">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-1">
-                <span className="text-white">✦</span> {isHovered && !showNotification ? "RABIA'S AI" : activeGuideData.label}
+            {/* Dark Gradient Overlay for optimal manga illustration contrast & text clarity */}
+            <span className="absolute inset-0 bg-gradient-to-br from-black/70 via-slate-950/65 to-black/80 rounded-2xl sm:rounded-3xl pointer-events-none" />
+
+            {/* Die-Cut Vinyl Sticker Top Gloss */}
+            <span className="absolute top-0 inset-x-0 h-[45%] bg-gradient-to-b from-white/20 via-white/5 to-transparent rounded-t-2xl sm:rounded-t-3xl pointer-events-none" />
+
+            {/* Inner Specular Border & Ambient Glow */}
+            <span className="absolute inset-0 rounded-2xl sm:rounded-3xl border border-white/30 group-hover:border-white/50 transition-all duration-500 shadow-[inset_0_0_15px_rgba(255,255,255,0.18)] pointer-events-none" />
+
+            {/* Real-Life Sticker Corner Rivet / Glow Nodes */}
+            <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-white/75 rounded-full animate-pulse-glow pointer-events-none" />
+            <span className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-white/75 rounded-full animate-pulse-glow-delayed pointer-events-none" />
+
+            {/* Center Ambient Core Aura */}
+            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 blur-2xl rounded-full animate-pulse-glow pointer-events-none" />
+
+            {/* Holographic Light Sweep Across Sticker Surface */}
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl sm:rounded-3xl pointer-events-none" />
+
+            {/* Header / Meta Row */}
+            <div className="relative z-10 flex items-center justify-between w-full pb-1.5 border-b border-white/15">
+              <span className="text-[10px] font-black uppercase tracking-wider text-white flex items-center gap-1.5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] animate-pulse">✦</span>{' '}
+                {isHovered && !showNotification ? "RABIA'S AI" : activeGuideData.label}
               </span>
-              <span className="text-[10px] text-slate-400 group-hover:text-white transition-colors">Tap to Chat ↗</span>
+              <span className="text-[9.5px] font-bold text-slate-200 group-hover:text-white px-2 py-0.5 rounded-full bg-white/15 group-hover:bg-white/25 border border-white/20 transition-all shadow-sm flex items-center gap-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                <span>Tap to Chat</span>
+                <span className="text-[9px] font-black">↗</span>
+              </span>
             </div>
-            <p className="text-[11.5px] text-slate-200 mt-1 leading-snug font-medium">
+
+            {/* Prompt / Message Body */}
+            <p
+              className="relative z-10 text-[11.5px] sm:text-xs text-white font-medium mt-1.5 leading-snug select-none"
+              style={{
+                textShadow: '0 0 16px rgba(255,255,255,0.35), 0 2px 4px rgba(0,0,0,0.8)',
+              }}
+            >
               {isHovered && !showNotification
                 ? "Hi there! 👋 Click me to ask anything about Rabia's projects & skills!"
                 : activeGuideData.guideText}
             </p>
-            <span className="text-[10px] text-slate-400 mt-1.5 italic">
+
+            {/* Hint / Subtitle Footer */}
+            <span className="relative z-10 text-[10px] text-slate-300 mt-1.5 italic font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] flex items-center gap-1">
+              <span className="text-white/60 not-italic text-[10px]">↳</span>
               {isHovered && !showNotification
                 ? 'Ask about Flutter, Supabase & more'
                 : activeGuideData.hint}

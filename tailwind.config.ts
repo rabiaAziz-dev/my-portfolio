@@ -18,6 +18,16 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        '2xl': '1.25rem',
+        '3xl': '1.75rem',
+        '4xl': '2.25rem',
+      },
+      boxShadow: {
+        'neu-flat': '8px 8px 20px rgba(0, 0, 0, 0.08), -8px -8px 20px rgba(255, 255, 255, 0.9)',
+        'neu-flat-dark': '10px 10px 26px rgba(0, 0, 0, 0.55), -8px -8px 24px rgba(255, 255, 255, 0.04)',
+        'neu-pressed': 'inset 4px 4px 8px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.85)',
+        'neu-pressed-dark': 'inset 5px 5px 12px rgba(0, 0, 0, 0.7), inset -3px -3px 8px rgba(255, 255, 255, 0.04)',
+        'neu-glow': '0 0 25px rgba(255, 255, 255, 0.4), 8px 8px 20px rgba(0, 0, 0, 0.1)',
       },
       colors: {
         background: 'hsl(var(--background))',
