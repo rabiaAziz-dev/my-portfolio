@@ -78,7 +78,7 @@ export function useAIChat() {
       }
       case 'openResume':
         window.open(
-          'https://drive.google.com/file/d/15ybKpKaNNWWWRCr4juTa1-ocgLG9_YlV/view?usp=sharing',
+          'https://drive.google.com/file/d/1xAb2h17uqQ9PtSzpiO2XRSF1BU8fn-A5/view?usp=drive_link',
           '_blank'
         );
         break;

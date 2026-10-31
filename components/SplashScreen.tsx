@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -202,7 +202,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_#262626_0%,_#0a0a0a_70%,_#000000_100%)]">
       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
       <div className="absolute inset-0 flex items-center justify-center opacity-10 select-none pointer-events-none z-0">
-        <span className="text-[35vw] font-black text-white tracking-widest drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">é–‹å§‹</span>
+        <span className="text-[35vw] font-black text-white tracking-widest drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">開始</span>
       </div>
       <Image
         src="/images/Logo.png"

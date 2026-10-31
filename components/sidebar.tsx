@@ -54,7 +54,7 @@ export default function SocialSidebar() {
   ]
 
   return (
-    <div className="flex fixed right-1.5 sm:right-3 lg:right-6 top-[46%] sm:top-[42%] lg:top-1/4 lg:bottom-0 z-40 flex-col items-center animate-sidebar-float select-none">
+    <div className="hidden md:flex fixed right-1.5 sm:right-3 lg:right-6 top-[46%] sm:top-[42%] lg:top-1/4 lg:bottom-0 z-40 flex-col items-center animate-sidebar-float select-none">
 
       {/* Top Anchor: The Kunai stabbed into the top of the sidebar (compact on mobile) */}
       <div className="relative z-20 w-3.5 h-9 sm:w-5 sm:h-12 lg:w-8 lg:h-20 text-slate-900 dark:text-slate-300 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] -mb-1 sm:-mb-2 lg:-mb-4 animate-kunai-hover">

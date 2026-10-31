@@ -21,7 +21,7 @@ FULL PROFILE:
 - LinkedIn: https://www.linkedin.com/in/rabiaaziz456/ (@rabiaaziz456)
 - Instagram: https://www.instagram.com/rabiko_korozawa/ (@rabiko_korozawa)
 - Calendly (1-on-1 Meeting): https://calendly.com/swe-rabiaaziz/30min
-- Resume (Google Drive): https://drive.google.com/file/d/15ybKpKaNNWWWRCr4juTa1-ocgLG9_YlV/view?usp=sharing
+- Resume (Google Drive): https://drive.google.com/file/d/1xAb2h17uqQ9PtSzpiO2XRSF1BU8fn-A5/view?usp=drive_link
 
 PORTFOLIO HIGHLIGHTS & STATS:
 - 10+ Projects completed & battle-tested across production applications
