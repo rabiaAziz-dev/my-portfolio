@@ -95,6 +95,35 @@ const projects: Project[] = [
     ],
   },
   {
+    title: 'Ethiopian Calendar — Zemen App',
+    shortTitle: 'Zemen App',
+    desc: 'Feature-rich Ethiopian calendar & date converter with 13-month Geez navigation, live 12-hour sunrise Ethiopian clock, Orthodox Tewahedo fasting & saints, Islamic prayer times, and holiday countdowns.',
+    tags: [
+      'Flutter',
+      'Calendar & Tools',
+      'Date Converter',
+      'Google Play',
+      'Orthodox & Fasts',
+    ],
+    github: null,
+    download: null,
+    playstore:
+      'https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en',
+    initial: 'Z',
+    showcase: '/images/zemen_showcase.png',
+    showcaseAlt: 'Ethiopian Calendar — Zemen App showcase',
+    screenshots: [
+      '/images/zemen_screenshots/image.png',
+      '/images/zemen_screenshots/image2.png',
+      '/images/zemen_screenshots/image3.png',
+      '/images/zemen_screenshots/image4.png',
+      '/images/zemen_screenshots/image5.png',
+      '/images/zemen_screenshots/image6.png',
+      '/images/zemen_screenshots/image7.png',
+      '/images/zemen_screenshots/image8.png',
+    ],
+  },
+  {
     title: 'ZenPeace — Pomodoro & Mindful Flow',
     shortTitle: 'ZenPeace',
     desc: 'A minimalist Pomodoro companion built with Flutter and Provider. Offers customizable focus intervals, ambient soundscapes (piano, lofi, ocean), session analytics with fl_chart, and haptic feedback.',
@@ -269,12 +298,12 @@ export default function ProjectsSection() {
             </p>
           </RevealItem>
 
-          {/* 3 Projects in One Row on Desktop (Grid: 1 col on mobile, 2 on tablet, 3 on desktop) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-stretch">
+          {/* Featured Projects Grid: 1 col on mobile, 2 on tablet & desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-7 items-stretch">
             {projects.map((project, index) => (
               <RevealItem
                 key={project.title}
-                direction={index === 0 ? 'left' : index === 1 ? 'up' : 'right'}
+                direction={index % 2 === 0 ? 'left' : 'right'}
                 className="h-full"
               >
                 <div className="neu-flat-interactive group relative flex flex-col justify-between h-full rounded-2xl sm:rounded-3xl p-5 border border-white/70 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">

@@ -66,7 +66,18 @@ FEATURED PROJECTS:
      • 💎 In-App Purchases & Premium Unlocks: Full Google Play billing integration for premium soundscapes and extended analytics.
    - Tech Stack: Flutter, Dart, Provider, audioplayers, fl_chart, flutter_local_notifications, flutter_secure_storage, in_app_purchase, Google Fonts.
    - Google Play Store: https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en
-3. Health Tracker — Vitals & BP Monitor:
+3. Ethiopian Calendar — Zemen App (zemen):
+   - Overview: A feature-rich Ethiopian Calendar (የኢትዮጵያ ቀን አቆጣጠር) and cultural utility app live on the Google Play Store.
+   - Core Features:
+     • 📅 13-Month Ethiopian Calendar: View all 13 months including Pagume (ጳጉሜ) in month view or year grid, with Gregorian date equivalents and Ge'ez numerals (፩, ፪, ፫).
+     • 🔄 Dual Date Converter: Fast two-way offline conversion between Ethiopian and Gregorian calendars for any past or future date.
+     • ⏰ Traditional Ethiopian Clock & Time: Live analog and digital display of traditional 12-hour sunrise time synced to East Africa Time (EAT), alongside a world clock and solar times.
+     • ⛪ Orthodox Tewahedo Calendar & Fasts: Complete fasting periods (Abiy Tsom / Great Lent, Tsome Nenewe, Filseta, weekly fasts) and daily saint commemorations (Kidus Mikael, Mariam, Giorgis).
+     • 🕌 Islamic Prayer Times & Qibla: Precise 5-prayer schedules across 12 Ethiopian cities with countdowns, Qibla compass, and Hijri calendar dates.
+     • 🔔 Events, Reminders & ICS Export: Custom recurring reminders by Ethiopian date, color-coded notes, and .ics calendar export.
+   - Tech Stack: Flutter, Dart, Offline Date Conversion Algorithms, Provider, Local Notifications, Shared Preferences / Hive, Google Fonts.
+   - Google Play Store: https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en
+4. Health Tracker — Vitals & BP Monitor:
    - Overview: A personal health companion mobile app designed to help users take small daily steps toward healthier tomorrows by monitoring vital signs, health trends, and daily wellness.
    - Core Features:
      • Vitals & Blood Pressure Tracking: Log and monitor Systolic & Diastolic readings (mmHg) with visual status indicators (Normal, Elevated).
@@ -76,7 +87,7 @@ FEATURED PROJECTS:
      • Health Glance & History: At-a-glance dashboard with most recent readings and organized history logs.
      • Clean, Modern UI: Soft neumorphic/glassmorphic interface with color-coded status badges for effortless reading.
    - Google Play Store: https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en
-3. Production Applications & Ecosystems:
+5. Production Applications & Ecosystems:
    - 10+ battle-tested cross-platform applications featuring clean responsive UI, cloud backends, and reliable performance.
 
 PROFESSIONAL EXPERIENCE & JOURNEY:

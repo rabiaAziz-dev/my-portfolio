@@ -32,7 +32,7 @@ const SECTION_GUIDE_DATA: Record<string, { label: string; guideText: string; hin
   },
   projects: {
     label: 'FEATURED APPS',
-    guideText: 'Production Flutter apps including Health Tracker 🚀',
+    guideText: 'Production Flutter apps including Zemen & CivicCoach 🚀',
     hint: 'Tap to learn about any project',
   },
   experience: {

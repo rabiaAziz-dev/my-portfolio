@@ -32,7 +32,7 @@ function getLocalFallbackResponse(
   // 1. Greetings & Pleasantries
   if (/^(hi|hello|hey|greetings|good morning|good evening|good afternoon|what's up|sup)\b/i.test(query)) {
     return {
-      reply: "Hello! 👋 I'm Rabia's AI Assistant. I can guide you through her Flutter apps (like CivicCoach, ZenPeace & Health Tracker), tech stack, backend expertise in Supabase/Firebase, and senior recommendations, or help you connect directly with her. What would you like to explore?",
+      reply: "Hello! 👋 I'm Rabia's AI Assistant. I can guide you through her Flutter apps (like CivicCoach, Zemen, ZenPeace & Health Tracker), tech stack, backend expertise in Supabase/Firebase, and senior recommendations, or help you connect directly with her. What would you like to explore?",
       functionCalls: null,
     };
   }
@@ -68,7 +68,22 @@ function getLocalFallbackResponse(
     };
   }
 
-  // 4. Specific Project: Health Tracker (Vitals & BP Monitor)
+  // 4. Specific Project: Ethiopian Calendar — Zemen App
+  if (
+    query.includes('zemen') ||
+    query.includes('ethiopian') ||
+    query.includes('habesha') ||
+    query.includes('calendar') ||
+    query.includes('geez') ||
+    query.includes('aqotater')
+  ) {
+    return {
+      reply: "Ethiopian Calendar — Zemen App is Rabia's latest live utility application on Google Play! 🇪🇹📅\n\nOverview:\nA feature-rich Ethiopian Calendar (የኢትዮጵያ ቀን አቆጣጠር) and conversion utility. Features 13-month Geez calendar view, dual Ethiopian-Gregorian date converter, live traditional Ethiopian sunrise clock, Orthodox fasts & saints, Islamic prayer times, and holiday countdowns.\n\nKey App Features:\n• 📅 13-Month Ethiopian Calendar: View all 13 months including Pagume (ጳጉሜ) in month view or year grid, with Gregorian equivalents and Ge'ez numbers (፩, ፪, ፫).\n• 🔄 Dual Date Converter: Seamlessly convert between Ethiopian and Gregorian calendars for any past or future date without internet.\n• ⏰ Traditional Ethiopian Clock & Time: Live analog and digital display of traditional 12-hour sunrise time synced to East Africa Time (EAT), plus world clock.\n• ⛪ Orthodox Tewahedo Fasting & Saints: Complete fasting calendar (Abiy Tsom, Tsome Nenewe, Filseta, Wed/Fri) and daily saints (Kidus Mikael, Mariam, Giorgis, etc.).\n• 🕌 Islamic Prayer Times & Qibla: Accurate prayer times for 12 cities, Qibla compass, and Hijri date integration.\n• 🔔 Events & Reminders: Add birthdays, holidays, and personal recurring reminders by Ethiopian date with ICS export support.\n\n📲 Available on Google Play Store:\nhttps://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en",
+      functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'projects' } }],
+    };
+  }
+
+  // 5. Specific Project: Health Tracker (Vitals & BP Monitor)
   if (
     query.includes('health') ||
     query.includes('tracker') ||
@@ -113,7 +128,7 @@ function getLocalFallbackResponse(
   ) {
     const liveProjectList = pageContext?.liveProjects?.length
       ? pageContext.liveProjects.map((p) => `• 📱 ${p.title}: ${p.desc}`).join('\n')
-      : "• 📱 CivicCoach — AI US Citizenship Test 2026: Official USCIS 2026 prep with AI voice mock interviews, 128 questions, and elected officials lookup.\n• 📱 ZenPeace — Pomodoro Focus & Mindful Flow: A serene Pomodoro timer with ambient soundscapes, focus analytics, and mindfulness tools.\n• 📱 Health Tracker — Vitals & BP Monitor: A personal health companion for logging blood pressure, body temperature, pulse rate, and tracking weekly trend averages.";
+      : "• 📱 CivicCoach — AI US Citizenship Test 2026: Official USCIS 2026 prep with AI voice mock interviews, 128 questions, and elected officials lookup.\n• 📱 Ethiopian Calendar — Zemen App: Feature-rich 13-month Geez calendar, dual offline date converter, live sunrise clock, and Orthodox fasts.\n• 📱 ZenPeace — Pomodoro Focus & Mindful Flow: A serene Pomodoro timer with ambient soundscapes, focus analytics, and mindfulness tools.\n• 📱 Health Tracker — Vitals & BP Monitor: A personal health companion for logging blood pressure, body temperature, pulse rate, and tracking weekly trend averages.";
 
     return {
       reply: `Rabia has built 10+ battle-tested mobile, web, and desktop applications using Flutter, Dart, Supabase, and Firebase.\n\nFeatured Projects on her website:\n${liveProjectList}\n\nExplore her Projects showcase or check out her GitHub at https://github.com/rabiaAziz-dev !`,
@@ -280,7 +295,7 @@ function getLocalFallbackResponse(
     query.includes('background')
   ) {
     return {
-      reply: "Rabia Aziz is a passionate Software Engineer and Flutter App Developer with 1+ years of experience and 10+ completed applications. She specializes in building AI-powered mobile apps, scalable Supabase/Firebase backends, and responsive UI that feels smooth and intuitive. Would you like to check her projects (like CivicCoach & Health Tracker), technical skills, or get in touch?",
+      reply: "Rabia Aziz is a passionate Software Engineer and Flutter App Developer with 1+ years of experience and 10+ completed applications. She specializes in building AI-powered mobile apps, scalable Supabase/Firebase backends, and responsive UI that feels smooth and intuitive. Would you like to check her projects (like CivicCoach, Zemen & ZenPeace), technical skills, or get in touch?",
       functionCalls: [{ name: 'scrollToSection', args: { sectionId: 'about' } }],
     };
   }
