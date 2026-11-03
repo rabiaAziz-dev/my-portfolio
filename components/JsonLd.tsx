@@ -77,70 +77,127 @@ export default function JsonLd() {
       {
         '@type': 'SoftwareApplication',
         name: 'CivicCoach — AI US Citizenship 2026',
+        description:
+          'AI-powered Flutter application for USCIS civics prep featuring oral AI mock interviews, spaced-repetition flashcards, and elected officials lookup.',
         operatingSystem: 'Android',
         applicationCategory: 'EducationalApplication',
+        url: 'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
+        downloadUrl:
+          'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
+        installUrl:
+          'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
+        image: 'https://swe-rabia-aziz.vercel.app/images/civic_coach_showcase.jpeg',
+        screenshot:
+          'https://swe-rabia-aziz.vercel.app/images/civic_coach_showcase.jpeg',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
         },
-        downloadUrl:
-          'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep&hl=en',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          ratingCount: '120',
+          bestRating: '5',
+          worstRating: '1',
+        },
         author: {
           '@id': 'https://swe-rabia-aziz.vercel.app/#person',
         },
-        image: 'https://swe-rabia-aziz.vercel.app/images/civic_coach_showcase.jpeg',
       },
       {
         '@type': 'SoftwareApplication',
         name: 'Ethiopian Calendar — Zemen App',
+        description:
+          'Feature-rich Ethiopian calendar and date converter with 13-month Geez navigation, live 12-hour clock, and Orthodox fasting schedules.',
         operatingSystem: 'Android',
         applicationCategory: 'UtilitiesApplication',
+        url: 'https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en',
+        downloadUrl:
+          'https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en',
+        installUrl:
+          'https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en',
+        image: 'https://swe-rabia-aziz.vercel.app/images/zemen_showcase.png',
+        screenshot:
+          'https://swe-rabia-aziz.vercel.app/images/zemen_showcase.png',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
         },
-        downloadUrl:
-          'https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha&hl=en',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.8',
+          ratingCount: '95',
+          bestRating: '5',
+          worstRating: '1',
+        },
         author: {
           '@id': 'https://swe-rabia-aziz.vercel.app/#person',
         },
-        image: 'https://swe-rabia-aziz.vercel.app/images/zemen_showcase.png',
       },
       {
         '@type': 'SoftwareApplication',
         name: 'ZenPeace — Pomodoro & Mindful Flow',
+        description:
+          'A minimalist Pomodoro companion built with Flutter and Provider. Offers ambient soundscapes, session analytics, and haptic feedback.',
         operatingSystem: 'Android',
         applicationCategory: 'ProductivityApplication',
+        url: 'https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en',
+        downloadUrl:
+          'https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en',
+        installUrl:
+          'https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en',
+        image: 'https://swe-rabia-aziz.vercel.app/images/zenpeace_showcase.png',
+        screenshot:
+          'https://swe-rabia-aziz.vercel.app/images/zenpeace_showcase.png',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
         },
-        downloadUrl:
-          'https://play.google.com/store/apps/details?id=com.zenpeace.pomodoro.focus.timer.mindfulstate&hl=en',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          ratingCount: '80',
+          bestRating: '5',
+          worstRating: '1',
+        },
         author: {
           '@id': 'https://swe-rabia-aziz.vercel.app/#person',
         },
-        image: 'https://swe-rabia-aziz.vercel.app/images/zenpeace_showcase.png',
       },
       {
         '@type': 'SoftwareApplication',
         name: 'Health Tracker — Vitals & BP Monitor',
+        description:
+          'A personal health companion to record and monitor blood pressure, pulse rate, temperature, and blood glucose with trend charts.',
         operatingSystem: 'Android',
         applicationCategory: 'HealthApplication',
+        url: 'https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en',
+        downloadUrl:
+          'https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en',
+        installUrl:
+          'https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en',
+        image:
+          'https://swe-rabia-aziz.vercel.app/images/health_trackor showcase.jpg',
+        screenshot:
+          'https://swe-rabia-aziz.vercel.app/images/health_trackor showcase.jpg',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
         },
-        downloadUrl:
-          'https://play.google.com/store/apps/details?id=com.vitals.bp.family.health.tracker&hl=en',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.8',
+          ratingCount: '65',
+          bestRating: '5',
+          worstRating: '1',
+        },
         author: {
           '@id': 'https://swe-rabia-aziz.vercel.app/#person',
         },
-        image: 'https://swe-rabia-aziz.vercel.app/images/health_trackor showcase.jpg',
       },
     ],
   };

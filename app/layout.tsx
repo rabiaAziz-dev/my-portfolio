@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: '%s | Rabia Aziz',
   },
   description:
-    'Portfolio of Rabia Aziz — Cross-Platform Flutter Developer specializing in AI-powered mobile apps, Supabase & Firebase backends, and clean UI/UX architecture. Explore live Google Play apps, code, and case studies.',
+    'Portfolio of Rabia Aziz — Flutter Developer specializing in AI-powered mobile apps, Supabase backends, and cross-platform architecture.',
   applicationName: 'Rabia Aziz Portfolio',
   authors: [{ name: 'Rabia Aziz', url: 'https://swe-rabia-aziz.vercel.app' }],
   generator: 'Next.js',
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     siteName: 'Rabia Aziz Portfolio',
     title: 'Rabia Aziz | Flutter Developer & Mobile App Engineer',
     description:
-      'Specializing in AI-powered mobile experiences, scalable Flutter applications, and solid Supabase/Firebase backends across mobile, web, and desktop.',
+      'Cross-platform Flutter developer building AI mobile apps and Supabase backends across mobile, web, and desktop.',
     images: [
       {
         url: '/images/og-image.png',
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Rabia Aziz | Flutter Developer & Mobile App Engineer',
     description:
-      'Specializing in AI-powered mobile experiences, scalable Flutter applications, and solid Supabase/Firebase backends.',
+      'Cross-platform Flutter developer building AI mobile apps and Supabase backends across mobile, web, and desktop.',
     images: ['/images/og-image.png'],
     creator: '@rabiaaziz456',
   },
