@@ -1,15 +1,96 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
+import JsonLd from '@/components/JsonLd';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
+
+export const viewport: Viewport = {
+  themeColor: '#09090b',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
-  title: 'SWE.Rabia Aziz',
-  description: 'Portfolio of Rabia Aziz - Flutter Developer specializing in cross-platform applications with clean design and strong performance',
-  icons: {
-    icon: 'images/Logo.png',
+  metadataBase: new URL('https://swe-rabia-aziz.vercel.app'),
+  title: {
+    default: 'Rabia Aziz | Flutter Developer & Mobile App Engineer',
+    template: '%s | Rabia Aziz',
   },
+  description:
+    'Portfolio of Rabia Aziz — Cross-Platform Flutter Developer specializing in AI-powered mobile apps, Supabase & Firebase backends, and clean UI/UX architecture. Explore live Google Play apps, code, and case studies.',
+  applicationName: 'Rabia Aziz Portfolio',
+  authors: [{ name: 'Rabia Aziz', url: 'https://swe-rabia-aziz.vercel.app' }],
+  generator: 'Next.js',
+  keywords: [
+    'Rabia Aziz',
+    'Flutter Developer',
+    'Mobile App Developer',
+    'Flutter Engineer',
+    'Cross-Platform Developer',
+    'Supabase Developer',
+    'Firebase Developer',
+    'Dart Developer',
+    'AI Mobile Apps',
+    'CivicCoach',
+    'ZenPeace',
+    'Zemen App',
+    'Health Tracker',
+    'Mobile Application Engineer Pakistan',
+    'Remote Flutter Developer',
+    'Android Developer',
+    'iOS Developer',
+  ],
+  creator: 'Rabia Aziz',
+  publisher: 'Rabia Aziz',
+  alternates: {
+    canonical: 'https://swe-rabia-aziz.vercel.app',
+  },
+  icons: {
+    icon: [
+      { url: '/images/Logo.png' },
+      { url: '/images/Logo.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/images/Logo.png' }],
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://swe-rabia-aziz.vercel.app',
+    siteName: 'Rabia Aziz Portfolio',
+    title: 'Rabia Aziz | Flutter Developer & Mobile App Engineer',
+    description:
+      'Specializing in AI-powered mobile experiences, scalable Flutter applications, and solid Supabase/Firebase backends across mobile, web, and desktop.',
+    images: [
+      {
+        url: '/images/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Rabia Aziz — Flutter Developer & Mobile App Engineer Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rabia Aziz | Flutter Developer & Mobile App Engineer',
+    description:
+      'Specializing in AI-powered mobile experiences, scalable Flutter applications, and solid Supabase/Firebase backends.',
+    images: ['/images/og-image.png'],
+    creator: '@rabiaaziz456',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  category: 'technology',
 };
 
 export default function RootLayout({
@@ -20,6 +101,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <JsonLd />
         <script
           dangerouslySetInnerHTML={{
             __html: `

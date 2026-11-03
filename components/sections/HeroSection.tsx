@@ -165,11 +165,11 @@ export default function HeroSection({ animReady = false }: { animReady?: boolean
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.4)_100%)] pointer-events-none" />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center" style={{ perspective: '1000px' }}>
-        {animReady && (
+        {/* Hero Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
+            animate={animReady ? 'visible' : 'hidden'}
           >
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]">
 
@@ -222,13 +222,13 @@ export default function HeroSection({ animReady = false }: { animReady?: boolean
               I build AI-powered experiences, scalable Flutter applications, and solid Supabase backends that work across mobile, web, and desktop. From idea to deployment, I make it happen.
             </motion.p>
           </motion.div>
-        )}
+
 
         {/* CTA Buttons - Modern Fluid Neumorphic (Monochrome Theme) */}
-        {animReady && (
+        {/* Hero Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={animReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1, ease: premiumEase, delay: 1.3 }}
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-8 sm:mb-12 w-full max-w-xl mx-auto"
           >
@@ -295,7 +295,7 @@ export default function HeroSection({ animReady = false }: { animReady?: boolean
               </a>
             </div>
           </motion.div>
-        )}
+
       </div>
     </section>
   );
