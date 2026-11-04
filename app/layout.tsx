@@ -107,6 +107,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <JsonLd />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

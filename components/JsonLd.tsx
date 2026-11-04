@@ -30,8 +30,10 @@ export default function JsonLd() {
         '@type': 'Person',
         '@id': 'https://swe-rabia-aziz.vercel.app/#person',
         name: 'Rabia Aziz',
-        alternateName: ['SWE. Rabia Aziz', 'Rabia Aziz Dev'],
+        alternateName: ['SWE. Rabia Aziz', 'Rabia Aziz Dev', 'Rabia Aziz Flutter'],
         jobTitle: 'Flutter Developer & Mobile App Engineer',
+        disambiguatingDescription:
+          'Rabia Aziz is a software engineer and Flutter mobile app developer from Pakistan, known for authoring AI-powered mobile applications including CivicCoach (USCIS Civics 2026) and ZenPeace on the Google Play Store.',
         description:
           'Flutter Developer specializing in AI-powered cross-platform mobile apps, Supabase & Firebase backends, and clean UI/UX architecture.',
         url: 'https://swe-rabia-aziz.vercel.app',
@@ -47,6 +49,21 @@ export default function JsonLd() {
         alumniOf: {
           '@type': 'EducationalOrganization',
           name: 'Virtual University of Pakistan',
+          url: 'https://www.vu.edu.pk',
+        },
+        hasCredential: [
+          {
+            '@type': 'EducationalOccupationalCredential',
+            name: 'Professional Flutter App Development Certification',
+            recognizedBy: {
+              '@type': 'EducationalOrganization',
+              name: 'Arfa Karim Technology Incubator, Peshawar',
+            },
+          },
+        ],
+        worksFor: {
+          '@type': 'Organization',
+          name: 'X Dev Soft',
         },
         sameAs: [
           'https://github.com/rabiaAziz-dev',
@@ -67,10 +84,14 @@ export default function JsonLd() {
           'Supabase',
           'Firebase',
           'Cloud Firestore',
-          'AI / LLM Integration',
+          'AI / LLM Mobile Integration',
+          'Google ML Kit',
+          'Speech-to-Text & Text-to-Speech',
           'BLoC State Management',
           'Provider State Management',
           'Clean Architecture',
+          'Model-View-ViewModel (MVVM)',
+          'Drift ORM & SQLite',
           'Mobile UI/UX Design',
         ],
       },
@@ -198,6 +219,52 @@ export default function JsonLd() {
         author: {
           '@id': 'https://swe-rabia-aziz.vercel.app/#person',
         },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://swe-rabia-aziz.vercel.app/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Who is Rabia Aziz?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Rabia Aziz is a software engineer and cross-platform Flutter developer based in Pakistan who specializes in AI-powered mobile applications, Supabase and Firebase backends, and clean UI/UX architecture. She has authored multiple production applications published on the Google Play Store.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What mobile applications has Rabia Aziz developed?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Rabia Aziz has published four production mobile apps on Google Play: 1) CivicCoach (USCIS civics prep featuring AI mock interviews), 2) Ethiopian Calendar — Zemen App (13-month Geez navigation and prayer schedules), 3) ZenPeace (a minimalist Pomodoro timer with ambient soundscapes), and 4) Health Tracker (a vitals and blood pressure monitor).',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What tech stack and backend technologies does Rabia Aziz use?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Her primary mobile framework is Flutter with Dart for iOS, Android, web, and desktop. For backend and databases, she specializes in Supabase (PostgreSQL, Auth, RLS, RPC, Storage) and Firebase. For architecture, she uses Clean Architecture, MVVM, BLoC, Provider, and Drift/SQLite for local storage.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What AI and machine learning features does Rabia Aziz build?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'She integrates LLM APIs (Groq, Gemini, OpenAI) and on-device ML with Google ML Kit for speech-to-text oral simulations, optical character recognition (OCR), text-to-speech, and context-aware conversational assistants.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Is Rabia Aziz available for hire or remote contracts?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes, Rabia Aziz is available worldwide for full-time remote engineering positions, contract development, and freelance mobile applications. She can be reached via email at swe.rabiaaziz@gmail.com or on WhatsApp at +92 327 5676026.',
+            },
+          },
+        ],
       },
     ],
   };
