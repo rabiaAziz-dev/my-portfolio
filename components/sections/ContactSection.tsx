@@ -163,6 +163,13 @@ icon: WhatsAppIcon,
       color: 'from-slate-700 to-slate-800 dark:from-slate-200 dark:to-slate-400'
     },
     {
+      icon: WhatsAppIcon,
+      name: 'WhatsApp',
+      username: '+92 327 5676026',
+      link: 'https://wa.me/923275676026',
+      color: 'from-slate-800 to-slate-700 dark:from-slate-100 dark:to-slate-300'
+    },
+    {
       icon: Instagram,
       name: 'Instagram',
       username: '@rabiko_korozawa',

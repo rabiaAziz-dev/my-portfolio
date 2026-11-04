@@ -205,11 +205,11 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         <span className="text-[35vw] font-black text-white tracking-widest drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">開始</span>
       </div>
       <Image
-        src="/images/Logo.png"
-        alt="Logo"
+        src="/images/logo.jpg"
+        alt="Rabia Aziz - Flutter Developer Brand Logo"
         width={180}
         height={180}
-        className="drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] z-10"
+        className="rounded-full drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] z-10"
         priority
       />
     </div>

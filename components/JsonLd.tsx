@@ -37,7 +37,12 @@ export default function JsonLd() {
         description:
           'Flutter Developer specializing in AI-powered cross-platform mobile apps, Supabase & Firebase backends, and clean UI/UX architecture.',
         url: 'https://swe-rabia-aziz.vercel.app',
-        image: 'https://swe-rabia-aziz.vercel.app/images/Logo.png',
+        image: {
+          '@type': 'ImageObject',
+          url: 'https://swe-rabia-aziz.vercel.app/images/logo.jpg',
+          contentUrl: 'https://swe-rabia-aziz.vercel.app/images/logo.jpg',
+          caption: 'Rabia Aziz - Official Flutter Developer Personal Brand Logo',
+        },
         email: 'swe.rabiaaziz@gmail.com',
         telephone: '+923275676026',
         address: {

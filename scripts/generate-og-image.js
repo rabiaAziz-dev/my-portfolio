@@ -14,7 +14,7 @@ async function generateCleanPortfolioOgImage() {
     </svg>`
   );
 
-  const roundedLogo = await sharp(path.join(__dirname, '..', 'public', 'images', 'Logo.png'))
+  const roundedLogo = await sharp(path.join(__dirname, '..', 'public', 'images', 'logo.jpg'))
     .resize(logoSize, logoSize, { fit: 'cover' })
     .composite([{ input: logoCircleMask, blend: 'dest-in' }])
     .png()

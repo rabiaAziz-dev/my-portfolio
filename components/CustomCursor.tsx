@@ -927,6 +927,7 @@ export default function NarutoCursor() {
         className="fixed top-0 left-0 pointer-events-none"
         aria-hidden="true"
         style={{
+          opacity: 0,
           zIndex: 99999,
           width: '10px',
           height: '10px',
@@ -949,6 +950,7 @@ export default function NarutoCursor() {
         className="fixed top-0 left-0 pointer-events-none"
         aria-hidden="true"
         style={{
+          opacity: 0,
           zIndex: 99998,
           width: '42px',
           height: '42px',
