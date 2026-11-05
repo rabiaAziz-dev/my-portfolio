@@ -71,9 +71,10 @@ export default function JsonLd() {
           name: 'X Dev Soft',
         },
         sameAs: [
-          'https://github.com/rabiaAziz-dev',
+          'https://github.com/swe-rabiaaziz',
           'https://www.linkedin.com/in/rabiaaziz456/',
-          'https://www.instagram.com/rabiko_korozawa/',
+          'https://www.instagram.com/swe.rabiaaziz/',
+          'https://www.facebook.com/swe.rabiaaziz',
           'https://wa.me/923275676026',
           'https://play.google.com/store/apps/details?id=com.us.citizenship.test.naturalization.civics.prep',
           'https://play.google.com/store/apps/details?id=com.ethiopia.zemen.calendar.aqotater.ethiopian.habesha',

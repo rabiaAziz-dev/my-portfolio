@@ -172,8 +172,8 @@ icon: WhatsAppIcon,
     {
       icon: Instagram,
       name: 'Instagram',
-      username: '@rabiko_korozawa',
-      link: 'https://www.instagram.com/rabiko_korozawa/',
+      username: '@swe.rabiaaziz',
+      link: 'https://www.instagram.com/swe.rabiaaziz/',
       color: 'from-slate-600 to-slate-700 dark:from-slate-300 dark:to-slate-500'
     },
     {
